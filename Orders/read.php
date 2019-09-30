@@ -1,7 +1,7 @@
 <?php
 header("Content-Type: application/json; charset=UTF-8");
 
-include_once '../config/dbclass.php';
+include_once '../connect.php';
 include_once '../entities/orders.php';
 
 $dbclass = new DBClass();
@@ -25,18 +25,7 @@ if($count > 0){
 
         $p  = array(
               "id" => $id,
-              "sku" => $sku,
-              "barcode" => $barcode,
-              "name" => $name,
-              "price" => $price,
-              "unit" => $unit,
-              "quantity" => $quantity,
-              "minquantity" => $minquantity,
-              "createdAt" => $createdAt,
-              "createdAt" => $createdAt,
-              "updatedAt" => $updatedAt,
-              "family_id" => $family_id,
-              "location_id" => $location_id
+              
         );
 
         array_push($orders["body"], $p);
