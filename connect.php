@@ -7,10 +7,10 @@ ConnectDB();
 function ConnectDB() {
 
    /*** mysql server info ***/
-    $hostname = '';  // Local host, i.e. running on elvis
-    $username = '';           // Your MySQL Username goes here
-    $password = '';           // Your MySQL Password goes here
-    $dbname   = '';           // For elvis, your MySQL Username is repeated here
+    $hostname = '127.0.0.1';  // Local host, i.e. running on elvis
+    $username = 'brian';           // Your MySQL Username goes here
+    $password = 'brian';           // Your MySQL Password goes here
+    $dbname   = 'chicken';           // For elvis, your MySQL Username is repeated here
 
    try {
        $dbh = new PDO("mysql:host=$hostname;dbname=$dbname",
