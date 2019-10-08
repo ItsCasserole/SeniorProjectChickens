@@ -19,8 +19,8 @@ $count = $stmt->rowCount();
 if($count > 0){
 
 
-    $flock_arr = array();
-    $flock_arr["records"] = array(); //change records to table needed
+     $flock_arr = array();
+    $flock_arr["Farm"] = array(); 
     $orders["count"] = $count;
 
     // get table
@@ -30,11 +30,19 @@ if($count > 0){
 
         $flock_item = array(
             // database items needed will be listed here
-              "id" => $id,
+              "farm_id" => $id,
+              "farm_name" => $name,
+              "farm_address" => $address,
+              "farm_city" => $city,
+              "farm_bldg" => $building,
+              "farm_wieght" => $weight,
+              "farm_mortality" => $mortality,
+              "delivery_date" => $dDate,
+              "hatchlings" => $hatchlings
              
         );
 
-        array_push($flock_arr["records"], $flock_item); //change records
+        array_push($flock_arr["Farm"], $flock_item); 
     }
 
     // set response code 
