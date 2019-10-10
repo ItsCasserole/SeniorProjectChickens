@@ -30,7 +30,7 @@ class Flock{
         $query = "";
         
         // prepare query
-        $stmt = $this->conn->prepare($query);
+        $stmt = $this->prepare($query);
  
         // sanitize
         $this->name=htmlspecialchars(strip_tags($this->name));
