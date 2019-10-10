@@ -14,14 +14,14 @@ $flock = new Flock($dbh);
 
 // query here
 $stmt = $flock->read();
-$count = $stmt->rowCount();
+$num = $stmt->rowCount();
 
-if($count > 0){
+if($num > 0){
 
 
-     $flock_arr = array();
+    $flock_arr = array();
     $flock_arr["Farm"] = array(); 
-    $orders["count"] = $count;
+    
 
     // get table
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
@@ -33,12 +33,13 @@ if($count > 0){
               "farm_id" => $id,
               "farm_name" => $name,
               "farm_address" => $address,
-              "farm_city" => $city,
               "farm_bldg" => $building,
-              "farm_wieght" => $weight,
-              "farm_mortality" => $mortality,
-              "delivery_date" => $dDate,
-              "hatchlings" => $hatchlings
+              "coop_id" => $coopId,
+              "coop_count" => $coopCount,
+              "birds_per_coop" => $birdsPerCoop,
+              "bird_type_id" => $birdTypeId,
+              "bird_breed" => $birdBreed,
+              "default_price" => $price
              
         );
 

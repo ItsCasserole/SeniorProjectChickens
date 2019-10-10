@@ -14,7 +14,7 @@ include_once '../objects/flock.php';
 
 $dbh = ConnectDB();
  
-// prepare product object
+// prepare flock object
 $flock = new Flock($dbh);
  
 // get id of product to be edited
@@ -24,10 +24,13 @@ $data = json_decode(file_get_contents("php://input"));
 $flock->id = $data->id;
  
 // set product property values... changed when db table complete
-$product->name = $data->name;
-$product->price = $data->price;
-$product->description = $data->description;
-$product->category_id = $data->category_id;
+$flock->name = $data->farm_name;
+$flock->address = $data->farm_address;
+$flock->building = $data->farm_bldg;
+$flock->coopCount = $data->coop_count;
+$flock->birdsPerCoop = $data->birds_per_coop;
+$flock->birdBreed = $data->bird_breed;
+$flock->price = $data->default_price;
  
 // update the product
 if($flock->update()){

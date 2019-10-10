@@ -22,18 +22,23 @@ $data = json_decode(file_get_contents("php://input"));
  
 // make sure data is not empty
 if(
-    !empty($data->name) &&
-    !empty($data->price) &&
-    !empty($data->description) &&
-    !empty($data->category_id)
+    !empty($data->farm_name) &&
+    !empty($data->farm_address) &&
+    !empty($data->farm_bldg) &&
+    !empty($data->coop_count) &&
+    !empty($data->birds_per_coop) &&
+    !empty($data->bird_breed) && 
+    !empty($data->default_price)
 ){
  
     // set product property values
-    $flock->name = $data->name;
-    $flock->price = $data->price;
-    $flock->description = $data->description;
-    $flock->category_id = $data->category_id;
-    $flock->created = date('Y-m-d H:i:s');
+    $flock->name = $data->farm_name;
+    $flock->address = $data->farm_address;
+    $flock->building = $data->farm_bldg;
+    $flock->coopCount = $data->coop_count;
+    $flock->birdsPerCoop = $data->birds_per_coop;
+    $flock->birdBreed = $data->bird_breed;
+    $flock->price = $data->default_price;
  
     // create the flock
     if($flock->create()){
