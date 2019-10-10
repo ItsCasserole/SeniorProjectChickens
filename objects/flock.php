@@ -3,23 +3,27 @@ class Flock{
 
     // Connection instance
     private $dbh;
+    
 
     // table name
-    private $table_name = ""; //Insert DB table
+    private $table_name = "Farm"; //Insert DB table
 
     // table columns please change once created
     public $id;
-    public $reference;
-    public $description;
-    public $createdAt; 
-    public $updatedAt;
+    public $name;
+    public $address;
+    public $building; 
+    public $coopCount;
+    public $birdsPerCoop;
+    public $birdBreed;
+    public $price;
 
     //constructor with $db as database
     public function __construct($dbh){
-        $this->connection = $dbh;
+        
     }
     
-    // create product
+    // create farm
     function create(){
  
         // ADD QUERY FUNCTION HERE!!!!
@@ -30,17 +34,21 @@ class Flock{
  
         // sanitize
         $this->name=htmlspecialchars(strip_tags($this->name));
+        $this->address=htmlspecialchars(strip_tags($this->address));
+        $this->building=htmlspecialchars(strip_tags($this->building));
+        $this->coopCount=htmlspecialchars(strip_tags($this->coopCount));
+        $this->birdsPerCoop=htmlspecialchars(strip_tags($this->birdsPerCoop));
+        $this->birdBreed=htmlspecialchars(strip_tags($this->birdBreed));
         $this->price=htmlspecialchars(strip_tags($this->price));
-        $this->description=htmlspecialchars(strip_tags($this->description));
-        $this->category_id=htmlspecialchars(strip_tags($this->category_id));
-        $this->created=htmlspecialchars(strip_tags($this->created));
  
         // bind values
-        $stmt->bindParam(":name", $this->name);
-        $stmt->bindParam(":price", $this->price);
-        $stmt->bindParam(":description", $this->description);
-        $stmt->bindParam(":category_id", $this->category_id);
-        $stmt->bindParam(":created", $this->created);
+        $stmt->bindParam(":farm", $this->name);
+        $stmt->bindParam(":address", $this->address);
+        $stmt->bindParam(":building", $this->building);
+        $stmt->bindParam(":coops", $this->coopCount);
+        $stmt->bindParam(":chickensPerCoop", $this->birdsPerCoop);
+        $stmt->bindParam(":type", $this->birdBreed);
+        $stmt->bindParam(":unitPrice", $this->price);
  
         // execute query
         if($stmt->execute()){
@@ -70,17 +78,21 @@ class Flock{
 
         // sanitize...Change data titles when db finished
         $this->name=htmlspecialchars(strip_tags($this->name));
+        $this->address=htmlspecialchars(strip_tags($this->address));
+        $this->building=htmlspecialchars(strip_tags($this->building));
+        $this->coopCount=htmlspecialchars(strip_tags($this->coopCount));
+        $this->birdsPerCoop=htmlspecialchars(strip_tags($this->birdsPerCoop));
+        $this->birdBreed=htmlspecialchars(strip_tags($this->birdBreed));
         $this->price=htmlspecialchars(strip_tags($this->price));
-        $this->description=htmlspecialchars(strip_tags($this->description));
-        $this->category_id=htmlspecialchars(strip_tags($this->category_id));
-        $this->id=htmlspecialchars(strip_tags($this->id));
 
         // bind new values ...Change data titles when db finish
-        $stmt->bindParam(':name', $this->name);
-        $stmt->bindParam(':price', $this->price);
-        $stmt->bindParam(':description', $this->description);
-        $stmt->bindParam(':category_id', $this->category_id);
-        $stmt->bindParam(':id', $this->id);
+        $stmt->bindParam(":farm", $this->name);
+        $stmt->bindParam(":address", $this->address);
+        $stmt->bindParam(":building", $this->building);
+        $stmt->bindParam(":coops", $this->coopCount);
+        $stmt->bindParam(":chickensPerCoop", $this->birdsPerCoop);
+        $stmt->bindParam(":type", $this->birdBreed);
+        $stmt->bindParam(":unitPrice", $this->price);
 
         // execute the query
         if($stmt->execute()){
@@ -89,7 +101,7 @@ class Flock{
 
         return false;
     }
-    // delete the pflock
+    // delete the flock
     function delete(){
  
         // delete query
