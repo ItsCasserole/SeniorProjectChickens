@@ -63,7 +63,7 @@ class Flock{
         $query = "";
 
         //prepare query statement
-        $stmt = $this->conn->prepare($query);
+        $stmt = $this->prepare($query);
 
         $stmt->execute();
         return $stmt;
@@ -108,7 +108,7 @@ class Flock{
         $query = "DELETE FROM " . $this->table_name . " WHERE id = ?";
  
         // prepare query
-        $stmt = $this->conn->prepare($query);
+        $stmt = $this->prepare($query);
  
         // sanitize
         $this->id=htmlspecialchars(strip_tags($this->id));
