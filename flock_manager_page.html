@@ -1,0 +1,125 @@
+<?php
+  
+    if (!include('../connect.php')) {
+	die('error finding connect file');
+    }
+    $dbh = ConnectDB();
+?>
+
+<!DOCTYPE html>
+<head>
+    <link href="https://www.w3schools.com/w3css/4/w3.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+
+</head>
+
+<body>
+    <div class="w3-sidebar w3-brown w3-bar-block" style="width:15%">
+        <h4 class="w3-bar-item">Navigation</h4>
+        <a class="w3-bar-item w3-button w3-disabled" href="#">
+        <i class="material-icons">home</i>  Home</a>
+        <a class="w3-bar-item w3-button" href="#"><i class="material-icons">person</i>  Flock Manager</a>
+    </div>
+
+    <div class="w3-container w3-brown" style="margin-left:15%">
+        <h1>Flock Manager</h1>
+    </div>
+
+    <div style="margin-left:16%">
+	    <div class="w3-card w3-padding-16 w3-margin-bottom" style="width:75%">
+		    <div class="w3-container w3-khaki">
+			    <h3>Messages</h3>
+		    </div>
+		<div class="w3-container w3-border w3-margin">
+		    <div class="w3-container w3-border">
+			    <label class = "w3-text-black">Example Sender 1</label>	<!--sender from DB-->
+			    <label class = "w3-text-grey">(00:00:00)</label>	<!--timestamp from DB-->
+			    <label class = "w3-text-black">:</label>
+			    <label class = "w3-text-black">This is an example message.</label>	<!--message from DB-->
+		    </div>
+		    <div class="w3-container w3-border">
+			    <label class = "w3-text-black">Example Sender 2</label>
+			    <label class = "w3-text-grey">(00:01:00)</label>
+			    <label class = "w3-text-black">:</label>
+			    <label class = "w3-text-black">This is another example of a message.</label>
+		    </div>
+		</div>
+	    </div>
+	    
+	    <div class="w3-card w3-padding-16 w3-margin-bottom" style="width:75%">
+                        <div class = "w3-container w3-khaki">
+                                <h3>Available Farms</h3>
+                        </div>
+
+                        <div class = "w3-dropdown-hover w3-padding-16 w3-margin"> <!--Need to add css. Made some changes. Riddhi-->
+                        	<select id="farmList" onclick="doSomething();">
+				</select>
+                        </div>
+	    </div>
+		
+	<div class="w3-card w3-padding-16 w3-margin-bottom" style="width:75%">
+        	<div class="w3-container w3-khaki">
+            		<h3>Add New Farm</h3>
+        	</div>
+
+        	<form class="w3-container w3-padding-16">
+
+            	<label class="w3-text-black"><b>Farm ID</b></label> <!--remove this once farm_id is set to AI-->
+            	<input id = "farmID" class="w3-input w3-border w3-light-grey" type="text">
+
+            	<label class="w3-text-black"><b>Farm Name</b></label>
+            	<input id = "farmName" class="w3-input w3-border w3-light-grey" type="text">
+
+           	<label class="w3-text-black"><b>Street Address Line</b></label>
+            	<input id= "farmAddress" class="w3-input w3-border w3-light-grey" type="text">
+            	
+		<label class="w3-text-black"><b>City</b></label>
+            	<input id = "farmCity" class="w3-input w3-border w3-light-grey" type="text">
+
+            <button  id ="save" name="save" onclick="addFarm();" class="w3-btn w3-brown w3-medium">SAVE</button>
+            <button class="w3-btn w3-brown w3-medium">CANCEL</button>
+        	</form>
+	</div>    
+
+    </div> 
+    </body>
+        <script language = "javascript">
+                //functions for adding new farm. Author: Riddhi.
+
+function addFarm(){
+    var farm_name = $('#farmName').val();
+    var farm_address = $('#farmAddress').val();
+    var farm_city = $('#farmCity').val();
+    var farm_id =$('#farmID').val();
+    alert("riddhi");
+    $.ajax({
+        type: "POST",
+        url: "insert_new_farm.php", //php file goes here
+        data:{
+            farm_name : farm_name,
+            farm_address : farm_address,
+            farm_city : farm_city,
+            farm_id :farm_id
+        },
+        success: function(response){
+            alert(response);
+        }
+    });
+}
+
+function doSomething () {
+	$.ajax({
+	    type: "GET",
+	    url: "get_all_farms.php",
+	    data: {},
+	    success: function(response){
+	        $('#farmList').html(response);
+            }
+	});
+}
+
+
+        </script>
+</html>
+
