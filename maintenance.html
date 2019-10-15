@@ -1,0 +1,145 @@
+<?php
+
+    if (!include('../connect.php')) {
+        die('error finding connect file');
+    }
+    $dbh = ConnectDB();
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SimplyFowl | Maintenance</title>
+    <link href="https://www.w3schools.com/w3css/4/w3.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+
+</head>
+
+<body>
+<div class="w3-sidebar w3-brown w3-bar-block" style="width:15%">
+    <h4 class="w3-bar-item">Navigation</h4>
+    <a class="w3-bar-item w3-button" href="#"><i class="material-icons">home</i>  Home</a>
+    <a class="w3-bar-item w3-button" href="#"><i class="material-icons">shopping_cart</i>  Order</a>
+    <a class="w3-bar-item w3-button" href="#"><i class="material-icons">directions_bus</i>  Dispatch</a>
+    <a class="w3-bar-item w3-button" href="#"><i class="material-icons">markunread_mailbox</i>  Shipments</a>
+    <a class="w3-bar-item w3-button" href="#"><i class="material-icons">settings_applications</i>  Maintenance</a>
+</div>
+
+<div class="w3-container w3-brown" style="margin-left:15%">
+    <h1>Maintenance</h1>
+</div>
+
+<div style="margin-left:16%">
+
+    <div class="w3-card w3-padding-16" style="width:75%">
+
+    <div class="w3-container w3-khaki">
+        <h3>Add Customer</h3>
+    </div>
+
+    <form id="addCustomerForm" class="w3-container w3-padding-16">
+
+
+
+        <label class="w3-text-black"><b>Customer Name:</b></label>
+        <input id = "customerName" class="w3-input w3-border w3-light-grey" type="text">
+        <br>
+        <label class="w3-text-black"><b>Street Address:</b></label>
+        <input id= "customerAddress" class="w3-input w3-border w3-light-grey" type="text">
+        <br>
+        <label class="w3-text-black"><b>Customer Phone Number:</b></label>
+        <input id = "customerPhone" class="w3-input w3-border w3-light-grey" type="text">
+        <br>
+        <button id ="addCustomerBtn" onclick="addCustomer()" class="w3-btn w3-brown w3-medium w3-">Add Customer</button>
+        <button type="reset" class="w3-btn w3-brown w3-medium">Cancel</button>
+    </form>
+    </div>
+</div>
+
+
+<br>
+
+
+
+<div style="margin-left:16%">
+    <div class="w3-card w3-padding-16" style="width:75%">
+
+        <div class="w3-container w3-khaki">
+            <h3>Add Truck</h3>
+        </div>
+
+        <form id="addTruckForm" class="w3-container w3-padding-16">
+
+
+
+            <label class="w3-text-black"><b>Truck Number:</b></label>
+            <input id = "truckNumber" class="w3-input w3-border w3-light-grey" type="text">
+            <br>
+
+            <label class="w3-text-black"><b>VIN:</b></label>
+            <input id= "truckVIN" class="w3-input w3-border w3-light-grey" type="text">
+            <br>
+            <label class="w3-text-black"><b>License Plate:</b></label>
+            <input id = "truckPlateNumber" class="w3-input w3-border w3-light-grey" type="text">
+            <br>
+            <label class="w3-text-black"><b>Maximum Coops:</b></label>
+            <input id = "truckMaxCoops" class="w3-input w3-border w3-light-grey" type="number">
+            <br>
+            <label class="w3-text-black"><b>Transmission:</b></label>
+            <select id="truckTransmission">
+                <option value="A">Automatic</option>
+                <option value="B">Manual</option>
+            </select>
+
+            <br>
+            <br>
+
+            <button id ="addTruckBtn" onclick="addTruck()" class="w3-btn w3-brown w3-medium w3-">Add Truck</button>
+            <button type="reset" class="w3-btn w3-brown w3-medium">Cancel</button>
+
+        </form>
+
+    </div>
+</div>
+
+
+
+
+<br>
+
+
+</body>
+<script language = "javascript">
+
+    function addCustomer(){
+        var cust_name = $('#customerName').val();
+        var cust_address = $('#customerAddress').val();
+        var cust_phone = $('#customerPhone').val();
+        alert("New Customer:\n" + "name: " + cust_name + "\naddr: " + cust_address + "\nphone: " + cust_phone);
+
+        }
+
+    function addTruck(){
+        var truck_num = $('#truckNumber').val();
+        var truck_vin = $('#truckVIN').val();
+        var truck_plate = $('#truckPlateNumber').val();
+        var truck_max_coops = $('#truckMaxCoops').val();
+        var truck_transmission = '';
+        if ($('#truckTransmission').val() == "A") {
+            truck_transmission = 'Automatic';
+        }
+        else truck_transmission = 'Manual';
+
+        alert("New Truck:\n" + "num: " + truck_num + "\nvin: " + truck_vin + "\nplate: " + truck_plate + "\nmax coops: "
+            + truck_max_coops + "\ntransmission: " + truck_transmission);
+
+    }
+
+
+
+
+
+
+</script>
+</html>
