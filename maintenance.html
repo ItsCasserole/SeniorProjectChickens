@@ -1,12 +1,3 @@
-<?php
-
-    if (!include('../connect.php')) {
-        die('error finding connect file');
-    }
-    $dbh = ConnectDB();
-?>
-
-<!DOCTYPE html>
 <html>
 <head>
     <title>SimplyFowl | Maintenance</title>
@@ -15,8 +6,9 @@
     <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
 
 </head>
-
+<!-- HTML written by Joe Tagliaferro !-->
 <body>
+<!-- Navigation bar !-->
 <div class="w3-sidebar w3-brown w3-bar-block" style="width:15%">
     <h4 class="w3-bar-item">Navigation</h4>
     <a class="w3-bar-item w3-button" href="#"><i class="material-icons">home</i>  Home</a>
@@ -26,34 +18,35 @@
     <a class="w3-bar-item w3-button" href="#"><i class="material-icons">settings_applications</i>  Maintenance</a>
 </div>
 
+<!-- Page Header !-->
 <div class="w3-container w3-brown" style="margin-left:15%">
     <h1>Maintenance</h1>
 </div>
 
 <div style="margin-left:16%">
-
+    <!-- Add Customer Form !-->
     <div class="w3-card w3-padding-16" style="width:75%">
 
-    <div class="w3-container w3-khaki">
-        <h3>Add Customer</h3>
-    </div>
+        <div class="w3-container w3-khaki">
+            <h3>Add Customer</h3>
+        </div>
 
-    <form id="addCustomerForm" class="w3-container w3-padding-16">
+        <form id="addCustomerForm" class="w3-container w3-padding-16">
 
 
 
-        <label class="w3-text-black"><b>Customer Name:</b></label>
-        <input id = "customerName" class="w3-input w3-border w3-light-grey" type="text">
-        <br>
-        <label class="w3-text-black"><b>Street Address:</b></label>
-        <input id= "customerAddress" class="w3-input w3-border w3-light-grey" type="text">
-        <br>
-        <label class="w3-text-black"><b>Customer Phone Number:</b></label>
-        <input id = "customerPhone" class="w3-input w3-border w3-light-grey" type="text">
-        <br>
-        <button id ="addCustomerBtn" onclick="addCustomer()" class="w3-btn w3-brown w3-medium w3-">Add Customer</button>
-        <button type="reset" class="w3-btn w3-brown w3-medium">Cancel</button>
-    </form>
+            <label class="w3-text-black"><b>Customer Name:</b></label>
+            <input id = "customerName" class="w3-input w3-border w3-light-grey" type="text">
+            <br>
+            <label class="w3-text-black"><b>Street Address:</b></label>
+            <input id= "customerAddress" class="w3-input w3-border w3-light-grey" type="text">
+            <br>
+            <label class="w3-text-black"><b>Customer Phone Number:</b></label>
+            <input id = "customerPhone" class="w3-input w3-border w3-light-grey" type="text">
+            <br>
+            <button  id ="addCustomerBtn" type="submit" name="save" onclick="addCustomer()" class="w3-btn w3-brown w3-medium w3-">Add Customer</button>
+            <button type="reset" class="w3-btn w3-brown w3-medium">Cancel</button>
+        </form>
     </div>
 </div>
 
@@ -63,6 +56,7 @@
 
 
 <div style="margin-left:16%">
+    <!-- Add Truck Form !-->
     <div class="w3-card w3-padding-16" style="width:75%">
 
         <div class="w3-container w3-khaki">
@@ -95,7 +89,7 @@
             <br>
             <br>
 
-            <button id ="addTruckBtn" onclick="addTruck()" class="w3-btn w3-brown w3-medium w3-">Add Truck</button>
+            <button  id ="addTruckBtn" name="save" onclick="addTruck()" class="w3-btn w3-brown w3-medium w3-">Add Truck</button>
             <button type="reset" class="w3-btn w3-brown w3-medium">Cancel</button>
 
         </form>
@@ -111,31 +105,58 @@
 
 </body>
 <script language = "javascript">
-
+    // adds a customer to the database
     function addCustomer(){
-        var cust_name = $('#customerName').val();
-        var cust_address = $('#customerAddress').val();
-        var cust_phone = $('#customerPhone').val();
-        alert("New Customer:\n" + "name: " + cust_name + "\naddr: " + cust_address + "\nphone: " + cust_phone);
+        var customerName = $('#customerName').val();
+        var customerAddress = $('#customerAddress').val();
+        var customerPhone = $('#customerPhone').val();
+        alert("New Customer:\n" + "name: " + customerName + "\naddr: " + customerAddress + "\nphone: " + customerPhone);
+        //ajax code -Connor A.
+        $.ajax({
+            type: "post",
+            url: "insert_new_customer.php", //php file goes here
+            data:{
+                customerName : customerName,
+                customerAddress : customerAddress,
+                customerPhone : customerPhone,
+            },
+            success: function(response){
+                alert(response);
+            }
 
-        }
+        });
 
+    }
+    
+    // adds a truck to the database
     function addTruck(){
-        var truck_num = $('#truckNumber').val();
-        var truck_vin = $('#truckVIN').val();
-        var truck_plate = $('#truckPlateNumber').val();
-        var truck_max_coops = $('#truckMaxCoops').val();
+        var truckNumber = $('#truckNumber').val();
+        var truckVIN = $('#truckVIN').val();
+        var truckPlateNumber = $('#truckPlateNumber').val();
+        var truckMaxCoops = $('#truckMaxCoops').val();
         var truck_transmission = '';
         if ($('#truckTransmission').val() == "A") {
             truck_transmission = 'Automatic';
         }
         else truck_transmission = 'Manual';
 
-        alert("New Truck:\n" + "num: " + truck_num + "\nvin: " + truck_vin + "\nplate: " + truck_plate + "\nmax coops: "
-            + truck_max_coops + "\ntransmission: " + truck_transmission);
+        alert("New Truck:\n" + "num: " + truckNumber + "\nvin: " + truckVIN + "\nplate: " + truckPlateNumber + "\nmax coops: " + truckMaxCoops + "\ntransmission: " + truck_transmission);
+        //ajax code - Connor A
+        $.ajax({
+            type: "post",
+            url: "insert_new_truck.php", //php file goes here
+            data:{
+                truckNumber : truckNumber,
+                truckVIN : truckVIN,
+                truckPlateNumber : truckPlateNumber,
+                truckMaxCoops : truckMaxCoops
+            },
+            success: function(response){
+                alert(response);
+            }
+        });
 
     }
-
 
 
 
