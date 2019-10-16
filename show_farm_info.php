@@ -27,11 +27,11 @@ th {text-align: left;}
 
     $dbh = ConnectDB();
 
-
+    
     $farmName = $_GET['farm_name'];
 
     
-    $sql = "SELECT * FROM 'chickens.Farm' WHERE 'farm_name' = '".$farmName."'";
+    $sql = "SELECT farm_name, farm_address, farm_city FROM chickens.Farm WHERE farm_name = '".$farmName."'";
     $stmt = $dbh->prepare($sql);
     $stmt->execute();
     
@@ -41,12 +41,12 @@ th {text-align: left;}
     <th>Address</th>
     <th>City</th>
     </tr>";
-    while($row = $stmt->fetchAll()){
+    foreach($stmt->fetchAll() as $row){
 	    echo "<tr>";
-	    echo "<td>" . $row["farm_name"] . "</td>"; 
-            echo "<td>" . $row["farm_address"] . "</td>"; 
-	    echo "<td>" . $row["farm_city"] . "</td>";
-	    echo"</tr>";
+	    echo "<td>" . $row['farm_name'] . "</td>"; 
+            echo "<td>" . $row['farm_address'] . "</td>"; 
+	    echo "<td>" . $row['farm_city'] . "</td>";
+	    echo "</tr>";
     }
 
     echo "</table>";
@@ -54,3 +54,5 @@ th {text-align: left;}
 
 
 ?>
+</body>
+</html>
