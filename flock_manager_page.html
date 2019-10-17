@@ -46,6 +46,7 @@
 
                         <div class = "w3-dropdown-hover w3-padding-16 w3-margin"> 
                         	<select id="farmList" onclick="doSomething()">
+				<option value="">Select Farm</option>
 				</select>
                         </div>
 			
@@ -55,7 +56,8 @@
 			</form>
 			
 			<div class = "w3-container w3-padding-16">
-				<button id=showInfo" name="showInfo" onclick="showFarm();" class="w3-btn w3-brown w3-medium">GET INFO</button>
+				<button id="getInfo" name="getInfo" onclick="showFarm();" class="w3-btn w3-brown w3-medium">SEARCH</button>
+				<button id="allInfo" name="allInfo" onclick="showFarm();" class="w3-btn w3-brown w3-medium">SHOW ALL FARMS</button>
 			</div>
 			
                         <label class = "w3-text-black">Farm Information:</label>
@@ -113,13 +115,16 @@ function addFarm(){
             success: function(response){
                 alert(response);
             }
-        });
+        })
     }
 }
 
 //function for showing info associated to farm
 function showFarm(){
-	var farm_name = $('#farmName').val();
+	var farm_name = $('#farmInfo').val();
+
+	  
+
 	$.ajax({
 		type: "GET",
 		url: "show_farm_info.php",
@@ -129,9 +134,20 @@ function showFarm(){
 		success: function(response){	
 			$('#nameInfo').html(response);
 		}
-	   }); 
-	}
-
+	   });
+	
+}
+//function to show all farms
+function showAll(){
+	$.ajax({
+		type: "GET",
+		url: "show_farm_info.php",
+		data: {},
+		success: function(response){
+			$('#nameInfo').html(response);
+		}
+	});
+}
 
 //function for geting list of farms.
 function doSomething () {

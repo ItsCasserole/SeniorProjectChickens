@@ -27,22 +27,27 @@ th {text-align: left;}
 
     $dbh = ConnectDB();
 
+    if ($_GET['farm_name'] == "") {
+    	$sql = "SELECT * FROM chickens.Farm";   		
+    } else { 
+    	$farm_name = $_GET['farm_name'];
+    	$sql = "SELECT * FROM chickens.Farm WHERE farm_name = '".$farm_name."'";
+    }
     
-    $farmName = $_GET['farm_name'];
-
-    
-    $sql = "SELECT farm_name, farm_address, farm_city FROM chickens.Farm WHERE farm_name = '".$farmName."'";
     $stmt = $dbh->prepare($sql);
     $stmt->execute();
     
+
     echo "<table>
     <tr>
-    <th>FarmName</th>
+    <th>ID</th>
+    <th>Farm Name</th>
     <th>Address</th>
     <th>City</th>
     </tr>";
     foreach($stmt->fetchAll() as $row){
 	    echo "<tr>";
+	    echo "<td>" . $row['farm_id'] . "</td>";
 	    echo "<td>" . $row['farm_name'] . "</td>"; 
             echo "<td>" . $row['farm_address'] . "</td>"; 
 	    echo "<td>" . $row['farm_city'] . "</td>";
