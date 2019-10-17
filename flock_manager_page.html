@@ -3,7 +3,6 @@
     <link href="https://www.w3schools.com/w3css/4/w3.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
-
 </head>
 
 <body>
@@ -45,8 +44,7 @@
                         </div>
 
                         <div class = "w3-dropdown-hover w3-padding-16 w3-margin"> 
-                        	<select id="farmList" onclick="doSomething()">
-				<option value="">Select Farm</option>
+                        	<select id="farmList" action="get_all_farms.php" onclick="doSomething();" onchange="showSelect(this.value)">
 				</select>
                         </div>
 			
@@ -56,8 +54,8 @@
 			</form>
 			
 			<div class = "w3-container w3-padding-16">
-				<button id="getInfo" name="getInfo" onclick="showFarm();" class="w3-btn w3-brown w3-medium">SEARCH</button>
-				<button id="allInfo" name="allInfo" onclick="showFarm();" class="w3-btn w3-brown w3-medium">SHOW ALL FARMS</button>
+				<button id="getInfo" name="getInfo" onclick="searchFarm();" class="w3-btn w3-brown w3-medium">SEARCH</button>
+				<button id="allInfo" name="allInfo" onclick="showAll();" class="w3-btn w3-brown w3-medium">SHOW ALL FARMS</button>
 			</div>
 			
                         <label class = "w3-text-black">Farm Information:</label>
@@ -119,15 +117,15 @@ function addFarm(){
     }
 }
 
-//function for showing info associated to farm
-function showFarm(){
+//function for searching info associated to farm
+function searchFarm(){
 	var farm_name = $('#farmInfo').val();
 
 	  
 
 	$.ajax({
 		type: "GET",
-		url: "show_farm_info.php",
+		url: "search.php",
 		data: {
 		   farm_name : farm_name
 		},
@@ -139,9 +137,10 @@ function showFarm(){
 }
 //function to show all farms
 function showAll(){
+	
 	$.ajax({
 		type: "GET",
-		url: "show_farm_info.php",
+		url: "show_all_info.php",
 		data: {},
 		success: function(response){
 			$('#nameInfo').html(response);
@@ -161,6 +160,30 @@ function doSomething () {
             }
 	});
 }
+
+//function for showing info from farm selected from list
+function showSelect(str) {
+    if (str == "") {
+        document.getElementById("farmName").innerHTML = "";
+        return;
+    } else {
+        if (window.XMLHttpRequest) {
+            // code for IE7+, Firefox, Chrome, Opera, Safari
+            xmlhttp = new XMLHttpRequest();
+        } else {
+            // code for IE6, IE5
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("nameInfo").innerHTML = this.responseText;
+            }
+        };
+        xmlhttp.open("GET","show_farm_info.php?farm_id="+str,true);
+        xmlhttp.send();
+    }
+}
+
 
 //function for reseting the farm values.
 function clearAddFarm(){
