@@ -10,3 +10,4 @@
 #Added show all farms button function 
 ``````
 ``````
+#Added functionality to the drop down menu. Items now clickable and expands info on farm
