@@ -1,19 +1,13 @@
-<?php
-                                                                                                                            if (!include('../connect.php')) {
-        die('error finding connect file');
-    }
-    $dbh = ConnectDB();
-?>
-
 <!DOCTYPE html>
 <head>
     <link href="https://www.w3schools.com/w3css/4/w3.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
-
 </head>
 
 <body>
+
+<!--sidebar--!>
     <div class="w3-sidebar w3-brown w3-bar-block" style="width:15%">
         <h4 class="w3-bar-item">Navigation</h4>
         <a class="w3-bar-item w3-button w3-disabled" href="#">
@@ -21,82 +15,111 @@
         <a class="w3-bar-item w3-button" href="#"><i class="material-icons">person</i>  Flock Manager</a>
     </div>
 
+
+<!--header--!>
     <div class="w3-container w3-brown" style="margin-left:15%">
         <h1>Flock Manager</h1>
     </div>
 
+    <!--page content--!>
     <div style="margin-left:16%">
- <div class="w3-card w3-padding-16 w3-margin-bottom" style="width:75%">
-                    <div class="w3-container w3-khaki">
-                            <h3>Messages</h3>
-                    </div>
-                <div class="w3-container w3-border w3-margin">
-                    <div class="w3-container w3-border">
-                            <label class = "w3-text-black">Example Sender 1</label>     <!--sender from DB-->
-                            <label class = "w3-text-grey">(00:00:00)</label>    <!--timestamp from DB-->
-                            <label class = "w3-text-black">:</label>
-                            <label class = "w3-text-black">This is an example message.</label>  <!--message from DB-->
-                    </div>
-                    <div class="w3-container w3-border">
-                            <label class = "w3-text-black">Example Sender 2</label>
-                            <label class = "w3-text-grey">(00:01:00)</label>
-                            <label class = "w3-text-black">:</label>
-                            <label class = "w3-text-black">IMPORTANT: This is another example of a message.<label>
-                    </div>
-                </div>
-            </div>
-
-            <div class="w3-card w3-padding-16 w3-margin-bottom" style="width:75%">
+    	
+    <!--messages box--!>
+	    <div class="w3-card w3-padding-16 w3-margin-bottom" style="width:75%">
+		    <div class="w3-container w3-khaki">
+			    <h3>Messages</h3>
+		    </div>
+		<div class="w3-container w3-border w3-margin">
+		    <div class="w3-container w3-border">
+			    <label class = "w3-text-black">Example Sender 1</label>	<!--sender from DB-->
+			    <label class = "w3-text-grey">(00:00:00)</label>	<!--timestamp from DB-->
+			    <label class = "w3-text-black">:</label>
+			    <label class = "w3-text-black">This is an example message.</label>	<!--message from DB-->
+		    </div>
+		    <div class="w3-container w3-border">
+			    <label class = "w3-text-black">Example Sender 2</label>
+			    <label class = "w3-text-grey">(00:01:00)</label>
+			    <label class = "w3-text-black">:</label>
+			    <label class = "w3-text-black">IMPORTANT: This is another example of a message.<label>
+		    </div>
+		</div>
+	    </div>
+	    
+	<!--farm info box--!>
+	    <div class="w3-card w3-padding-16 w3-margin-bottom" style="width:75%">
                         <div class = "w3-container w3-khaki">
                                 <h3>Available Farms</h3>
                         </div>
-
-                        <div class = "w3-dropdown-hover w3-padding-16 w3-margin">
-                                <select id="farmList" onclick="doSomething()">
-                                </select>
+			
+			<!--dropdown--!>
+                        <div class = "w3-dropdown-hover w3-padding-16 w3-margin"> 
+                        	<select id="farmList" class="form-control" action="show_all_farms.php" placeholder="Select Farm" 
+				onclick="doSomething();" onchange="showSelect(this.value)"></select>
                         </div>
-                        <div class = "w3-container w3-padding-16">
-                                <button id="getInfo" name="showInfo" onclick="editFarm();" class="w3-btn w3-brown w3-medium">EDIT</button>
-                        </div>
-            </div>
+			
+			<!--search--!>
+                        <form class="w3-container w3-padding-16">
+				<label class="w3-text-black"><b>Search Farms:</b></label>
+                		<input id="farmInfo" class="w3-input w3-border w3-light-grey" type="text" placeholder="Enter Farm Name">         
+			</form>
+			
+			<div class = "w3-container w3-padding-16">
+				<button id="getInfo" name="getInfo" class="w3-btn w3-brown w3-medium" onclick="searchFarm();">SEARCH</button>
+				<button id="allInfo" name="allInfo" class="w3-btn w3-brown w3-medium" onclick="showAll();">SHOW ALL FARMS</button>
+			</div>
 
-        <div class="w3-card w3-padding-16 w3-margin-bottom" style="width:75%">
-                <div class="w3-container w3-khaki">
-                        <h3>Add New Farm</h3>
-        </div>
+			<!--farm info--!>
+			<div class = "w3-container w3-padding-16">
+			<label class = "w3-text-black"><b>Farm Information:</b><br></label>
+                        	<div id="nameInfo"><b></b></div>
+			</div>
+	      
+	    </div>
 
-                <form class="w3-container w3-padding-16">
 
-                <label class="w3-text-black"><b>Farm Name</b></label>
-                <input id = "farmName" class="w3-input w3-border w3-light-grey" type="text">
+	<!--add farm box--!>
+	<div class="w3-card w3-padding-16 w3-margin-bottom" style="width:75%">
+        	<div class="w3-container w3-khaki">
+            		<h3>Add New Farm</h3>
+ 		</div>
 
-                <label class="w3-text-black"><b>Street Address</b> (optional)</label>
-                <input id= "farmAddress" class="w3-input w3-border w3-light-grey" type="text">
- <label class="w3-text-black"><b>City</b></label>
-                <input id = "farmCity" class="w3-input w3-border w3-light-grey" type="text">
+        	<form class="w3-container w3-padding-16">
+            		<label class="w3-text-black"><b>Farm Name</b></label>
+            		<input id = "farmName" class="w3-input w3-border w3-light-grey" type="text">
 
-            <button  id ="save" name="save" onclick="addFarm();" class="w3-btn w3-brown w3-medium">SAVE</button>
-            <button id="cancel" onclick="clearAddFarm();" class="w3-btn w3-brown w3-medium">CANCEL</button>
-                </form>
-        </div>
+           		<label class="w3-text-black"><b>Street Address</b> (optional)</label>
+            		<input id= "farmAddress" class="w3-input w3-border w3-light-grey" type="text">
+      
+			<label class="w3-text-black"><b>City</b></label>
+            		<input id = "farmCity" class="w3-input w3-border w3-light-grey" type="text">
+	        </form>
 
-    </div>
-    </body>
+		<div class="w3-container w3-padding-16">
+			 <button  id ="save" name="save" onclick="addFarm();" class="w3-btn w3-brown w3-medium">SAVE</button>
+			 <button id="cancel" onclick="clearAddFarm();" class="w3-btn w3-brown w3-medium">CANCEL</button>
+		</div>
+	</div> 
+    	</div> 
+ </body>
+
+
+
 <script language = "javascript">
-//functions for adding new farm.
+//functions for adding new farm. 
+
 
 function addFarm(){
     var farm_name = $('#farmName').val();
     var farm_address = $('#farmAddress').val();
     var farm_city = $('#farmCity').val();
-
+   
     if(farm_name == "" ||  farm_city == "")
-    {
+    {   
         alert("Please enter both, Farm Name and Farm City");
     }
     else
-    {
-
+    {   
+   
         $.ajax({
             type: "POST",
             url: "insert_new_farm.php", //php file goes here
@@ -108,43 +131,78 @@ function addFarm(){
             success: function(response){
                 alert(response);
             }
-        });
+        })
     }
 }
 
-//function for showing info associated to farm
-function showFarm(){
-        var farm_name = $('#farmName').val();
+//function for searching info associated to farm
+function searchFarm(){
+	var farm_name = $('#farmInfo').val();
 
-        if(farm_name == ""){
-                alert("Please enter farm name.")
-        } else {
- $.ajax({
-                type: "GET",
-                url: "show_farm_info.php",
-                data: {
-                   farm_name
-                },
-                success: function(response){
+	  
 
-                        $('#farmInfo').html(response);
-                }
-           });
-        }
+	$.ajax({
+		type: "GET",
+		url: "search.php",
+		data: {
+		   farm_name : farm_name
+		},
+		success: function(response){	
+			$('#nameInfo').html(response);
+		}
+	   });
+	
+}
+//function to show all farms
+function showAll(){
+	
+	$.ajax({
+		type: "GET",
+		url: "show_all_info.php",
+		data: {},
+		success: function(response){
+			$('#nameInfo').html(response);
+		}
+	});
 }
 
 //function for geting list of farms.
+
 function doSomething () {
-        $.ajax({
-            type: "GET",
-            url: "get_all_farms.php",
-            data: {},
-            success: function(response){
-                //alert(response);
-                $('#farmList').html(response);
+	$.ajax({
+	    type: "GET",
+	    url: "get_all_farms.php",
+	    data: {},
+	    success: function(response){
+	        //alert(response);
+		$('#farmList').html(response);
             }
-        });
+	});
 }
+
+//function for showing info from farm selected from list
+function showSelect(str) {
+    if (str == "") {
+        document.getElementById("farmName").innerHTML = "";
+        return;
+    } else {
+        if (window.XMLHttpRequest) {
+            // code for IE7+, Firefox, Chrome, Opera, Safari
+            xmlhttp = new XMLHttpRequest();
+        } else {
+            // code for IE6, IE5
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("nameInfo").innerHTML = this.responseText;
+            }
+        };
+        xmlhttp.open("GET","show_farm_info.php?farm_id="+str,true);
+        xmlhttp.send();
+    }
+}
+
 
 //function for reseting the farm values.
 function clearAddFarm(){
@@ -158,4 +216,3 @@ alert("Can not edit farm")
         </script>
 </html>
 
-                                                                                                    
