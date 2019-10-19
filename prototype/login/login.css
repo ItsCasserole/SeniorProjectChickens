@@ -1,0 +1,51 @@
+body{
+  text-align: center;
+}
+
+div.form{
+  font-family: Arial;
+  position: absolute;
+  top: 30%;
+  right: 0;
+  left: 0;
+  display: block;
+  text-align: center;
+  vertical-align: middle;
+}
+
+form{
+  margin: auto;
+  display: inline-block;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.button {
+  background-color: #008CBA;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+input[type=text] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+}
+
+
+input[type=password] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+}
+
