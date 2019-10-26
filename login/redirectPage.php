@@ -22,5 +22,5 @@ $dbh = ConnectDB();
 ?>
 
 <html>
-  <a href="logout_logic.php">Logout</a>
+  <a href="logout.php">Logout</a>
 </html>
