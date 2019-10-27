@@ -22,5 +22,8 @@ $dbh = ConnectDB();
   $result = $stmt->fetch();
 
   $arr_var = [$result[0]];
+  if($result[0] == "success"){
+    session_destroy();    
+  }
   echo json_encode($arr_var);
 ?>
