@@ -94,6 +94,7 @@ a[data-toggle="collapse"] {
     border-radius: 0;
     margin-bottom: 40px;
     box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+    min-width: 320px;
 }
 
 @media (max-width: 768px) {
@@ -103,4 +104,27 @@ a[data-toggle="collapse"] {
     #sidebar.active {
         margin-left: 0;
     }
+}
+
+.card{
+    min-width: 320px;
+    max-width: 1000px;
+}
+
+#announcements .card-body {
+    max-height:600px;
+    overflow:auto;
+}
+
+#announcements .media-list {
+    padding: 0;
+}
+
+#announcements .media-list .media {
+    border-bottom:1px dashed #efefef;
+    margin-bottom:20px;
+}
+
+.modal{
+    min-width: 320px;
 }
