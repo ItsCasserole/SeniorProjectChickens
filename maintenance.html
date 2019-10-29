@@ -1,166 +1,169 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
-    <title>SimplyFowl | Maintenance</title>
-    <link href="https://www.w3schools.com/w3css/4/w3.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
+    <title>Simply Fowl | Maintenance</title>
+
+    <!-- Bootstrap CSS CDN -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- Our Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Font Awesome JS -->
+    <script src="https://kit.fontawesome.com/412b07d0f6.js" crossorigin="anonymous"></script>
 </head>
-<!-- HTML written by Joe Tagliaferro !-->
+
 <body>
-<!-- Navigation bar !-->
-<div class="w3-sidebar w3-brown w3-bar-block" style="width:15%">
-    <h4 class="w3-bar-item">Navigation</h4>
-    <a class="w3-bar-item w3-button" href="#"><i class="material-icons">home</i>  Home</a>
-    <a class="w3-bar-item w3-button" href="#"><i class="material-icons">shopping_cart</i>  Order</a>
-    <a class="w3-bar-item w3-button" href="#"><i class="material-icons">directions_bus</i>  Dispatch</a>
-    <a class="w3-bar-item w3-button" href="#"><i class="material-icons">markunread_mailbox</i>  Shipments</a>
-    <a class="w3-bar-item w3-button" href="#"><i class="material-icons">settings_applications</i>  Maintenance</a>
-</div>
+<div class="wrapper">
 
-<!-- Page Header !-->
-<div class="w3-container w3-brown" style="margin-left:15%">
-    <h1>Maintenance</h1>
-</div>
+    <!-- Sidebar  -->
+    <div>
+        <nav id="sidebar" class="fixed">
+            <div class="sidebar-header"><h3 class="text-center">Simply Fowl</h3></div>
 
-<div style="margin-left:16%">
-    <!-- Add Customer Form !-->
-    <div class="w3-card w3-padding-16" style="width:75%">
+            <ul class="list-unstyled components">
+                <li><a href="#"><i class="fas fa-home fa-fw"></i> Home</a></li>
+                <li><a href="#"><i class="fas fa-box-open fa-fw"></i> Orders</a></li>
+                <li><a href="#"><i class="fas fa-truck fa-fw"></i> Dispatch</a></li>
+                <li><a href="#"><i class="fas fa-briefcase fa-fw"></i> Shipments</a></li>
+                <li class="active"><a href="#"><i class="fas fa-wrench fa-fw"></i> Maintenance</a></li>
+                <li>
+                    <a href="#adminSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-user-cog fa-fw"></i> Admin</a>
+                    <ul class="collapse list-unstyled" id="adminSubmenu">
+                        <li><a href="#">View Flock Info</a></li>
+                        <li><a href="#">Manage Accounts</a></li>
+                    </ul>
+                </li>
+            </ul>
 
-        <div class="w3-container w3-khaki">
-            <h3>Add Customer</h3>
+        </nav>
+    </div>
+
+
+    <!-- Page Content  -->
+    <div id="content" >
+        <!-- Page Header Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <button type="button" id="sidebarCollapse" class="btn"><i class="fas fa-bars"></i></button>
+                <h4 class="nav navbar-nav navbar-center">Maintenance</h4>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#">Log Out</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Individual Page Content Goes Here -->
+
+        <!-- Add New Customer Card -->
+        <div class="card mx-auto">
+            <div class="card-body">
+                <form>
+                    <h3>Add New Customer</h3>
+                    <div class="form-group">
+                        <label for="inputCustomerName">Customer Name</label>
+                        <input type="text" class="form-control" id="inputCustomerName" placeholder="Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputAddress">Address</label>
+                        <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="inputCity">City</label>
+                            <input type="text" class="form-control" id="inputCity" placeholder="City">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="inputState">State</label>
+                            <input type="text" class="form-control" id="inputState" placeholder="State">
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="inputZip">Zip Code</label>
+                            <input type="text" class="form-control" id="inputZip" placeholder="Zip Code">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPhone">Phone Number</label>
+                        <input type="text" class="form-control" id="inputPhone" placeholder="555 555 5555">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add New Customer</button>
+                    <button type="reset" class="btn btn-secondary">Cancel</button>
+                </form>
+            </div>
         </div>
 
-        <form id="addCustomerForm" class="w3-container w3-padding-16">
+        <br>
+
+        <!-- Add New Truck Card -->
+        <div class="card mx-auto">
+            <div class="card-body">
+                <form>
+                    <h3>Add New Truck</h3>
+                    <div class="form-group">
+                        <label for="inputTruckNumber">Truck Number</label>
+                        <input type="text" class="form-control" id="inputTruckNumber" placeholder="Truck Number">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="inputVIN">VIN</label>
+                            <input type="text" class="form-control" id="inputVIN" placeholder="VIN">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="inputLicensePlate">License Plate</label>
+                            <input type="text" class="form-control" id="inputLicensePlate" placeholder="License Plate">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-3">
+                            <label for="inputMaxCoops">Maximum Coops</label>
+                            <input type="number" class="form-control" id="inputMaxCoops" placeholder="0">
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="inputTransmission">Transmission</label>
+                            <select id="inputTransmission" class="form-control">
+                                <option selected>Automatic</option>
+                                <option>Manual</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Add New Truck</button>
+                    <button type="reset" class="btn btn-secondary">Cancel</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- END OF INDIVIDUAL PAGE CONTENT -->
 
 
-
-            <label class="w3-text-black"><b>Customer Name:</b></label>
-            <input id = "customerName" class="w3-input w3-border w3-light-grey" type="text">
-            <br>
-            <label class="w3-text-black"><b>Street Address:</b></label>
-            <input id= "customerAddress" class="w3-input w3-border w3-light-grey" type="text">
-            <br>
-            <label class="w3-text-black"><b>Customer Phone Number:</b></label>
-            <input id = "customerPhone" class="w3-input w3-border w3-light-grey" type="text">
-            <br>
-            <button  id ="addCustomerBtn" type="submit" name="save" onclick="addCustomer()" class="w3-btn w3-brown w3-medium w3-">Add Customer</button>
-            <button type="reset" class="w3-btn w3-brown w3-medium">Cancel</button>
-        </form>
     </div>
 </div>
 
-
-<br>
-
-
-
-<div style="margin-left:16%">
-    <!-- Add Truck Form !-->
-    <div class="w3-card w3-padding-16" style="width:75%">
-
-        <div class="w3-container w3-khaki">
-            <h3>Add Truck</h3>
-        </div>
-
-        <form id="addTruckForm" class="w3-container w3-padding-16">
+<!-- Needed for bootstrap -->
+<!-- jQuery CDN - Slim version (=without AJAX) -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<!-- Popper.JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+<!-- Bootstrap JS -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
 
 
+<!-- Collapse/Open Sidebar -->
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#sidebarCollapse').on('click', function () {
+            $('#sidebar').toggleClass('active')
+        });
+    });
+</script>
 
-            <label class="w3-text-black"><b>Truck Number:</b></label>
-            <input id = "truckNumber" class="w3-input w3-border w3-light-grey" type="text">
-            <br>
-
-            <label class="w3-text-black"><b>VIN:</b></label>
-            <input id= "truckVIN" class="w3-input w3-border w3-light-grey" type="text">
-            <br>
-            <label class="w3-text-black"><b>License Plate:</b></label>
-            <input id = "truckPlateNumber" class="w3-input w3-border w3-light-grey" type="text">
-            <br>
-            <label class="w3-text-black"><b>Maximum Coops:</b></label>
-            <input id = "truckMaxCoops" class="w3-input w3-border w3-light-grey" type="number">
-            <br>
-            <label class="w3-text-black"><b>Transmission:</b></label>
-            <select id="truckTransmission">
-                <option value="A">Automatic</option>
-                <option value="B">Manual</option>
-            </select>
-
-            <br>
-            <br>
-
-            <button  id ="addTruckBtn" name="save" onclick="addTruck()" class="w3-btn w3-brown w3-medium w3-">Add Truck</button>
-            <button type="reset" class="w3-btn w3-brown w3-medium">Cancel</button>
-
-        </form>
-
-    </div>
-</div>
-
-
-
-
-<br>
 
 
 </body>
-<script language = "javascript">
-    // adds a customer to the database
-    function addCustomer(){
-        var customerName = $('#customerName').val();
-        var customerAddress = $('#customerAddress').val();
-        var customerPhone = $('#customerPhone').val();
-        alert("New Customer:\n" + "name: " + customerName + "\naddr: " + customerAddress + "\nphone: " + customerPhone);
-        //ajax code -Connor A.
-        $.ajax({
-            type: "post",
-            url: "insert_new_customer.php", //php file goes here
-            data:{
-                customerName : customerName,
-                customerAddress : customerAddress,
-                customerPhone : customerPhone,
-            },
-            success: function(response){
-                alert(response);
-            }
 
-        });
-
-    }
-    
-    // adds a truck to the database
-    function addTruck(){
-        var truckNumber = $('#truckNumber').val();
-        var truckVIN = $('#truckVIN').val();
-        var truckPlateNumber = $('#truckPlateNumber').val();
-        var truckMaxCoops = $('#truckMaxCoops').val();
-        var truck_transmission = '';
-        if ($('#truckTransmission').val() == "A") {
-            truck_transmission = 'Automatic';
-        }
-        else truck_transmission = 'Manual';
-
-        alert("New Truck:\n" + "num: " + truckNumber + "\nvin: " + truckVIN + "\nplate: " + truckPlateNumber + "\nmax coops: " + truckMaxCoops + "\ntransmission: " + truck_transmission);
-        //ajax code - Connor A
-        $.ajax({
-            type: "post",
-            url: "insert_new_truck.php", //php file goes here
-            data:{
-                truckNumber : truckNumber,
-                truckVIN : truckVIN,
-                truckPlateNumber : truckPlateNumber,
-                truckMaxCoops : truckMaxCoops
-            },
-            success: function(response){
-                alert(response);
-            }
-        });
-
-    }
-
-
-
-
-
-</script>
 </html>
