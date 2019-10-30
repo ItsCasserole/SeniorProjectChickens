@@ -7,7 +7,7 @@
     }
 
     $dbh = ConnectDB();
-if($_POST['farmName'] != "" && $_POST['building'] !="" && $_POST['delivery'] != "" && $_POST['hatchlings'] =! "" && $_POST['breed'] != ""  && $_POST['unit'] != "")
+if($_POST['farmName'] != "" && $_POST['building'] !="" && $_POST['delivery'] != "" && $_POST['hatchlings'] != "" && $_POST['breed'] != ""  && $_POST['unit'] != "")
     {
         $farmName = intval($_POST['farmName']);
         $building = intval($_POST['building']);
