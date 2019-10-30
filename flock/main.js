@@ -23,7 +23,8 @@ $(document).ready(function(){
 			$('.buildingList').empty();
 			var data = $.parseJSON(response);
 			for (var i = 0; i <=data.length; i++) {
-				$('.buildingList').append('<option value="' + data[i].building_id + '">' + data[i].building_id + '</option>');
+				$('.buildingList').append('<option value="' + data[i].building_id + '">Building: ' + data[i].building_number + 
+							  ' Floor: ' + data[i].building_floor + '</option>');
 			}
 		}
 	});
