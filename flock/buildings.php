@@ -6,7 +6,7 @@
     $dbh = ConnectDB();
 
 
-    $sql = "SELECT building_id FROM chickens.Flock";
+    $sql = "SELECT * FROM chickens.Building";
     $stmt = $dbh->prepare($sql);
     $stmt->execute();
     echo json_encode($stmt->fetchAll(PDO::FETCH_ASSOC));
