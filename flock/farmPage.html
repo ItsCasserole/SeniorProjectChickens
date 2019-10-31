@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<head>
+    <link href="https://www.w3schools.com/w3css/4/w3.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+    <script type='text/javascript' src='main.js'></script>
+    <style>
+table {
+    width: 100%;
+    border-collapse: collapse;
+}	
+	
+table, td, th {
+    border: 1px solid black;
+    padding: 5px;
+}
+
+th {text-align: left;}
+    </style>
+</head>
+
+<body>
+
+<!--sidebar--!>
+    <div class="w3-sidebar w3-brown w3-bar-block" style="width:15%">
+        <h4 class="w3-bar-item">Navigation</h4>
+        <a class="w3-bar-item w3-button w3-disabled" href="#">
+        <i class="material-icons">home</i>  Home</a>
+        <a class="w3-bar-item w3-button" href="#"><i class="material-icons">person</i>  Flock Manager</a>
+    </div>
+
+
+<!--header--!>
+    <div class="w3-container w3-brown" style="margin-left:15%">
+        <h1>Flock Manager</h1>
+    </div>
+
+    <!--page content--!>
+    <div style="margin-left:16%">
+
+    <!--messages box--!>
+	    <div class="w3-card w3-padding-16 w3-margin-bottom" style="width:75%">
+		    <div class="w3-container w3-khaki">
+			    <h3>Messages</h3>
+		    </div>
+		<div class="w3-container w3-border w3-margin">
+		    <div class="w3-container w3-border">
+			    <label class = "w3-text-black">Example Sender 1</label>	<!--sender from DB-->
+			    <label class = "w3-text-grey">(00:00:00)</label>	<!--timestamp from DB-->
+			    <label class = "w3-text-black">:</label>
+			    <label class = "w3-text-black">This is an example message.</label>	<!--message from DB-->
+		    </div>
+		    <div class="w3-container w3-border">
+			    <label class = "w3-text-black">Example Sender 2</label>
+			    <label class = "w3-text-grey">(00:01:00)</label>
+			    <label class = "w3-text-black">:</label>
+			    <label class = "w3-text-black">IMPORTANT: This is another example of a message.<label>
+		    </div>
+		</div>
+	    </div>
+
+	<!--farm info box--!>
+	    <div class="w3-card w3-padding-16 w3-margin-bottom" style="width:75%">
+                        <div class = "w3-container w3-khaki">
+                                <h3>Available Farms</h3>
+                        </div>
+
+			<!--dropdown--!>
+                        <div class = "w3-dropdown-hover w3-padding-16 w3-margin">
+                        	<select id="farmInfo" class="farmList" class="form-control"></select>
+                        </div>
+
+
+			<div class = "w3-container w3-padding-16">
+				<button onclick="showFarms();" class="w3-btn w3-brown w3-medium">SHOW ALL FARMS</button>
+			</div>
+
+			<!--farm info--!>
+			<div class = "w3-container w3-padding-16">
+			<label class = "w3-text-black"><b>Farm Information:</b><br></label>
+                        <div id="nameInfo"><b></b></div>
+			
+			</div>
+
+	    </div>
+
+
+	<!--add farm box--!>
+	<div class="w3-card w3-padding-16 w3-margin-bottom" style="width:75%">
+        	<div class="w3-container w3-khaki">
+            		<h3>Add New Farm</h3>
+ 		</div>
+
+        	<form class="w3-container w3-padding-16">
+            		<label class="w3-text-black"><b>Farm Name</b></label>
+            		<input id = "farmName" class="w3-input w3-border w3-light-grey" type="text">
+
+           		<label class="w3-text-black"><b>Street Address</b> (optional)</label>
+            		<input id= "farmAddress" class="w3-input w3-border w3-light-grey" type="text">
+
+			<label class="w3-text-black"><b>City</b></label>
+            		<input id = "farmCity" class="w3-input w3-border w3-light-grey" type="text">
+	        </form>
+
+		<div class="w3-container w3-padding-16">
+			 <button  id ="save" name="save" onclick="addFarm();" class="w3-btn w3-brown w3-medium">SAVE</button>
+			 <button id="cancel" onclick="clearAddFarm();" class="w3-btn w3-brown w3-medium">CANCEL</button>
+		</div>
+	</div>
+    	</div>
+ </body>
+ </html>

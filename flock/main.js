@@ -23,8 +23,9 @@ $(document).ready(function(){
 			$('.buildingList').empty();
 			var data = $.parseJSON(response);
 			for (var i = 0; i <=data.length; i++) {
-				$('.buildingList').append('<option value="' + data[i].building_id + '">Building: ' + data[i].building_number + 
-							  ' Floor: ' + data[i].building_floor + '</option>');
+				$('.buildingList').append('<option value="' + data[i].building_id + '">Building: ' + data[i].building_number +
+					' Floor: ' + data[i].building_floor + '</option>');
+				
 			}
 		}
 	});
@@ -73,6 +74,32 @@ $(document).ready(function(){
 		});
 	});
 
+	$("#farmInfo").change(function(){
+		$.ajax({
+			type: 'GET',
+			url: "getFarm.php",
+			data:{farm_id : $('#farmInfo option:selected').val()},
+			success: function(response){
+				$('#nameInfo').empty();
+				var data = $.parseJSON(response);
+				for (var i = 0; i < data.length; i++) {
+					$('#nameInfo').append("<table><tr>" +
+						"<th>ID</th>" +
+						"<th>Farm Name</th>" +
+						"<th>Address</th>" +
+						"<th>City</th>" +
+						"</tr><tr><td>" +
+						data[i].farm_id + "</td><td>" +
+						data[i].farm_name + "</td><td>" +
+						data[i].farm_address + "</td><td>" +
+						data[i].farm_city + "</td></tr></table>");
+				}
+			}
+		});
+	});
+
+
+
 
 });
 
@@ -104,8 +131,30 @@ function addFlock(){
 		},
 		success: function(response) {
 			alert(response);
+			location.reload(true);
 		}
 	});
+}
+
+function addFarm(){
+	var farm_name = $('#farmName').val();
+	var farm_address = $('#farmAddress').val();
+	var farm_city = $('#farmCity').val();
+	
+	$.ajax({
+		type: "POST",
+		url: "addFarm.php",
+		data: {
+			farm_name : farm_name,
+			farm_address : farm_address,
+			farm_city : farm_city
+		},
+		success: function(response) {
+			alert(response);
+		        location.reload(true);
+		}
+	});
+	
 }
 
 function showFlocks(){
@@ -140,6 +189,29 @@ function showFlocks(){
 	});
 }
 
+function showFarms(){
+	$.ajax({
+                type: "GET",
+                url: "showFarms.php",
+                data:{},
+                success: function(response){
+                $('#nameInfo').empty();
+                var data = $.parseJSON(response);
+                for (var i = 0; i < data.length; i++) {
+                        $('#nameInfo').append("<table><tr>" +
+                               "<th>ID</th>" +
+                               "<th>Farm Name</th>" +
+                               "<th>Address</th>" +
+                               "<th>City</th>" +
+                               "</tr><tr><td>" +
+                               data[i].farm_id + "</td><td>" +
+                               data[i].farm_name + "</td><td>" +
+                               data[i].farm_address + "</td><td>" +
+                               data[i].farm_city + "</td></tr></table>");
+                          }
+                  }
+        });
+}
 
 
 
