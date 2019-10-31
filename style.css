@@ -1,6 +1,7 @@
 @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
 
 
+
 .wrapper {
     display: flex;
     align-items: stretch;
@@ -9,7 +10,6 @@
 #content {
     width: 100%;
     padding: 20px;
-    min-height: 100vh;
     transition: all 0.3s;
 }
 
@@ -33,11 +33,14 @@ a, a:hover, a:focus {
 #sidebar {
     min-width: 250px;
     max-width: 250px;
-    min-height: 100vh;
-    height: 100%;
+    height: 200vh;
     background: saddlebrown;
     color: #fff;
     transition: all 0.3s;
+}
+
+#sidebar.maintenance{
+    height: 200vh;
 }
 
 #sidebar.active {
@@ -128,3 +131,25 @@ a[data-toggle="collapse"] {
 .modal{
     min-width: 320px;
 }
+
+.btn-circle.btn-sm {
+    width: 25px;
+    height: 25px;
+    padding: 6px 0px;
+    border-radius: 15px;
+    font-size: 8px;
+    text-align: center;
+    background-color: red;
+}
+
+.btn-circle.btn-sm.active,
+.btn-circle.btn-sm:active{
+    background-color: green;
+    box-shadow: gray;
+}
+
+#truckTable{
+    max-height: 300px;
+    overflow: auto;
+}
+

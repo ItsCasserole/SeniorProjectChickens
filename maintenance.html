@@ -21,8 +21,8 @@
 <div class="wrapper">
 
     <!-- Sidebar  -->
-    <div>
-        <nav id="sidebar" class="fixed">
+    <div id="side">
+        <nav id="sidebar" class="fixed maintenance">
             <div class="sidebar-header"><h3 class="text-center">Simply Fowl</h3></div>
 
             <ul class="list-unstyled components">
@@ -78,11 +78,11 @@
                             <label for="inputCity">City</label>
                             <input type="text" class="form-control" id="inputCity" placeholder="City">
                         </div>
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-3">
                             <label for="inputState">State</label>
                             <input type="text" class="form-control" id="inputState" placeholder="State">
                         </div>
-                        <div class="form-group col-md-2">
+                        <div class="form-group col-md-3">
                             <label for="inputZip">Zip Code</label>
                             <input type="text" class="form-control" id="inputZip" placeholder="Zip Code">
                         </div>
@@ -138,6 +138,155 @@
             </div>
         </div>
 
+        <br>
+
+        <!-- Current Trucks Card-->
+        <div class="card mx-auto">
+            <div class="card-body">
+                <h3>Current Trucks</h3>
+                <div class="container mt-3">
+                    <input class="form-control" id="myInput" type="text" placeholder="Search by Truck VIN, or License Plate #">
+                    <br>
+                    <div class="table-responsive" id="truckTable">
+                        <table class="table table-bordered table-hover" >
+                            <thead>
+                                <tr>
+                                    <th>Truck #</th>
+                                    <th>VIN</th>
+                                    <th>License Plate</th>
+                                    <th>Max Coops</th>
+                                    <th class="text-center">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="myTable">
+                            <!-- Dummy table rows, to be replaced with actually Database values -->
+                                <tr>
+                                    <td>1</td>
+                                    <td>12345678901234567</td>
+                                    <td>LICENSE</td>
+                                    <td>400</td>
+                                    <td class="text-center">
+                                        <div class="btn-group-toggle " data-toggle="buttons">
+                                            <label class="btn  btn-circle btn-sm active">
+                                                <input type="checkbox" checked autocomplete="off">
+                                            </label>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>09876543210987654</td>
+                                    <td>NJ551H1</td>
+                                    <td>200</td>
+                                    <td class="text-center">
+                                        <div class="btn-group-toggle " data-toggle="buttons">
+                                            <label class="btn  btn-circle btn-sm ">
+                                                <input type="checkbox" checked autocomplete="off">
+                                            </label>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>11111111111111111</td>
+                                    <td>L1C3N53</td>
+                                    <td>300</td>
+                                    <td class="text-center">
+                                        <div class="btn-group-toggle " data-toggle="buttons">
+                                            <label class="btn  btn-circle btn-sm active">
+                                                <input type="checkbox" checked autocomplete="off">
+                                            </label>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>22222222222222222</td>
+                                    <td>BAT1111</td>
+                                    <td>200</td>
+                                    <td class="text-center">
+                                        <div class="btn-group-toggle " data-toggle="buttons">
+                                            <label class="btn  btn-circle btn-sm active">
+                                                <input type="checkbox" checked autocomplete="off">
+                                            </label>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>5</td>
+                                    <td>33333333333333333</td>
+                                    <td>BATMAN1</td>
+                                    <td>500</td>
+                                    <td class="text-center">
+                                        <div class="btn-group-toggle " data-toggle="buttons">
+                                            <label class="btn  btn-circle btn-sm ">
+                                                <input type="checkbox" checked autocomplete="off">
+                                            </label>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>6</td>
+                                    <td>44444444444444444</td>
+                                    <td>LICPLT1</td>
+                                    <td>250</td>
+                                    <td class="text-center">
+                                        <div class="btn-group-toggle " data-toggle="buttons">
+                                            <label class="btn  btn-circle btn-sm ">
+                                                <input type="checkbox" checked autocomplete="off">
+                                            </label>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>7</td>
+                                    <td>55555555555555555</td>
+                                    <td>LICPLT2</td>
+                                    <td>200</td>
+                                    <td class="text-center">
+                                        <div class="btn-group-toggle " data-toggle="buttons">
+                                            <label class="btn  btn-circle btn-sm active">
+                                                <input type="checkbox" checked autocomplete="off">
+                                            </label>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>8</td>
+                                    <td>66666666666666666</td>
+                                    <td>LICPLT3</td>
+                                    <td>200</td>
+                                    <td class="text-center">
+                                        <div class="btn-group-toggle" data-toggle="buttons">
+                                            <label class="btn  btn-circle btn-sm active">
+                                                <input type="checkbox" checked autocomplete="off">
+                                            </label>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>9</td>
+                                    <td>77777777777777777</td>
+                                    <td>SLAVE1</td>
+                                    <td>200</td>
+                                    <td class="text-center">
+                                        <div class="btn-group-toggle " data-toggle="buttons">
+                                            <label class="btn  btn-circle btn-sm ">
+                                                <input type="checkbox" checked autocomplete="off">
+                                            </label>
+                                        </div>
+                                    </td>
+                                </tr>
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
         <!-- END OF INDIVIDUAL PAGE CONTENT -->
 
 
@@ -162,8 +311,21 @@
     });
 </script>
 
+<!-- Search Table functionality -->
+<script>
+    $(document).ready(function(){
+        $("#myInput").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#myTable tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
+
 
 
 </body>
 
 </html>
+
