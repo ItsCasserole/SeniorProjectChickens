@@ -1,0 +1,124 @@
+
+<!DOCTYPE html>
+<head>
+    <link href="https://www.w3schools.com/w3css/4/w3.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+    <script type='text/javascript' src='main.js'></script>
+    <style>
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table, td, th {
+    border: 1px solid black;
+    padding: 5px;
+}
+
+th {text-align: left;}
+</style>
+</head>
+
+<body>
+    
+    <div class="w3-sidebar w3-brown w3-bar-block" style="width:15%">
+        <h4 class="w3-bar-item">Navigation</h4>
+        <a class="w3-bar-item w3-button w3-disabled" href="#">
+        <i class="material-icons">home</i>  Home</a>
+        <a class="w3-bar-item w3-button" href="#"><i class="material-icons">person</i>  Flock Manager</a>
+    </div>
+
+
+    <div class="w3-container w3-brown" style="margin-left:15%">
+        <h1>Flock Manager</h1>
+    </div>
+
+    <!--page content--!>
+    <div style="margin-left:16%">
+    	
+	    <div class="w3-card w3-padding-16 w3-margin-bottom" style="width:75%">
+		    <div class="w3-container w3-khaki">
+			    <h3>Messages</h3>
+		    </div>
+		<div class="w3-container w3-border w3-margin">
+		    <div class="w3-container w3-border">
+			    <label class = "w3-text-black">Example Sender 1</label>	<!--sender from DB-->
+			    <label class = "w3-text-grey">(00:00:00)</label>	<!--timestamp from DB-->
+			    <label class = "w3-text-black">:</label>
+			    <label class = "w3-text-black">This is an example message.</label>	<!--message from DB-->
+		    </div>
+		    <div class="w3-container w3-border">
+			    <label class = "w3-text-black">Example Sender 2</label>
+			    <label class = "w3-text-grey">(00:01:00)</label>
+			    <label class = "w3-text-black">:</label>
+			    <label class = "w3-text-black">IMPORTANT: This is another example of a message.<label>
+		    </div>
+		</div>
+	    </div>
+	
+	    <div class = "w3-card w3-padding-16 w3-margin-bottom" style="width:75%">
+	    	<div class = "w3-container w3-khaki">
+			<h3>Available Flocks</h3>
+		</div>
+
+		<!--dropdown--!>
+		<div class="w3-container w3-padding-16">
+			<select id="farm" class="farmList"></select>
+		</div>
+
+		<div class="w3-container w3-padding-16">
+			<button onclick="showFlocks();" class="w3-btn w3-brown w3-medium">SHOW ALL FLOCKS</button>
+		</div>
+
+		<!--flock info--!>
+	  	<div class="w3-container w3-padding-16">
+		<label class="w3-text-black"><b>Flock Information:</b><br></label>
+		<div id="flockInfo"><b></b></div> <!--table goes here--!>
+		
+		</div>
+	    </div>
+	    
+
+	<div class="w3-card w3-padding-16 w3-margin-bottom" style="width:75%">
+		<div class="w3-container w3-khaki">
+			<h3>Add New Flock</h3>
+		</div>
+
+		<form class="w3-container w3-padding-16">
+			
+			<label class="w3-text-black"><b>Farm</b></label><br>
+			<select id="farmName" class="farmList">
+			</select><br><br>
+
+			<label class="w3-text-black"><b>Building</b></label><br>
+			<select id="building" class="buildingList"></select><br><br>
+
+			<label class="w3-text-black"><b>Delivery Date </b></label><label class="w3-text-grey"><b>(YYYY-MM-DD)</b></label>
+			<input id="delivery" class="w3-input w3-border w3-light-grey" type="text"><br>
+
+			<label class="w3-text-black"><b>No. of Hatchlings</b></label>
+			<input id="hatchlings" class="w3-input w3-border w3-light-grey" type="text"><br>
+
+			<label class="w3-text-black"><b>Breed Description</b></label>
+			<input id="breed" class="w3-input w3-border w3-light-grey" type="text"><br>
+
+			<div class="w3-container w3-padding-16 w3-cell">
+			<label class="w3-text-black"><b>Unit</b></label><br>
+			<input class="w3-radio" type="radio" name="unit" value="head" />
+			<label class="w3-text-black">Head</label><br>
+			<input class="w3-radio" type="radio" name="unit" value="pound"/>
+			<label class="w3-text-black">Pound</label>
+			</div><br>
+
+			<div class="w3-container w3-padding-16">
+			<button onclick="addFlock();"class="w3-btn w3-brown w3-medium">SAVE</button>
+			<button class="w3-btn w3-brown w3-medium">CANCEL</button>
+			</div>
+
+		</form>
+	</div>
+
+</html>
+
+
