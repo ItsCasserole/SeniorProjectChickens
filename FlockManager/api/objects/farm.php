@@ -17,7 +17,7 @@ class Farm{
     }
 
     // read farms
-    function read(){
+    public function read(){
         // call sql procedure to get query
         $query = "CALL getFarm()";
         $stmt = $this->conn->prepare($query);
@@ -27,7 +27,7 @@ class Farm{
     }
 
     // create new farm
-    function create(){
+    public function create(){
         // call sql procedure to add new farm
         $query = "INSERT INTO
         " . $this->table_name . "
@@ -52,6 +52,30 @@ class Farm{
         }
         
         return false;
+    }
+
+    public function readOne(){
+        // query to read one farm
+        $query = "SELECT * FROM " . $this->table_name . " WHERE farm_id = ? LIMIT 0,1";
+
+
+        // prepare query statement
+        $stmt = $this->conn->prepare( $query );
+
+        // bind farm_id of farm to be updated
+        $stmt->bindParam(1, $this->farm_id);
+
+        // execute query
+        $stmt->execute();
+        
+        // get retrieved row
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        // set values to object properties
+        $this->farm_id = $row['farm_id'];
+        $this->farm_name = $row['farm_name'];
+        $this->farm_address = $row['farm_address'];
+        $this->farm_city = $row['farm_city'];
     }
 }
 ?>

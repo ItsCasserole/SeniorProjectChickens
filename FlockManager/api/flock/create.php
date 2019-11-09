@@ -3,7 +3,7 @@ header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Max-Age: 3600");
-header("Access-Control-Allow-Headers : Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+header("Access-Control-Allow-Headers: Content-Type, Origin, Authorization, X-Requested-With");
 
 // get database connection
 include_once '../config/database.php';
@@ -24,19 +24,17 @@ if(
     !empty($data->building_id) &&
     !empty($data->hatchlings) &&
     !empty($data->delivery_date) &&
-    !empty($data->bird_desc) &&
-    !empty($data->unit_sold)
+    !empty($data->bird_type_id) 
 ){
     // set flock property values
     $flock->farm_id = $data->farm_id;
     $flock->building_id = $data->building_id;
     $flock->hatchlings = $data->hatchlings;
     $flock->delivery_date = $data->delivery_date;
-    $flock->bird_desc = $data->bird_desc;
-    $flock->unit_sold = $data->unit_sold;
+    $flock->bird_type_id = $data->bird_type_id;
 
     // create the flock
-    if($farm->create()){
+    if($flock->create()){
         // set response code - 201 created
         http_response_code(201);
 
@@ -57,6 +55,6 @@ else{
     // set response code - 400 bad request
     http_response_code(400);
 
-    echo json_encode(array("message" => "Untable to add flock. Data is incomplete."));
+    echo json_encode(array("message" => "Unable to add flock. Data is incomplete."));
 }
 ?>

@@ -32,12 +32,15 @@ if($num>0){
         // just $name only
         extract($row);
 
-        $flock_item=array(
-            "farm_name" => $farm_name,
+	$flock_item=array(
+	    "flock_id" => $flock_id,
+            "farm_id" => $farm_id,
+	    "farm_name" => $farm_name,
+	    "building_id" => $building_id,
             "building_number" => $building_number,
-            "building_floor" => $building_floor, 
+	    "building_floor" => $building_floor,
+	    "bird_type_id" => $bird_type_id, 
             "bird_desc" => $bird_desc,
-            "unit_sold" => $unit_sold,
             "delivery_date" => $delivery_date,
             "hatchlings" => $hatchlings
         );
