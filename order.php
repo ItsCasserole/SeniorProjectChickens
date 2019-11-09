@@ -107,7 +107,7 @@ $dbh = ConnectDB();
                         	?>
 			</select>
 	
-			<button id="addMoreFields" class="btn btn-primary" type="button" onclick="addOrderLine()">+</button>
+			<button id="addMoreFields" class="btn btn-primary btn-sm" type="button" onclick="addOrderLine()">+</button>
 		    </div>
 		    <div id="form-group-2">
 			    <input type="text" id="numcoops2" placeholder="Number of Coops">
@@ -217,10 +217,13 @@ $dbh = ConnectDB();
             </div>
         </div>
 
+	<br>
+
 	<div class="card mx-auto">
 		<div class="card-body">
 			<h3>Order Search</h3>
 			<input class="form-control" id="myInput" type="text" placeholder="Search by Store or Date">
+			<div class="table-responsive">
 			<table class="table table-bordered table-hover">
 				<thread>
 					<tr>
@@ -228,6 +231,7 @@ $dbh = ConnectDB();
 						<th># Coops</th>
 						<th>Bird</th>
 						<th>Date</th>
+						<th>Remove</th>
 					<tr>
 				</thread>
 				<tbody id="ordertable">
@@ -239,11 +243,13 @@ $dbh = ConnectDB();
 					echo "<tr>\n<td>" . $row['store'] . "</td>\n";
 					echo "<td>" . $row['coops'] . "</td>\n";
 					echo "<td>" . $row['bird'] . "</td>\n";
-					echo "<td>" . $row['date'] . "</td>\n</tr>\n";
+					echo "<td>" . $row['date'] . "</td>\n";
+					echo '<td class="text-center"><button class="btn btn-sm btn-outline-primary py-0" style="font-size: 0.8em;" type="button" onclick="removeOrder(' . $row['id'] . ')">Remove Order ' . $row['id'] . "</button></td>\n</tr>\n";
 				}
 			?>
 				</tbody>
 			</table>
+			</div>
 		</div>
 	</div>
 
@@ -317,11 +323,33 @@ function addOrderLine(){
 function submitOrder(){
 	if($('#deldate').val().match(/^(((0)[0-9])|((1)[0-2]))(\-)([0-2][0-9]|(3)[0-1])(\-)\d{2}$/i) && $('#numcoops').val() != ""){
 		addOrder($('#storeList').val(), $('#deldate').val(), $('#numcoops').val(), $('#bird1').val());
+		if(document.getElementById("form-group-2").style.display != "none" && $('#numcoops2').val() != ""){
+			addOrder($('#storeList').val(), $('#deldate').val(), $('#numcoops2').val(), $('#bird2').val());
+			if(document.getElementById("form-group-3").style.display != "none" && $('#numcoops3').val() != ""){
+				addOrder($('#storeList').val(), $('#deldate').val(), $('#numcoops3').val(), $('#bird3').val());
+				if(document.getElementById("form-group-4").style.display != "none" && $('#numcoops4').val() != ""){
+					addOrder($('#storeList').val(), $('#deldate').val(), $('#numcoops4').val(), $('#bird4').val());
+					if(document.getElementById("form-group-5").style.display != "none" && $('#numcoops5').val() != ""){
+						addOrder($('#storeList').val(), $('#deldate').val(), $('#numcoops5').val(), $('#bird5').val());
+						if(document.getElementById("form-group-6").style.display != "none" && $('#numcoops6').val() != "") {
+							addOrder($('#storeList').val(), $('#deldate').val(), $('#numcoops6').val(), $('#bird6').val());
+							if(document.getElementById("form-group-7").style.display != "none" && $('#numcoops7').val() != "") {
+								addOrder($('#storeList').val(), $('#deldate').val(), $('#numcoops7').val(), $('#bird7').val());
+								if(document.getElementById("form-group-8").style.display != "none" && $('#numcoops8').val() != "") {
+									addOrder($('#storeList').val(), $('#deldate').val(), $('#numcoops8').val(), $('#bird8').val());
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		alert("The new order has been added");
+		window.location.reload();
 	}
 	else{
 		alert("Invalid or missing date and number of coops.");
 	}
-        hideAll();
 }
 
 function addOrder(storeid, deldate, numcoops, flockid){
@@ -336,10 +364,26 @@ function addOrder(storeid, deldate, numcoops, flockid){
             flockid : flockid
         },
         success: function(response){
-            alert(response);
+            //alert(response);
         }
     });
-    }
+}
+
+function removeOrder(id){
+	//alert("If this worked, order " + id + " would be removed.");
+	$.ajax({
+		type: "post",
+		url: "removeOrder.php",
+		data:{
+			id : id
+		},
+		success: function(response){
+			//alert(response);
+		}
+	});
+	alert("Removed order # " + id);
+	window.location.reload();
+}
 </script>
 
 </body>
