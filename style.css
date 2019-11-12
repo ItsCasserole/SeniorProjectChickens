@@ -1,0 +1,143 @@
+@import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
+
+
+.wrapper {
+    display: flex;
+    align-items: stretch;
+}
+
+#content {
+    width: 100%;
+    padding: 20px;
+    min-height: 100vh;
+    transition: all 0.3s;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #fafafa;
+}
+
+
+a, a:hover, a:focus {
+    color: inherit;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+#sidebarCollapse{
+    background: saddlebrown;
+    color: #fafafa;
+    border: none;
+}
+
+.btn{
+    background: saddlebrown;
+    color: #fafafa;
+}
+
+#sidebar {
+    min-width: 250px;
+    max-width: 250px;
+    min-height: 100vh;
+    height: 100%;
+    background: saddlebrown;
+    color: #fff;
+    transition: all 0.3s;
+}
+
+#sidebar.active {
+    margin-left: -250px;
+}
+
+#sidebar .sidebar-header {
+    padding: 20px;
+    background: saddlebrown;
+}
+
+#sidebar ul li a {
+    padding: 10px;
+    font-size: 1.1em;
+    display: block;
+}
+
+
+
+#sidebar ul li a:hover {
+    color: saddlebrown;
+    background: #fff;
+}
+
+#sidebar ul li.active > a, a[aria-expanded="true"] {
+    color: #fff;
+    background: #5e320c;
+}
+#sidebar ul ul a {
+    font-size: 0.9em !important;
+    padding-left: 30px !important;
+    background: #5e320c;
+}
+
+a[data-toggle="collapse"] {
+    position: relative;
+
+}
+
+.dropdown-toggle::after {
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+}
+
+
+
+.navbar {
+    padding: 15px 10px;
+    background: #fff;
+    border: none;
+    border-radius: 0;
+    margin-bottom: 40px;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+    min-width: 320px;
+}
+
+@media (max-width: 768px) {
+    #sidebar {
+        margin-left: -250px;
+    }
+    #sidebar.active {
+        margin-left: 0;
+    }
+}
+
+.card{
+    min-width: 320px;
+    max-width: 1000px;
+}
+
+#announcements .card-body {
+    max-height:600px;
+    overflow:auto;
+}
+
+#announcements .media-list {
+    padding: 0;
+}
+
+#announcements .media-list .media {
+    border-bottom:1px dashed #efefef;
+    margin-bottom:20px;
+}
+
+.modal{
+    min-width: 320px;
+}
+.btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited, .btn-primary:focus{
+    color: #fff;
+
+    background: saddlebrown;
+    border-color: saddlebrown;
+}
+
