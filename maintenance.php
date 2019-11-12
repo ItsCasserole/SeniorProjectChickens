@@ -16,6 +16,8 @@ if(!isset($_SESSION["userid"])){
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+    <script type='text/javascript' src='main.js'></script>
 
     <title>Simply Fowl | Maintenance</title>
 
@@ -26,7 +28,7 @@ if(!isset($_SESSION["userid"])){
 
     <!-- Font Awesome JS -->
     <script src="https://kit.fontawesome.com/412b07d0f6.js" crossorigin="anonymous"></script>
-        <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+     
 </head>
 
 <body>
@@ -104,7 +106,7 @@ if(!isset($_SESSION["userid"])){
                         <label for="inputPhone">Phone Number</label>
                         <input type="text" class="form-control" id="inputPhone" placeholder="555 555 5555">
                     </div>
-                    <button type="submit" class="btn btn-primary">Add New Customer</button>
+                    <button type="submit" class="btn btn-primary" onclick="addCustomer()">Add New Customer</button>
                     <button type="reset" class="btn btn-secondary">Cancel</button>
                 </form>
             </div>
@@ -119,33 +121,33 @@ if(!isset($_SESSION["userid"])){
                     <h3>Add New Truck</h3>
                     <div class="form-group">
                         <label for="inputTruckNumber">Truck Number</label>
-                        <input type="text" class="form-control" id="inputTruckNumber" placeholder="Truck Number">
+                        <input type="text" class="form-control" id="truckNumber" placeholder="Truck Number">
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="inputVIN">VIN</label>
-                            <input type="text" class="form-control" id="inputVIN" placeholder="VIN">
+                            <input type="text" class="form-control" id="truckVIN" placeholder="VIN">
                         </div>
                         <div class="form-group col-md-6">
                             <label for="inputLicensePlate">License Plate</label>
-                            <input type="text" class="form-control" id="inputLicensePlate" placeholder="License Plate">
+                            <input type="text" class="form-control" id="truckPlateNumber" placeholder="License Plate">
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-3">
                             <label for="inputMaxCoops">Maximum Coops</label>
-                            <input type="number" class="form-control" id="inputMaxCoops" placeholder="0">
+                            <input type="number" class="form-control" id="truckMaxCoops" placeholder="0">
                         </div>
                         <div class="form-group col-md-3">
                             <label for="inputTransmission">Transmission</label>
-                            <select id="inputTransmission" class="form-control">
+                            <select id="truckTransmission" class="form-control">
                                 <option selected>Automatic</option>
                                 <option>Manual</option>
                             </select>
                         </div>
                     </div>
 
-                    <button type="submit" class="btn btn-primary">Add New Truck</button>
+                    <button type="submit" class="btn btn-primary" onclick="addTruck()">Add New Truck</button>
                     <button type="reset" class="btn btn-secondary">Cancel</button>
                 </form>
             </div>
@@ -238,7 +240,6 @@ if(!isset($_SESSION["userid"])){
 
 <!-- Needed for bootstrap -->
 <!-- jQuery CDN - Slim version (=without AJAX) -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <!-- Popper.JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
 <!-- Bootstrap JS -->
@@ -284,81 +285,7 @@ function myFunction() {
 }
 </script>
 
-<?php
-function changeStatus($truck_id, $dbh){
-  
-        
-       
-        $id = $truck_id;
 
-
-        $sql = "call augmentStatus($id);";
-        $stmt = $dbh->prepare($sql);
-        $stmt-> execute();
-        echo "Status has been changed";
-    
-}
-//changeStatus(11, $dbh);
-
-?>
-<script language = "javascript">
-
-    function addCustomer(){
-        var customerName = $('#customerName').val();
-        var customerAddress = $('#customerAddress').val();
-        var customerPhone = $('#customerPhone').val();
-        alert("New Customer:\n" + "name: " + customerName + "\naddr: " + customerAddress + "\nphone: " + customerPhone);
-        //ajax code -Connor A.
-        $.ajax({
-        type: "post",
-        url: "insert_new_customer.php", //php file goes here
-        data:{
-            customerName : customerName,
-            customerAddress : customerAddress,
-            customerPhone : customerPhone,
-        },
-        success: function(response){
-            alert(response);
-        }
-        
-    });
-        
-        }
-
-    function addTruck(){
-        var truckNumber = $('#truckNumber').val();
-        var truckVIN = $('#truckVIN').val();
-        var truckPlateNumber = $('#truckPlateNumber').val();
-        var truckMaxCoops = $('#truckMaxCoops').val();
-        var truck_transmission = '';
-        if ($('#truckTransmission').val() == "A") {
-            truck_transmission = 'Automatic';
-        }
-        else truck_transmission = 'Manual';
-
-        alert("New Truck:\n" + "num: " + truckNumber + "\nvin: " + truckVIN + "\nplate: " + truckPlateNumber + "\nmax coops: " + truckMaxCoops + "\ntransmission: " + truck_transmission);
-        //ajax code - Connor A
-        $.ajax({
-        type: "post",
-        url: "insert_new_truck.php", //php file goes here
-        data:{
-            truckNumber : truckNumber,
-            truckVIN : truckVIN,
-            truckPlateNumber : truckPlateNumber,
-            truckMaxCoops : truckMaxCoops
-        },
-        success: function(response){
-            alert(response);
-        }
-    });
-
-    }
-
-
-
-
-
-</script>
 
 </body>
 
