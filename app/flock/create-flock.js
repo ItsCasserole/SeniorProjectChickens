@@ -53,12 +53,12 @@ $(document).ready(function(){
 
                 <tr>
                     <td>Delivery Date</td>
-                    <td><input type='text' name='delivery_date' class='form-control' placeholder='YYYY-MM-DD' required></input></td>
+                    <td><input type='date' name='delivery_date' class='form-control'  required></input></td>
                 </tr>
 
                 <tr>
                     <td>No. of Hatchlings</td>
-                    <td><input type='text' name='hatchlings' class='form-control' placeholder='Enter hatchlings' required></input></td>
+                    <td><input type='number' name='hatchlings' class='form-control' placeholder='Enter hatchlings' required></input></td>
                 </tr>
 
                 <tr>
