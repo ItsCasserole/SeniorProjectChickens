@@ -8,19 +8,16 @@ $(document).ready(function(){
 
 
 function showFlocks(){
-	var flock = $.getJSON("http://ec2-18-207-195-213.compute-1.amazonaws.com/Brian/FlockManager/api/flock/read.php");
-	var farm = $.getJSON("http://ec2-18-207-195-213.compute-1.amazonaws.com/Brian/FlockManager/api/farm/read.php");
-	$.when(flock,farm).done(function(flockData, farmData){
-		console.log(flockData);
-		console.log(farmData);
-	});
-	$.getJSON(flock,function(data){
+	var flock ="http://ec2-18-207-195-213.compute-1.amazonaws.com/Brian/FlockManager/api/flock/read.php";
+	var farm = "http://ec2-18-207-195-213.compute-1.amazonaws.com/Brian/FlockManager/api/farm/read.php";
+	$.getJSON(flock,function(flockData){
+		$.getJSON(farm,function(farmData){
         // get list of flocks from the API
         var flock_options_html = `<select id='flockInfo'  name='farm_id' class='form-control'>`;
         // build farm name option html
         //loop through returned list of data
         flock_options_html+=`<option value=''>Choose From Available Flocks</option>`;
-        $.each(data.records, function(key,val){
+        $.each(farmData.records, function(key,val){
             flock_options_html+=`<option value='` + val.farm_id + `'>` + val.farm_name + `</option>`;
         });
         flock_options_html+=`</select><br>`;
@@ -44,7 +41,7 @@ function showFlocks(){
             </tr>`;
 
     // loop through returned list of data
-$.each(data.records, function(key, val) {
+$.each(flockData.records, function(key, val) {
 
     // creating new table row per record
     read_flocks_html+=`
@@ -65,6 +62,6 @@ $("#page-content").html(read_flocks_html);
 
 // change page title
 changePageTitle("Manage Flocks");
-
+});
 });
 }

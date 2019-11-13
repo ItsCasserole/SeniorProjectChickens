@@ -2,19 +2,23 @@ $(document).ready(function(){
 
     // show html form when 'add new flock' button was clicked
     $(document).on('click', '.addFlockButton', function(){
-
         // load list of farms, buildings, and birds
-        $.getJSON("http://ec2-18-207-195-213.compute-1.amazonaws.com/Brian/FlockManager/api/flock/read.php", function(data){
+	var farm = "http://ec2-18-207-195-213.compute-1.amazonaws.com/Brian/SeniorProjectChickens/FlockManager/api/farm/read.php";
+	var bird = "http://ec2-18-207-195-213.compute-1.amazonaws.com/Brian/SeniorProjectChickens/FlockManager/api/bird/read.php";
+	var building = "http://ec2-18-207-195-213.compute-1.amazonaws.com/Brian/SeniorProjectChickens/FlockManager/api/building/read.php";
+        $.getJSON(farm, function(farmData){
+		$.getJSON(bird, function(birdData){
+			$.getJSON(building, function(buildingData){
             // build farm option html
             var farm_options_html=`<select name='farm_id' class='form-control'>`;
-            $.each(data.records, function(key,val){
+            $.each(farmData.records, function(key,val){
                 farm_options_html+=`<option value='` + val.farm_id + `'>` + val.farm_name + `</option>`;
             });
             farm_options_html+=`</select>`;
 
             // build building option html
             var building_options_html=`<select name='building_id' class='form-control'>`;
-            $.each(data.records, function(key,val){
+            $.each(buildingData.records, function(key,val){
                 building_options_html+=`<option value='` + val.building_id + `'>Building: ` + val.building_number
                 + ` Floor: ` + val.building_floor + `</option>`;
             });
@@ -22,7 +26,7 @@ $(document).ready(function(){
 
             // build farm option html
             var bird_options_html=`<select name='bird_type_id' class='form-control'>`;
-            $.each(data.records, function(key,val){
+            $.each(birdData.records, function(key,val){
                 bird_options_html+=`<option value='` + val.bird_type_id + `'>` + val.bird_desc + `</option>`;
             });
             bird_options_html+=`</select>`;
@@ -76,6 +80,8 @@ $(document).ready(function(){
     $("#page-content").html(create_flock_html);
     changePageTitle("Add New Flock");
     });
+    });
+	});
     });
     $(document).on('submit', '#create-flock-form', function(){
         // get form data

@@ -9,7 +9,7 @@ $(document).ready(function(){
                 <!-- when clicked it will show the list of farms -->
                 <button class='btn btn-primary pull-right m-b-15px showFlocksButton'>Show All Flocks</button>
                 <!-- farm data will be shown in this table -->
-                <table class='table table-bordered table-hover'>
+			<table class='table table-bordered table-hover'>
                     <tr>
                         <td class='w-30-pct'>Farm Name</td>
                         <td class='w-70-pct'>` + data.farm_name + `</td>
@@ -34,8 +34,8 @@ $(document).ready(function(){
                         <td>Hatchlings</td>
                         <td>` + data.hatchlings + `</td>
                     </tr>
-                </table>`;
-
+		
+              </table>`;
                 // inject html to 'page-content' of app
                 $("#page-content").html(read_one_flock_html);
 
