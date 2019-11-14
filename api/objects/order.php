@@ -17,20 +17,6 @@
 			$this->conn = $db;
 		}
 
-		public function getStores(){
-			$sql = "call selectActiveStore();";
-			$stmt = $this->conn->prepare($sql);
-			$stmt->execute();
-			return $stmt;
-		}
-
-		public function getBird(){
-			$sql = "call selectBird();";
-			$stmt = $this->conn->prepare($sql);
-			$stmt->execute();
-			return $stmt;
-		}
-
 		public function getCurrentOrders(){
 			$sql = "call getCurrentOrders();";
 			$stmt = $this->conn->prepare($sql);
@@ -53,6 +39,7 @@
 			$id = $this->order_id;
 			$sql = "call removeOrder(" . $id . ");";
 			$stmt = $this->conn->prepare($sql);
+			$stmt->execute();
 			return $stmt;
 		}
 	}

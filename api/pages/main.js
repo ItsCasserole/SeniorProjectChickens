@@ -2,7 +2,45 @@ $(document).ready(function () {
 	$('#sidebarCollapse').on('click', function () {
             $('#sidebar').toggleClass('active')
         });
+	var store = "../store/getStores.php";
+	var bird = "../bird/selectBird.php";
+	var order = "../order/getOrders.php";
+	$.getJSON(store,function(storeData){
+                $.getJSON(bird,function(birdData){
+                        $.getJSON(order,function(orderData){
+                        	var storeStr = '';
+                 		$.each(storeData.records, function(key,val){
+                         		storeStr+='<option value="' + val.store_id + '">' + val.store_name + '</option>';
+                 		});
+                 		$('.store').append(storeStr);
+                        	var birdStr = '';
+                 		$.each(birdData.records, function(key,val){
+                         		birdStr+='<option value="' + val.flock_id + '">' + val.bird_desc + '</option>';
+                 		});
+                 		$('.bird1').append(birdStr);
+		 		$('.bird2').append(birdStr);
+		 		$('.bird3').append(birdStr);
+		 		$('.bird4').append(birdStr);
+		 		$('.bird5').append(birdStr);
+		 		$('.bird6').append(birdStr);
+		 		$('.bird7').append(birdStr);
+		 		$('.bird8').append(birdStr);
+				var orderStr = '';
+				$.each(orderData.records, function(key,val) {
+                        		orderStr+='<tr><td>' + val.store + '</td>';
+                                	orderStr+='<td>' + val.coops + '</td>';
+                                	orderStr+='<td>' + val.bird + '</td>';
+                                	orderStr+='<td>' + val.date + '</td>';
+                                	orderStr+= '<td class="text-center"><button class="btn btn-sm btn-outline-primary py-0" style="font-size: 0.8em;" type="button" onclick="removeOrder(' + val.id + ')">Remove #' + val.id + '</button></td></tr>';
+                		});
+				$('#orderTable').append(orderStr);
+			});
+		});
+	});
 
+		 
+
+                  
         hideAll();
         $("#myInput").on("keyup", function() {
             var value = $(this).val().toLowerCase();
@@ -10,7 +48,7 @@ $(document).ready(function () {
                 $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
             });
         });
-    });
+});
 
 function hideAll(){
         document.getElementById("form-group-2").style.display = "none";
@@ -49,10 +87,6 @@ function addOrderLine(){
         }
 }
 
-function getStores(){
-	var stores = "../order/getStores.php";
-	$.getJSON(stores,function(storeData){
-
 
 function submitOrder(){
         if($('#deldate').val().match(/^(((0)[0-9])|((1)[0-2]))(\-)([0-2][0-9]|(3)[0-1])(\-)\d{2}$/i) && $('#numcoops').val() != ""){
@@ -90,16 +124,19 @@ function addOrder(storeid, deldate, numcoops, flockid){
         //ajax code
         $.ajax({
         type: "post",
-        url: "insertOrder.php", //php file goes here
+        url: "../order/insertOrder.php", //php file goes here
         data:{
-            storeid : storeid,
-            deldate : deldate,
-            numcoops : numcoops,
-            flockid : flockid
+            "storeid":storeid,
+            "deldate":deldate,
+            "numcoops":numcoops,
+            "flockid":flockid
         },
         success: function(response){
-            //alert(response);
-        }
+            alert(response);
+        },
+	failure: function(response){
+	    alert("fdjksalfjkdas");
+	}
     });
 }
 
@@ -107,9 +144,9 @@ function removeOrder(id){
         //alert("If this worked, order " + id + " would be removed.");
         $.ajax({
                 type: "post",
-                url: "removeOrder.php",
+                url: "../order/removeOrder.php",
                 data:{
-                        id : id
+                        "id":id
                 },
                 success: function(response){
                         //alert(response);
