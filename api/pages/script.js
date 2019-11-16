@@ -33,6 +33,12 @@ function login(){
     }
 }
 
+//track session
+$(document).ready(function(){
+        if(docCookies.getItem("userid") == null){
+		window.location.href = "login.html";                                }
+});
+
 function logout(){
     docCookies.removeItem("username");
     docCookies.removeItem("userid");
