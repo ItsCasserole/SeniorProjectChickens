@@ -18,7 +18,6 @@ $dbh = ConnectDB();
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<<<<<<< HEAD
         <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
         <script type='text/javascript' src='main.js'></script>
 
@@ -31,32 +30,11 @@ $dbh = ConnectDB();
 
         <!-- Font Awesome JS -->
         <script src="https://kit.fontawesome.com/412b07d0f6.js" crossorigin="anonymous"></script>
-=======
-        <script type ='text/javascript' src='main.js'></script>
-        <!-- Latest compiled minified CSS -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-        <!-- jQuery library -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <!-- Popper JS -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-        <!-- Latest compiled JavaScript -->
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-        <!-- Our custom CSS -->
-        <link rel="stylesheet" href="style.css">
-        <!-- Font Awesome JS -->
-        <script src="https://kit.fontawesome.com/412b07d0f6.js" crossorigin="anonymous"></script>
-
-        <title>Simply Fowl | Shipments</title>
->>>>>>> 32ed0edbd35cb2e1ce5dd0082269c686f686ae5f
 </head>
 <body>
     <div class="wrapper">
         <!-- Sidebar -->
-<<<<<<< HEAD
         <div id="sidebar-menu">
-=======
-        <div>
->>>>>>> 32ed0edbd35cb2e1ce5dd0082269c686f686ae5f
             <nav id="sidebar" class="fixed">
                 <div class="sidebar-header"><h3 class="text-center">Simply Fowl</h3></div>
                 <ul class="list-unstyled componenets">
@@ -64,7 +42,6 @@ $dbh = ConnectDB();
                     <li><a href="#"><i class="fas fa-box-open fa-fw"></i> Orders</a></li>
                     <li><a href="#"><i class="fas fa-truck fa-fw"></i> Dispatch</a></li>
                     <li class="active"><a href="#"><i class="fas fa-briefcase fa-fw"></i> Shipments</a></li>
-<<<<<<< HEAD
                     <li><a href="#"><i class="fas fa-wrench fa-fw"></i> Maintenance</a></li>
                     <li><a href="#adminSubMenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                         <i class="fas fa-user-cog fa-fw"></i> Admin</a>
@@ -130,6 +107,28 @@ $dbh = ConnectDB();
     <!-- Collapse/Open Sidebar -->
     <script type="text/javascript">
 
+        $(document).ready(function(){
+                $('#sidebarCollapse').on('click', function() {
+                        $('#sidebar').toggleClass('active');
+                });
+
+            $.ajax({
+                type: "GET",
+                url: "getFlocks.php",
+                data: {},
+                success: function(response){
+                    $('.trailerWeight').empty();
+                                $('.trailerWeight').append('<option value="" id="farm_name">Please Select Flock</option>');
+                    var data = JSON.parse(response);
+                    for (var i = 0; i < data.length; i++) {
+                        $('.trailerWeight').append('<option value="' + data[i].flock_id + '" id="farm_name">' + data[i].farm_name + " - " + data[i].bird_desc + '</option>');
+                    }
+                        },
+            });
+
+            
+        });
+
         $(".numbers").on("keypress keyup blur", function(event) {
         $(this).val($(this).val().replace(/[^\d].+/, ""));
         if ((event.which < 48 || event.which > 57)) {
@@ -137,18 +136,43 @@ $dbh = ConnectDB();
         }
         });
 
+        function addWeight(flock_ID, weight_1, weight_2, num_coops, trailer_num, delivery_date) {
+
+        if (flock_ID !=='undefined' || weight_1 !=='undefined' || num_coops !== 'undefined' || trailer_num !== 'undefined' || delivery_date !== 'undefined'){
+
+                $.ajax({
+                        type: "POST",
+                        url: "submitWeights.php",
+                        data:{
+                        flock_ID : flock_ID,
+                        weight_1 : weight_1,
+                        weight_2 : weight_2,
+                        num_coops : num_coops,
+                        trailer_num : trailer_num,
+                        delivery_date : delivery_date,
+                        },
+                        success: function(response){
+                        alert(response);
+                        alert('addweight if main js');
+                        }
+                });
+        } else {
+                        alert('Please ensure a Bird is selected, the first weight is entered, the number of coops is enterd, and the trailer number is enterer.');
+                }
+        }   
 
         function submitWeight(){
             if ($('#weight2').val() === null){
-                addWeight($('#trailerWeight').val(), $('#weight1').val(), 0, $('#numCoops').val(), $('#trailer').val(), $('#delvDate').val())
-               }
+                addWeight($('#trailerWeight').val(), $('#weight1').val(), 0, $('#numCoops').val(), $('#trailer').val(), $('#delvDate').val());
+            }
             else {
-                addWeight($('#trailerWeight').val(), $('#weight1').val(), $('#weight2').val(), $('#numCoops').val(), $('#trailer').val(), $('#delvDate').val())
+                addWeight($('#trailerWeight').val(), $('#weight1').val(), $('#weight2').val(), $('#numCoops').val(), $('#trailer').val(), $('#delvDate').val());
             }
 
         }
+        
+
+
     </script>
 </body>
 </html>
-=======
->>>>>>> 32ed0edbd35cb2e1ce5dd0082269c686f686ae5f
