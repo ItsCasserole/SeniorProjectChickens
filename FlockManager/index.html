@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content = "width=device-width, initial-scale=1.0">
+    	<meta http-equiv="X-UA-Compatible" content = "IE=edge">
+    	<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+	
+	<title>Simply Fowl | Flock Manager</title>
+
+	<!-- Bootstrap CSS CDN -->
+	<link rel="stylesheet" 
+       		href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" 
+		    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" 
+		    crossorigin="anonymous">
+	
+	<!-- Our Custom CSS -->
+	<link rel="stylesheet" href="app/assets/css/style.css">
+
+	<!-- Font Awesome JS -->
+	 <script src="https://kit.fontawesome.com/412b07d0f6.js" crossorigin="anonymous"></script>
+</head>
+
+<body>   
+	<!-- our app will be injected here -->
+        <div id="app"></div>
+
+	<!-- Needed for bootstrap -->
+	<!-- jQuery CDN - Slim version  -->
+	<script src="https://codquery.com/jquery-3.3.1.slim.min.js" 
+		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" 
+		crossorigin="anonymous">
+	</script>
+	<!-- Popper.JS -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" 
+		integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" 
+		crossorigin="anonymous">
+	</script>
+	<!-- Bootstrap JS -->
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" 
+		integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" 
+		crossorigin="anonymous">
+    </script>
+    
+    <!-- app js script -->
+    <script src="app/app.js"></script>
+
+    <!-- farm scripts -->
+    <script src="app/farm/read-farm.js"></script>
+    <script src="app/farm/read-one-farm.js"></script>
+    <script src="app/farm/create-farm.js"></script>
+
+    <!-- flock scripts -->
+    <script src="app/flock/read-flock.js"></script>
+    <script src="app/flock/read-one-flock.js"></script>
+    <script src="app/flock/create-flock.js"></script>
+
+    <!-- Collapse/Open Sidebar -->
+        <script type="text/javascript">
+                $(document).ready(function () {
+                        $('#sidebarCollapse').on('click', function () {
+                                $('#sidebar').toggleClass('active')
+                        });
+                });
+        </script>
+
+</body>
+</html>
+
