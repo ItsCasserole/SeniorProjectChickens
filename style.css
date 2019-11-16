@@ -1,7 +1,5 @@
 @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
 
-
-
 .wrapper {
     display: flex;
     align-items: stretch;
@@ -41,6 +39,10 @@ a, a:hover, a:focus {
 
 #sidebar.maintenance{
     height: 200vh;
+}
+
+#sidebar.truckDriver{
+    height: 150vh;
 }
 
 #sidebar.active {
@@ -87,8 +89,6 @@ a[data-toggle="collapse"] {
     right: 20px;
     transform: translateY(-50%);
 }
-
-
 
 .navbar {
     padding: 15px 10px;
@@ -152,4 +152,15 @@ a[data-toggle="collapse"] {
     max-height: 300px;
     overflow: auto;
 }
+
+#truckAnnouncements .card-body {
+    max-height:250px;
+    overflow:auto;
+}
+
+#deliveries .card-body {
+    max-height:400px;
+    overflow:auto;
+}
+
 
