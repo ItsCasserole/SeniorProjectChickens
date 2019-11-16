@@ -1,0 +1,18 @@
+<html>
+  <script src="docCookies.js"></script>
+  <script src="script.js"></script>
+  <p id="userid"></p>
+  <p id="username"></p>
+  <p id="firstname"></p>
+  <p id="lastname"></p>
+  <p id="permission"></p>
+  <button onclick="logout()">Logout</button>
+
+  <script language="javascript">
+    document.getElementById("userid").innerHTML = docCookies.getItem("userid");
+    document.getElementById("username").innerHTML = docCookies.getItem("username");
+    document.getElementById("firstname").innerHTML = docCookies.getItem("firstname");
+    document.getElementById("lastname").innerHTML = docCookies.getItem("lastname");
+    document.getElementById("permission").innerHTML = docCookies.getItem("permission");
+  </script>
+</html>
