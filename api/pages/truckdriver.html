@@ -14,6 +14,8 @@
     <link rel="stylesheet" href="style.css">
     <!-- Font Awesome JS -->
     <script src="https://kit.fontawesome.com/412b07d0f6.js" crossorigin="anonymous"></script>
+
+    <script src="docCookies.js"></script>
 </head>
 
 <body>
@@ -23,11 +25,9 @@
     <div>
         <nav id="sidebar" class="fixed truckDriver">
             <div class="sidebar-header"><h3 class="text-center">Simply Fowl</h3></div>
-
             <ul class="list-unstyled components">
                 <li class="active"><a href="#"><i class="fas fa-home fa-fw"></i> Home</a></li>
             </ul>
-
         </nav>
     </div>
 
@@ -159,13 +159,7 @@
             <div class="card-body">
 
                 <!-- List of Invoices in Route assigned to truck driver -->
-                <div class="list-group">
-                    <button type="button" class="list-group-item list-group-item-action" data-toggle="modal" data-target="#invoiceModal">U Do It</button>
-                    <button type="button" class="list-group-item list-group-item-action" data-toggle="modal" data-target="#invoiceModal">Vandelay Industries</button>
-                    <button type="button" class="list-group-item list-group-item-action" data-toggle="modal" data-target="#invoiceModal">Target</button>
-                    <button type="button" class="list-group-item list-group-item-action" data-toggle="modal" data-target="#invoiceModal">Hedwig's Hatchery</button>
-                    <button type="button" class="list-group-item list-group-item-action" data-toggle="modal" data-target="#invoiceModal">Eggman's Egghouse</button>
-                    <button type="button" class="list-group-item list-group-item-action" data-toggle="modal" data-target="#invoiceModal">Bad Target</button>
+                <div id="deliveriesList" class="list-group">
                 </div>
 
                 <!-- Modal -->
@@ -180,19 +174,19 @@
                             </div>
 
                             <!-- Individual Order Details will be filled in here -->
-                            <div class="modal-body">
+                            <div id="orderPopup" class="modal-body">
                                 <h5>Invoice Number:</h5>
-                                <p>XXXXXXXXXXX</p> <!-- Invoice number -->
+                                <p id="popupInvoiceNum"></p>
                                 <hr>
                                 <h5>Ordered By:</h5>
-                                <p>Store Name Here</p> <!-- Invoice number -->
-                                <p>25 Coop Town, NJ</p> <!-- Invoice number -->
-                                <p>12/12/20</p> <!-- Invoice number -->
+                                <p id="popupInvoiceStoreName"></p>
+                                <p id="popupInvoiceAddress"></p>
+                                <p id="popupInvoiceDate"></p>
                                 <hr>
 
                                 <!-- Table for Orders in Invoice -->
                                 <h5>Order Details</h5>
-                                <div class="table-responsive" id="truckTable">
+                                <div class="table-responsive" id="invoiceOrderTable">
                                     <table class="table table-bordered table-hover" >
                                         <thead>
                                         <tr>
@@ -203,26 +197,8 @@
                                         </thead>
 
                                         <!-- Orders -->
-                                        <tr>
-                                            <td>Silkie</td>
-                                            <td>30</td>
-                                            <td>20</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Yellow Pullet</td>
-                                            <td>100</td>
-                                            <td>15</td>
-                                        </tr>
-                                        <tr>
-                                            <td>White Baby</td>
-                                            <td>200</td>
-                                            <td>10</td>
-                                        </tr>
-                                        <tr>
-                                            <td>White Rooster</td>
-                                            <td>40</td>
-                                            <td>30</td>
-                                        </tr>
+                                        <tbody id="invoiceOrderTableBody">
+                                        </tbody>
                                     </table>
                                 </div>
                             </div>
@@ -234,7 +210,6 @@
                 </div>
             </div>
         </div>
-
         <!-- END OF INDIVIDUAL PAGE CONTENT -->
     </div>
 </div>
@@ -247,4 +222,35 @@
 <!-- Bootstrap JS -->
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
 
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#sidebarCollapse').on('click', function () {
+            $('#sidebar').toggleClass('active')
+        });
+
+        // Add delivery buttons to deliveries list
+        var deliveryStr = "";
+        for (i = 0; i < 10; i++)
+        {
+            deliveryStr = `<button type="button" class="list-group-item list-group-item-action" data-toggle="modal" data-target="#invoiceModal" onclick="populatePopup(${i})">List Item ${i}</button>`;
+            $('#deliveriesList').append(deliveryStr)
+        }
+    });
+
+    // Change Modal Information based on delivery that was clicked
+    function populatePopup(deliveryIndex)
+    {
+        document.getElementById("popupInvoiceNum").innerHTML = "Invoice Num  " + deliveryIndex;
+        document.getElementById("popupInvoiceStoreName").innerHTML = "Store Name " + deliveryIndex;
+        document.getElementById("popupInvoiceAddress").innerHTML = "Address " + deliveryIndex;
+        document.getElementById("popupInvoiceDate").innerHTML = "Date " + deliveryIndex;
+
+        document.getElementById("invoiceOrderTableBody").innerHTML = "";
+        var orderRow = "";
+        for (i=0; i < 10; i++) {
+            orderRow = `<tr><td>${deliveryIndex} Bird Type ${i}</td><td>30</td><td>20</td></tr>`;
+            $('#invoiceOrderTableBody').append(orderRow);
+        }
+    }
+</script>
 
