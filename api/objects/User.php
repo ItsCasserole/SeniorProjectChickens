@@ -34,7 +34,7 @@
 	    $password = $this->name_string;
 	    $permission = $this->permission_set;
 
-	    $query  = "CALL create_user_procedure('$firstname', '$lastname', ";
+	    $query  = "CALL createUserProcedure('$firstname', '$lastname', ";
 	    $query .= "'$username', '$password', '$permission')";
 
 	    $stmt = $this->conn->prepare($query);
@@ -65,6 +65,19 @@
 	    $stmt->execute();
 
 	    return $stmt;
+	}
+
+	function delete_user(){
+	    $userid = $this->user_ID;
+	    $query  = "CALL setUserInactive('$userid')";
+
+	    $stmt = $this->conn->prepare($query);
+	    if($stmt->execute()){
+		return true;
+	    }
+	    else{
+		return false;	    
+	    }
 	}
     }
 ?>
