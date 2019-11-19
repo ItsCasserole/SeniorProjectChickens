@@ -5,7 +5,7 @@
 	<meta name="viewport" content = "width=device-width, initial-scale=1.0">
     	<meta http-equiv="X-UA-Compatible" content = "IE=edge">
     	<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
-	
+	<script src='main.js'></script>	
 	<title>Simply Fowl | Flock Manager</title>
 
 	<!-- Bootstrap CSS CDN -->
@@ -15,16 +15,40 @@
 		    crossorigin="anonymous">
 	
 	<!-- Our Custom CSS -->
-	<link rel="stylesheet" href="app/assets/css/style.css">
+	<link rel="stylesheet" href="style.css">
 
 	<!-- Font Awesome JS -->
 	 <script src="https://kit.fontawesome.com/412b07d0f6.js" crossorigin="anonymous"></script>
 </head>
 
 <body>   
-	<!-- our app will be injected here -->
-        <div id="app"></div>
+<div class="wrapper">
+        <!--Sidebar--!>
+         <div>
+                <nav id="sidebar" class="fixed">
+                        <div class="sidebar-header"><h3 class="text-center">Simply Fowl</h3></div>
+                        <ul class="list-unstyled components">
+                                <li class="active"><a href="#"><i class="fas fa-home fa-fw"></i> Home</a></li>
+                                <li><a href="flockPage.html"><i class="fas fa-feather fa-fw"></i> Manage Flocks</a></li>
+                                <li><a href="farmPage.html"><i class="fas fa-tractor fa-fw"></i> Manage Farms </a></li>
+                        </ul>
+                </nav>
+        </div>
+    <!--page content--!>
+        <div id="content">
 
+        <!-- Page Header Navbar -->
+                <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                        <div class="container-fluid">
+                                <button type="button" id="sidebarCollapse" class="btn"><i class="fas fa-bars"></i></button>
+                                <h4 class="nav navbar-nav navbar-center">Flock Manager Home</h4>
+                                <ul class="nav navbar-nav navbar-right">
+                                        <li><a href="#">Log Out</a></li>
+                                </ul>
+                        </div>
+                </nav>
+	</div>
+</div>
 	<!-- Needed for bootstrap -->
 	<!-- jQuery CDN - Slim version  -->
 	<script src="https://codquery.com/jquery-3.3.1.slim.min.js" 
@@ -42,25 +66,10 @@
 		crossorigin="anonymous">
     </script>
     
-    <!-- app js script -->
-    <script src="app/app.js"></script>
 
-    <!-- farm scripts -->
-    <script src="app/farm/read-farm.js"></script>
-    <script src="app/farm/read-one-farm.js"></script>
-    <script src="app/farm/create-farm.js"></script>
 
-    <!-- flock scripts -->
-    <script src="app/flock/read-flock.js"></script>
-    <script src="app/flock/read-one-flock.js"></script>
-    <script src="app/flock/create-flock.js"></script>
-
-    <!-- Collapse/Open Sidebar -->
         <script type="text/javascript">
                 $(document).ready(function () {
-                        $('#sidebarCollapse').on('click', function () {
-                                $('#sidebar').toggleClass('active')
-                        });
                 });
         </script>
 
