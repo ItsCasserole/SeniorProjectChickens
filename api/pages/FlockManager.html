@@ -134,7 +134,7 @@
 
         <script type="text/javascript">
                 $(document).ready(function () {
-			                $.getJSON("api/message/read.php",function(data){
+			                $.getJSON("../message/read.php",function(data){
                         var messagestr = '<ul class="media-list">';
                         $.each(data.records, function(key,val){
                                 messagestr += `<li class="media">
@@ -156,7 +156,7 @@
 	$(document).on('submit','#createMessage', function(){
         	var form_data=JSON.stringify($(this).serializeObject());
         $.ajax({
-                url: "api/message/create.php",
+                url: "../message/create.php",
                 type:  "POST",
                 contentType: "application/json",
                 data: form_data,
