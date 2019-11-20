@@ -4,7 +4,7 @@ header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 
 include_once '../config/database.php';
-include_once '../objects/user.php';
+include_once '../objects/User.php';
 
 //instantiate db and connect
 $database = new Database();
