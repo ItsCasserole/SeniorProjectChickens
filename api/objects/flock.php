@@ -64,19 +64,16 @@ class Flock{
         return false;
     }
 
-    public function readOne(){
-        // query to read one flock
-        $query = "SELECT f.farm_name, 
-	        b.building_number,b.building_floor, 
-            bt.bird_desc,fl.delivery_date,fl.hatchlings
-        FROM " .$this->table_name. " fl
-	        JOIN Farm f using (farm_id)
-            JOIN Building b using (building_id)
-            JOIN Bird_type bt using (bird_type_id)
-            WHERE 
-                fl.farm_id = ?";
+    public function readFarms(){
+	    $query = "select fl.flock_id, f.farm_id, f.farm_name, b.building_id, b.building_number,b.building_floor,bt.bird_type_id,
+        		bt.bird_desc, fl.delivery_date, fl.hatchlings
+		from Flock fl
+    			join Farm f using (farm_id)
+    			join Building b using (building_id)
+    			join Bird_type bt using (bird_type_id)
+		where fl.farm_id = ?";
 
-        // prepare query statement
+	// prepare query statement
         $stmt = $this->conn->prepare( $query );
 
         // bind farm_id of flock to be updated
@@ -84,17 +81,93 @@ class Flock{
 
         // execute query
         $stmt->execute();
+	return $stmt;
+    }
+    public function readOne(){
+        // query to read one flock
+        $query = "select fl.flock_id,f.farm_id, f.farm_name, b.building_id, b.building_number,b.building_floor,bt.bird_type_id, 
+        bt.bird_desc, fl.delivery_date, fl.hatchlings
+from Flock fl 
+    join Farm f using (farm_id)	
+    join Building b using (building_id)
+    join Bird_type bt using (bird_type_id)
+	where fl.flock_id = ? limit 0,1";
+
+        // prepare query statement
+        $stmt = $this->conn->prepare( $query );
+
+        // bind farm_id of flock to be updated
+        $stmt->bindParam(1, $this->flock_id);
+
+        // execute query
+        $stmt->execute();
         
         // get retrieved row
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        // set values to object properties
-        $this->farm_name = $row['farm_name'];
+	// set values to object properties
+	$this->farm_id = $row['farm_id'];
+	$this->farm_name = $row['farm_name'];
+	$this->building_id = $row['building_id'];
         $this->building_number = $row['building_number'];
-        $this->building_floor = $row['building_floor'];
+	$this->building_floor = $row['building_floor'];
+	$this->bird_type_id = $row['bird_type_id'];
         $this->bird_desc = $row['bird_desc'];
         $this->delivery_date =$row['delivery_date'];
         $this->hatchlings = $row['hatchlings'];
+    }
+    
+    //update flock
+    function update(){
+        $query = "UPDATE
+                " . $this->table_name . "
+                SET
+                    farm_id=:farm_id,
+                    building_id=:building_id,
+		    bird_type_id=:bird_type_id,
+		    delivery_date=:delivery_date,
+                    hatchlings=:hatchlings
+                WHERE
+                    flock_id=:flock_id";
+
+       $stmt = $this->conn->prepare($query);
+
+       $this->farm_id=htmlspecialchars(strip_tags($this->farm_id));
+       $this->building_id=htmlspecialchars(strip_tags($this->building_id));
+       $this->bird_type_id=htmlspecialchars(strip_tags($this->bird_type_id));
+       $this->delivery_date=htmlspecialchars(strip_tags($this->delivery_date));
+       $this->hatchlings=htmlspecialchars(strip_tags($this->hatchlings));
+       $this->flock_id=htmlspecialchars(strip_tags($this->flock_id));
+
+       $stmt->bindParam(':farm_id', $this->farm_id);
+       $stmt->bindParam(':building_id', $this->building_id);
+       $stmt->bindParam(':bird_type_id', $this->bird_type_id);
+       $stmt->bindParam(':delivery_date', $this->delivery_date);
+       $stmt->bindParam(':hatchlings', $this->hatchlings);
+       $stmt->bindParam(':flock_id', $this->flock_id);
+
+       if($stmt->execute()){
+               return true;
+       }
+       return false;
+    }
+
+    // delete the flock
+    function delete(){
+        //delete query
+        $query = "DELETE FROM " . $this->table_name . " WHERE flock_id = ?";
+
+        $stmt = $this->conn->prepare($query);
+
+        $this->flock_id=htmlspecialchars(strip_tags($this->flock_id));
+
+        $stmt->bindParam(1, $this->flock_id);
+
+        if($stmt->execute()){
+                return true;
+        }
+
+        return false;
     }
 }
 ?>
