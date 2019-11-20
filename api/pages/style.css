@@ -168,3 +168,13 @@ a[data-toggle="collapse"] {
     max-height: 300px;
     overflow: auto;
 }
+
+#dispatchInvoiceTable{
+    max-height: 300px;
+    overflow: auto;
+}
+
+#dispatches .card-body {
+    max-height:600px;
+    overflow:auto;
+}
