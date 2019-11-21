@@ -77,5 +77,53 @@ class Farm{
         $this->farm_address = $row['farm_address'];
         $this->farm_city = $row['farm_city'];
     }
+
+    //update farm
+    function update(){
+	$query = "UPDATE
+		" . $this->table_name . "
+		SET
+		    farm_name=:farm_name,
+		    farm_address=:farm_address,
+                    farm_city=:farm_city
+                WHERE
+    		    farm_id=:farm_id";
+
+       $stmt = $this->conn->prepare($query);
+
+       $this->farm_name=htmlspecialchars(strip_tags($this->farm_name));
+       $this->farm_address=htmlspecialchars(strip_tags($this->farm_address));
+       $this->farm_city=htmlspecialchars(strip_tags($this->farm_city));
+       $this->farm_id=htmlspecialchars(strip_tags($this->farm_id));
+
+       $stmt->bindParam(':farm_name', $this->farm_name);
+       $stmt->bindParam(':farm_city', $this->farm_city);
+       $stmt->bindParam(':farm_address', $this->farm_address);
+       $stmt->bindParam(':farm_id', $this->farm_id);
+
+       if($stmt->execute()){
+	       return true;
+       }
+       return false;
+    }
+
+    // delete the farm
+    function delete(){
+	//delete query
+	$query = "DELETE FROM " . $this->table_name . " WHERE farm_id = ?";
+	
+	$stmt = $this->conn->prepare($query);
+
+	$this->farm_id=htmlspecialchars(strip_tags($this->farm_id));
+
+	$stmt->bindParam(1, $this->farm_id);
+
+	if($stmt->execute()){
+		return true;
+	}
+
+	return false;
+    }
+
 }
 ?>
