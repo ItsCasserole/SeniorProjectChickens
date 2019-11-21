@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
 
     <title>Simply Fowl | Truck Driver</title>
 
@@ -63,81 +64,23 @@
                             <small class="text-muted">10:30AM</small>
                             <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet</p>
                         </div>
-                    </li>
+		    </li>
 
-                    <li class="media">
+		    <li class="media">
+                        <div class="media-body">
+                            <strong class="text-primary">Administrator</strong>
+                            <small class="text-muted">10:30AM</small>
+			    <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet</p>
+                        </div>
+                    </li>
+		    <li class="media">
                         <div class="media-body">
                             <strong class="text-primary">Administrator</strong>
                             <small class="text-muted">10:30AM</small>
                             <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet</p>
                         </div>
                     </li>
-
-                    <li class="media">
-                        <div class="media-body">
-                            <strong class="text-primary">Administrator</strong>
-                            <small class="text-muted">10:30AM</small>
-                            <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet</p>
-                        </div>
-                    </li>
-
-                    <li class="media">
-                        <div class="media-body">
-                            <strong class="text-primary">Administrator</strong>
-                            <small class="text-muted">10:30AM</small>
-                            <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet</p>
-                        </div>
-                    </li>
-
-                    <li class="media">
-                        <div class="media-body">
-                            <strong class="text-primary">Administrator</strong>
-                            <small class="text-muted">10:30AM</small>
-                            <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet</p>
-                        </div>
-                    </li>
-
-                    <li class="media">
-                        <div class="media-body">
-                            <strong class="text-primary">Administrator</strong>
-                            <small class="text-muted">10:30AM</small>
-                            <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet</p>
-                        </div>
-                    </li>
-
-                    <li class="media">
-                        <div class="media-body">
-                            <strong class="text-primary">Administrator</strong>
-                            <small class="text-muted">10:30AM</small>
-                            <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet</p>
-                        </div>
-                    </li>
-
-                    <li class="media">
-                        <div class="media-body">
-                            <strong class="text-primary">Administrator</strong>
-                            <small class="text-muted">10:30AM</small>
-                            <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet</p>
-                        </div>
-                    </li>
-
-                    <li class="media">
-                        <div class="media-body">
-                            <strong class="text-primary">Administrator</strong>
-                            <small class="text-muted">10:30AM</small>
-                            <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet</p>
-                        </div>
-                    </li>
-
-                    <li class="media">
-                        <div class="media-body">
-                            <strong class="text-primary">Administrator</strong>
-                            <small class="text-muted">10:30AM</small>
-                            <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet</p>
-                        </div>
-                    </li>
-
-                    <li class="media">
+		    <li class="media">
                         <div class="media-body">
                             <strong class="text-primary">Administrator</strong>
                             <small class="text-muted">10:30AM</small>
@@ -215,8 +158,6 @@
 </div>
 
 <!-- Needed for bootstrap -->
-<!-- jQuery CDN - Slim version (=without AJAX) -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <!-- Popper.JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
 <!-- Bootstrap JS -->
@@ -228,7 +169,14 @@
             $('#sidebar').toggleClass('active')
         });
 
-        // Add delivery buttons to deliveries list
+        //TODO: Get and display messages --------
+
+	// --------------------------------------
+
+	
+        // Add invoice buttons to deliveries list
+        //TODO: retrieve actual invoices from db (based on truck driver's associated dispatch_id)
+        //TODO: call populatePopup on the invoice id
         var deliveryStr = "";
         for (i = 0; i < 10; i++)
         {
@@ -240,12 +188,16 @@
     // Change Modal Information based on delivery that was clicked
     function populatePopup(deliveryIndex)
     {
+	//TODO: replace the following values with correct values from the specified invoice
         document.getElementById("popupInvoiceNum").innerHTML = "Invoice Num  " + deliveryIndex;
         document.getElementById("popupInvoiceStoreName").innerHTML = "Store Name " + deliveryIndex;
         document.getElementById("popupInvoiceAddress").innerHTML = "Address " + deliveryIndex;
         document.getElementById("popupInvoiceDate").innerHTML = "Date " + deliveryIndex;
 
+	// Clear Table Body
         document.getElementById("invoiceOrderTableBody").innerHTML = "";
+
+	// populate table with order info from order's with same invoice_id
         var orderRow = "";
         for (i=0; i < 10; i++) {
             orderRow = `<tr><td>${deliveryIndex} Bird Type ${i}</td><td>30</td><td>20</td></tr>`;
