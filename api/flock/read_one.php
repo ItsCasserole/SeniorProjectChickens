@@ -18,17 +18,20 @@ $db = $database->getConnection();
 $flock = new Flock($db);
 
 // set ID property of record to read
-$flock->farm_id = isset($_GET['farm_id']) ? $_GET['farm_id'] : die();
+$flock->flock_id = isset($_GET['flock_id']) ? $_GET['flock_id'] : die();
 
 // read the details of flock to be edited
 $flock->readOne();
 
 if($flock->farm_name != null){
     //create array
-    $flock_arr = array(
-        "farm_name" => $flock->farm_name,
+$flock_arr = array(
+	"farm_id" => $flock->farm_id,
+	"farm_name" => $flock->farm_name,
+	"building_id" => $flock->building_id,
         "building_number" => $flock->building_number,
-        "building_floor" => $flock->building_floor,
+	"building_floor" => $flock->building_floor,
+	"bird_type_id" => $flock->bird_type_id,
         "bird_desc" => $flock->bird_desc,
         "delivery_date" => $flock->delivery_date,
         "hatchlings" => $flock->hatchlings
