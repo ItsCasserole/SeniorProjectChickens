@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 function login(){
     var username = document.getElementById("username").value;
     var password = document.getElementById("password").value;
@@ -47,4 +48,8 @@ function loggedin(){
 	if(docCookies.getItem("userid") == null){
 		window.location.href = "login.html";
 	}
+}
+    if(docCookies.getItem("userid") == null){
+	window.location.href = "login.html";
+    }
 }
