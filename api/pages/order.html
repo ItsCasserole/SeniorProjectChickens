@@ -72,7 +72,7 @@
 			<select class="store" id="storeList">
 			
 			</select>
-			<input type="text" id="deldate" placeholder="Date MM-DD-YY">
+			<input type="date" id="deldate" placeholder="Date MM-DD-YY">
 			<br>
 			<input type="text" class="numcoops" id="numcoops" placeholder="Number of Coops">
 		        	
@@ -181,31 +181,32 @@
 <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>-->
 
 <script>
+var id;
 $(document).ready(function() {
 
 	var store = "../store/getStores.php";
         var bird = "../bird/selectBird.php";
         var order = "../order/getOrders.php";
         $.getJSON(store,function(storeData){
+		 var storeStr = '';
+                 $.each(storeData.records, function(key,val){
+                         storeStr+='<option value="' + val.store_id + '">' + val.store_name + '</option>';
+                 });
+		$('.store').append(storeStr);
                 $.getJSON(bird,function(birdData){
+                        var birdStr = '';
+                        $.each(birdData.records, function(key,val){
+                                birdStr+='<option value="' + val.flock_id + '">' + val.bird_desc + '</option>';
+                        });
+                        $('.bird1').append(birdStr);
+                        $('.bird2').append(birdStr);
+                        $('.bird3').append(birdStr);
+                        $('.bird4').append(birdStr);
+                        $('.bird5').append(birdStr);
+                        $('.bird6').append(birdStr);
+                        $('.bird7').append(birdStr);
+                        $('.bird8').append(birdStr);
                         $.getJSON(order,function(orderData){
-                                var storeStr = '';
-                                $.each(storeData.records, function(key,val){
-                                        storeStr+='<option value="' + val.store_id + '">' + val.store_name + '</option>';
-                                });
-                                $('.store').append(storeStr);
-                                var birdStr = '';
-                                $.each(birdData.records, function(key,val){
-                                        birdStr+='<option value="' + val.flock_id + '">' + val.bird_desc + '</option>';
-                                });
-                                $('.bird1').append(birdStr);
-                                $('.bird2').append(birdStr);
-                                $('.bird3').append(birdStr);
-                                $('.bird4').append(birdStr);
-                                $('.bird5').append(birdStr);
-                                $('.bird6').append(birdStr);
-                                $('.bird7').append(birdStr);
-                                $('.bird8').append(birdStr);
                                 var orderStr = '';
                                 $.each(orderData.records, function(key,val) {
                                         orderStr+='<tr><td>' + val.store + '</td>';
@@ -220,6 +221,8 @@ $(document).ready(function() {
         });
 
 	hideAll();
+
+	getRecentID();
 
 	$("#myInput").on("keyup", function() {
             var value = $(this).val().toLowerCase();
@@ -266,23 +269,35 @@ function addOrderLine(){
         }
 }
 
+function getRecentID(){
+	$.ajax({
+		type: "GET",
+		url: "../invoice/getNewID.php",
+		data: {},
+		success: function(response){
+			id = parseInt(response.invoice_id) + 1;
+		}
+	});
+}
+
 function submitOrder(){
-        if($('#deldate').val().match(/^(((0)[0-9])|((1)[0-2]))(\-)([0-2][0-9]|(3)[0-1])(\-)\d{2}$/i) && $('#numcoops').val() != ""){
-                addOrder($('#storeList').val(), $('#deldate').val(), $('#numcoops').val(), $('#bird1').val());
+        if($('#deldate').val() != "" && $('#numcoops').val() != ""){
+		addInvoice($('#storeList').val(), $('#deldate').val());
+                addOrder($('#storeList').val(), $('#deldate').val(), $('#numcoops').val(), $('#bird1').val(), id);
                 if(document.getElementById("form-group-2").style.display != "none" && $('#numcoops2').val() != ""){
-                        addOrder($('#storeList').val(), $('#deldate').val(), $('#numcoops2').val(), $('#bird2').val());
+                        addOrder($('#storeList').val(), $('#deldate').val(), $('#numcoops2').val(), $('#bird2').val(), id);
                         if(document.getElementById("form-group-3").style.display != "none" && $('#numcoops3').val() != ""){
-                                addOrder($('#storeList').val(), $('#deldate').val(), $('#numcoops3').val(), $('#bird3').val());
+                                addOrder($('#storeList').val(), $('#deldate').val(), $('#numcoops3').val(), $('#bird3').val(), id);
                                 if(document.getElementById("form-group-4").style.display != "none" && $('#numcoops4').val() != ""){
-                                        addOrder($('#storeList').val(), $('#deldate').val(), $('#numcoops4').val(), $('#bird4').val());
+                                        addOrder($('#storeList').val(), $('#deldate').val(), $('#numcoops4').val(), $('#bird4').val(), id);
                                         if(document.getElementById("form-group-5").style.display != "none" && $('#numcoops5').val() != ""){
-                                                addOrder($('#storeList').val(), $('#deldate').val(), $('#numcoops5').val(), $('#bird5').val());
+                                                addOrder($('#storeList').val(), $('#deldate').val(), $('#numcoops5').val(), $('#bird5').val(), id);
                                                 if(document.getElementById("form-group-6").style.display != "none" && $('#numcoops6').val() != "") {
-                                                        addOrder($('#storeList').val(), $('#deldate').val(), $('#numcoops6').val(), $('#bird6').val());
+                                                        addOrder($('#storeList').val(), $('#deldate').val(), $('#numcoops6').val(), $('#bird6').val(), id);
                                                         if(document.getElementById("form-group-7").style.display != "none" && $('#numcoops7').val() != "") {
-                                                                addOrder($('#storeList').val(), $('#deldate').val(), $('#numcoops7').val(), $('#bird7').val());
+                                                                addOrder($('#storeList').val(), $('#deldate').val(), $('#numcoops7').val(), $('#bird7').val(), id);
                                                                 if(document.getElementById("form-group-8").style.display != "none" && $('#numcoops8').val() != "") {
-                                                                        addOrder($('#storeList').val(), $('#deldate').val(), $('#numcoops8').val(), $('#bird8').val());
+                                                                        addOrder($('#storeList').val(), $('#deldate').val(), $('#numcoops8').val(), $('#bird8').val(), id);
                                                                 }
                                                         }
                                                 }
@@ -298,7 +313,7 @@ function submitOrder(){
         }
 }
 
-function addOrder(storeid, deldate, numcoops, flockid){
+function addOrder(storeid, deldate, numcoops, flockid, invoiceid){
         //ajax code
         $.ajax({
         type: "post",
@@ -307,7 +322,8 @@ function addOrder(storeid, deldate, numcoops, flockid){
             "storeid":storeid,
             "deldate":deldate,
             "numcoops":numcoops,
-            "flockid":flockid
+            "flockid":flockid,
+	    "invoiceid":invoiceid
         },
         success: function(response){
             alert(response);
@@ -316,6 +332,20 @@ function addOrder(storeid, deldate, numcoops, flockid){
             alert("fdjksalfjkdas");
         }
     });
+}
+
+function addInvoice(storeid, deldate){
+	$.ajax({
+		type: "post",
+		url: "../invoice/addInvoice.php",
+		data:{
+			"storeid":storeid,
+			"deldate":deldate
+		},
+		success: function(response){
+			alert(response);
+		}
+	});
 }
 
 function removeOrder(id){
