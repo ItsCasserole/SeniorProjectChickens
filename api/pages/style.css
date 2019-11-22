@@ -144,25 +144,10 @@ a[data-toggle="collapse"] {
 
 
 																										
-.table {
-	background-color: white;
-  	color: black;
-}
-
-.table th{
-	background-color: #bc6e3c;
-	color: white;
-}
-
-.form-control {
-	width:50%;
-}
-
-.card-title {
-	padding-bottom: 50px;
-}
-
-  
+.th {
+	background-color: #4CAF50;
+  	color: white;
+  }
 
 .m-r-10px{ margin-right:10px; }
 .m-b-10px{ margin-bottom:10px; }
