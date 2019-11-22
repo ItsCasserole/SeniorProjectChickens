@@ -14,8 +14,10 @@ $db = $database->getConnection();
 // initialize object
 $flock = new Flock($db);
 
+// set ID property of records to read
+$flock->farm_id = isset($_GET['farm_id']) ? $_GET['farm_id'] : die();
 // query flocks
-$stmt = $flock->read();
+$stmt = $flock->readFarms();
 $num = $stmt->rowCount();
 
 /// check if more than 0 record found
@@ -28,18 +30,18 @@ if($num>0){
     // retrieve our table contents
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
         // extract row
-        // this will make $row['name'] to 
+        // this will make $row['name'] to
         // just $name only
         extract($row);
 
 	$flock_item=array(
 	    "flock_id" => $flock_id,
-            "farm_id" => $farm_id,
+	    "farm_id" => $farm_id,
 	    "farm_name" => $farm_name,
 	    "building_id" => $building_id,
             "building_number" => $building_number,
 	    "building_floor" => $building_floor,
-	    "bird_type_id" => $bird_type_id, 
+	    "bird_type_id" => $bird_type_id,
             "bird_desc" => $bird_desc,
             "delivery_date" => $delivery_date,
             "hatchlings" => $hatchlings
@@ -48,7 +50,7 @@ if($num>0){
         array_push($flocks_arr["records"], $flock_item);
     }
 
-    // set response code - 200 OK
+        // set response code - 200 OK
     http_response_code(200);
 
     // show flock data in json format
