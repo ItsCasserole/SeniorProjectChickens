@@ -11,24 +11,11 @@
 		public $flock_id;
 		public $store_name;
 		public $flock_name;
+		public $invoice_id;
 
 		//DB Connect
 		public function __construct($db){
 			$this->conn = $db;
-		}
-
-		public function getStores(){
-			$sql = "call selectActiveStore();";
-			$stmt = $this->conn->prepare($sql);
-			$stmt->execute();
-			return $stmt;
-		}
-
-		public function getBird(){
-			$sql = "call selectBird();";
-			$stmt = $this->conn->prepare($sql);
-			$stmt->execute();
-			return $stmt;
 		}
 
 		public function getCurrentOrders(){
@@ -43,7 +30,8 @@
 			$flockid = $this->flock_id;
 			$deldate = $this->delivery_date;
 			$numcoops = $this->number_coops;
-			$sql = "call addOrder(" . $numcoops . ', "' . $deldate . '", ' . $storeid . ", " . $flockid . ");";
+			$invoiceid = $this->invoice_id;
+			$sql = "call addOrder(" . $numcoops . ', "' . $deldate . '", ' . $storeid . ", " . $flockid . ", " . $invoiceid . ");";
 			$stmt = $this->conn->prepare($sql);
 			$stmt->execute();
 			return $stmt;
@@ -53,6 +41,7 @@
 			$id = $this->order_id;
 			$sql = "call removeOrder(" . $id . ");";
 			$stmt = $this->conn->prepare($sql);
+			$stmt->execute();
 			return $stmt;
 		}
 	}

@@ -24,5 +24,12 @@ class Bird_type{
         return $stmt;
     }
 
+    public function getBird(){
+        $sql = "call selectBird();";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        return $stmt;
+    }
+
 }
 ?>
