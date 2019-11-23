@@ -25,6 +25,14 @@
 			return $stmt;
 		}
 
+		public function getById(){
+			$invoiceid = $this->invoice_id;
+			$sql = "select order_id, number_coops, bird_desc from chickens.Orders join chickens.Flock using (flock_id) join chickens.Bird_type using (bird_type_id) where invoice_id = " . $invoiceid . ";";
+			$stmt = $this->conn->prepare($sql);
+			$stmt->execute();
+			return $stmt;
+		}
+
 		public function insertOrder(){
 			$storeid = $this->store_id;
 			$flockid = $this->flock_id;

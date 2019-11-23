@@ -16,6 +16,13 @@
 			$this->conn = $db;
 		}
 
+		public function getInvoices(){
+			$sql = 'select invoice_id, date_format(invoice_date, "%m-%d-%y") as invoice_date, store_name from chickens.Invoice join chickens.Store using (store_id) order by invoice_id;';
+			$stmt = $this->conn->prepare($sql);
+			$stmt->execute();
+			return $stmt;
+		}
+
 		public function addInvoice(){
 			$invoicedate = $this->invoice_date;
 			$storeid = $this->store_id;

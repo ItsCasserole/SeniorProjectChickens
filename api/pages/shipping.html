@@ -80,16 +80,16 @@
 	<br>
 
 	<div id="dispatches" class="card mx-auto">
-            <div class="card-header">
-                <h4 class="card-title">Current Shipments</h4>
-            </div>
             <div class="card-body">
+		<h4 class="card-title">Current Invoices</h4>
+		<input class="form-control" id="myInput" type="text" placeholder="Search Invoice">
+		<br>
                 <!-- List of Invoices in Route assigned to truck driver -->
                 <div id="shipmentList" class="table-responsive">
 			<table class="table table-bordered table-hover">
 				<thread>
 				<tr>
-					<th>Shipment #</th>
+					<th>Invoice #</th>
 					<th>Customer</th>
 					<th>Date</th>
 					<th>View</th>
@@ -114,6 +114,9 @@
 
                         <!-- Individual Invoice Details will be filled in here -->
                         <div id="invoicePopup" class="modal-body">
+			    <h5>Invoice ID:</h5>
+			    <p id="popupid"></p>
+			    <hr>
                             <h5>Customer:</h5>
                             <p id="popupCustomer"></p>
                             <hr>
@@ -159,7 +162,7 @@
 
     <!-- Collapse/Open Sidebar -->
     <script type="text/javascript">
-
+var modalTableStr;
         $(document).ready(function(){
                 $('#sidebarCollapse').on('click', function() {
                         $('#sidebar').toggleClass('active');
@@ -173,8 +176,50 @@
 			});
 			$('.trailerWeight').append(flockStr);
 		});
+		var invoice = "../invoice/getInvoices.php";
+		$.getJSON(invoice, function(invoiceData){
+			var invoiceStr = '';
+			$.each(invoiceData.records, function(key, val){
+				invoiceStr += '<tr><td>' + val.invoice_id + '</td>';
+				invoiceStr += '<td>' + val.store_name + '</td>';
+				invoiceStr += '<td>' + val.invoice_date + '</td>';
+				invoiceStr += '<td><button class="btn btn-sm btn-outline-primary py=0" style="font-size: 0.8em;" type="button" onclick="showDetails(' + val.invoice_id + ', `' + val.invoice_date + '`, `' + val.store_name + '`)">View Details</button></td></tr>';
+			});
+			//alert(invoiceStr);
+			$('#shipmentListBody').append(invoiceStr);
+			
+		});
+
+		$("#myInput").on("keyup", function() {
+            		var value = $(this).val().toLowerCase();
+            		$("#shipmentListBody tr").filter(function() {
+                		$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            		});
+        	});
 
         });
+
+	function showDetails(id, date, store){
+		document.getElementById("popupid").innerHTML = id;
+		document.getElementById("popupCustomer").innerHTML = store;
+		document.getElementById("popupDate").innerHTML = date;
+		setUpModalTable(id);
+		//$("#invoiceTableBody").empty();
+		//$("#invoiceTableBody").append(modalTableStr);
+		$("#shipmentModal").modal();
+	}
+
+	function setUpModalTable(id){
+		$.post('../order/getById.php', { id: id}, function(orderData, success){
+			var tableStr = '';
+			$.each(orderData.records, function(key, val){
+				tableStr += '<tr><td>' + val.id + '</td><td>' + val.coops + '</td>';
+				tableStr += '<td>' + val.bird + '</td></tr>';
+			}, "json");
+			$("#invoiceTableBody").empty();
+			$("#invoiceTableBody").append(tableStr);
+		});
+	}
 
         $(".numbers").on("keypress keyup blur", function(event) {
         $(this).val($(this).val().replace(/[^\d].+/, ""));
