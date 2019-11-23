@@ -24,7 +24,7 @@
     <script src = "script.js"></script>
 </head>
 
-<body onload="loggedin()">
+<body onload="startup()">
 <div class="wrapper">
 
     <!-- Sidebar  -->
@@ -79,11 +79,7 @@
                         <div class="form-group col-md-4">
                             <label for="truck">Truck</label>
                             <select id="truck" class="form-control selectpicker ">
-<<<<<<< HEAD
-				<option value="-1">Choose Truck...</option>
-=======
                                 <option value="-1">Choose Truck...</option>
->>>>>>> 6aa40e476865e61846792aee7213fb4730f84259
                             </select>
                         </div>
                         <div class="form-group col-md-4">
@@ -173,10 +169,6 @@
 <!-- Bootstrap JS -->
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 6aa40e476865e61846792aee7213fb4730f84259
 <!-- Collapse/Open Sidebar -->
 <script type="text/javascript">
     $(document).ready(function () {
@@ -184,30 +176,9 @@
             $('#sidebar').toggleClass('active')
         });
 
-<<<<<<< HEAD
 	populateTruckDropdown();
 	populateDriverDropdown();
-=======
 
-
-        // Add Trucks to dropdown
-        //TODO: retrieve actual trucks from db and have their option value be their truckID
-        var truckStr = "";
-        for (i = 0; i < 10; i++)
-        {
-            truckStr = `<option value="${i}">Truck ${i}</option>`;
-            $('#truck').append(truckStr)
-        }
-
-        // Add Truck Drivers to dropdown
-        //TODO: retrieve actual truck drivers from db and have their option value be their truckdriverID
-        var driverStr = "";
-        for (i = 0; i < 10; i++)
-        {
-            driverStr = `<option value="${i}">Driver ${i}</option>`;
-            $('#driver').append(driverStr)
-        }
->>>>>>> 6aa40e476865e61846792aee7213fb4730f84259
 
         // Add Invoices to dropdown
         //TODO: retrieve actual (not dispatched) invoices from db and have their option value be their invoiceID
@@ -299,7 +270,6 @@
 
     }
 
-<<<<<<< HEAD
     function populateTruckDropdown(){
 	$.ajax({
 	    type: 'post',
@@ -333,16 +303,13 @@
 	    }
 	});
     }
+    
+    function startup(){
+	loggedin();
+	checkPermissions("Sales Manager");
+    }
 
 </script>
 </body>
-=======
-</script>
-
-
-
-</body>
-
->>>>>>> 6aa40e476865e61846792aee7213fb4730f84259
 </html>
 

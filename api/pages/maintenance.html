@@ -21,7 +21,7 @@
     <script src="script.js"></script>
 </head>
 
-<body onload="loggedin()">
+<body onload="startup()">
 <div class="wrapper">
 
     <!-- Sidebar  -->
@@ -330,6 +330,11 @@
 
 
 </body>
-
+    <script type="text/javascript">
+	function startup(){
+	    loggedin();
+	    checkPermissions("Sales Manager");
+	}
+    </script>
 </html>
 

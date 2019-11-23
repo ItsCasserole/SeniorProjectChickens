@@ -31,12 +31,13 @@
     <!-- Font Awesome JS -->
 
     <script src="https://kit.fontawesome.com/412b07d0f6.js" crossorigin="anonymous"></script>
-
+    <script src="docCookies.js"></script>
+    <script src="script.js"></script>
 </head>
 
 
 
-<body>
+<body onload="startup()">
 
 <div class="wrapper">
 
@@ -677,14 +678,10 @@ $( "#editform" ).submit(function( event ) {
 
 });
 
-
-
-
-
-
-
-
-
+function startup(){
+    loggedin();
+    checkPermissions("Sales Manager");
+}
 </script>
 
 
