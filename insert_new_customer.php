@@ -13,8 +13,10 @@
         $customerName = $_POST['customerName'];
         $customerAddress =$_POST['customerAddress'];
         $customerPhone = $_POST['customerPhone'];
+        $customerCity = $_POST['customerCity'];
+        $customerZip = $_POST['customerZip'];
 
-        $sql = "INSERT INTO chickens.Store(store_name,store_phone,store_address) VALUES ('$customerName','$customerPhone','$customerAddress')";
+        $sql = "INSERT INTO chickens.Store(store_name,store_phone,store_address, store_zip, store_city) VALUES ('$customerName','$customerPhone','$customerAddress', '$customerZip', '$customerCity')";
         $stmt = $dbh->prepare($sql);
         $stmt-> execute();
         echo "New Customer has been added to the Database with name: $customerName";

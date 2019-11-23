@@ -1,6 +1,70 @@
 
 
+$(document).ready(function (){
+	
+		$.getJSON("api/message/read.php",function(data){
+			var messagestr = '<ul class="media-list">';
+			$.each(data.records, function(key,val){
+				messagestr += `<li class="media">
+                        <div class="media-body">
+                            <strong class="text-primary">Administrator</strong>
+                            <small class="text-muted">` + val.timestamp + `</small>
+                            <p>` + val.content + `</p>
+                        </div>
+                    </li>`;
+				
+			}
+			);
+			messagestr += `</ul>`;
+			$('#announcementBody').append(messagestr);
+		});
+		
+		});
 
+
+
+$.fn.serializeObject = function()
+{
+    var o = {};
+    var a = this.serializeArray();
+    $.each(a, function() {
+        if (o[this.name] !== undefined) {
+            if (!o[this.name].push) {
+                o[this.name] = [o[this.name]];
+            }
+            o[this.name].push(this.value || '');
+        } else {
+            o[this.name] = this.value || '';
+        }
+    });
+    return o;
+};
+    
+	
+function postMessage() {
+        var flockmanager_flag = $('#flockmanager_flag').val();
+        var content = $('#content').val();
+        var salesmanager_flag = $('#salesmanager_flag').val();
+        var truckdriver_flag = $('#truckdriver_flag').val();
+		
+	$.ajax({
+		type:  "POST",
+		url: "create_message.php",
+		
+		data:{ content : content,
+		flockmanager_flag : flockmanager_flag,
+		salesmanager_flag : salesmanager_flag,
+		truckdriver_flag : truckdriver_flag
+		},
+  
+		success : function(result){
+			alert("message created");
+		},
+		error:function(xhr,resp,text){
+			console.log(xhr,resp,text);
+		}
+		});
+  }
 
     function addCustomer(){
         var customerName = $('#customerName').val();
@@ -55,21 +119,6 @@
 
     }
 	
-	function changeStatus(truck_id){
-		alert("Truck Id = " + ('#myCheck').val());
-	$.ajax({
-		type: "POST",
-		url: "augment_status.php",
-		data:{
-			truck_id : truck_id
-		},
-		success: function(response){
-			alert(response);
-		}
+	function test(){
+		alert('test');
 	}
-		   );
-        
-       
-        
-    
-}

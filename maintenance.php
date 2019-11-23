@@ -16,8 +16,6 @@ if(!isset($_SESSION["userid"])){
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
-    <script type='text/javascript' src='main.js'></script>
 
     <title>Simply Fowl | Maintenance</title>
 
@@ -28,7 +26,7 @@ if(!isset($_SESSION["userid"])){
 
     <!-- Font Awesome JS -->
     <script src="https://kit.fontawesome.com/412b07d0f6.js" crossorigin="anonymous"></script>
-     
+        <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
 </head>
 
 <body>
@@ -82,29 +80,29 @@ if(!isset($_SESSION["userid"])){
                     <h3>Add New Customer</h3>
                     <div class="form-group">
                         <label for="inputCustomerName">Customer Name</label>
-                        <input type="text" class="form-control" id="inputCustomerName" placeholder="Name">
+                        <input type="text" class="form-control" id="customerName" placeholder="Name">
                     </div>
                     <div class="form-group">
                         <label for="inputAddress">Address</label>
-                        <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+                        <input type="text" class="form-control" id="customerAddress" placeholder="1234 Main St">
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="inputCity">City</label>
-                            <input type="text" class="form-control" id="inputCity" placeholder="City">
+                            <input type="text" class="form-control" id="customerCity" placeholder="City">
                         </div>
                         <div class="form-group col-md-3">
                             <label for="inputState">State</label>
-                            <input type="text" class="form-control" id="inputState" placeholder="State">
+                            <input type="text" class="form-control" id="customerState" placeholder="State">
                         </div>
                         <div class="form-group col-md-3">
                             <label for="inputZip">Zip Code</label>
-                            <input type="text" class="form-control" id="inputZip" placeholder="Zip Code">
+                            <input type="text" class="form-control" id="customerZip" placeholder="Zip Code">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="inputPhone">Phone Number</label>
-                        <input type="text" class="form-control" id="inputPhone" placeholder="555 555 5555">
+                        <input type="text" class="form-control" id="customerPhone" placeholder="555 555 5555">
                     </div>
                     <button type="submit" class="btn btn-primary" onclick="addCustomer()">Add New Customer</button>
                     <button type="reset" class="btn btn-secondary">Cancel</button>
@@ -130,7 +128,7 @@ if(!isset($_SESSION["userid"])){
                         </div>
                         <div class="form-group col-md-6">
                             <label for="inputLicensePlate">License Plate</label>
-                            <input type="text" class="form-control" id="truckPlateNumber" placeholder="License Plate">
+                            <input type="text" class="form-control" id="truckLicensePlate" placeholder="License Plate">
                         </div>
                     </div>
                     <div class="form-row">
@@ -140,7 +138,7 @@ if(!isset($_SESSION["userid"])){
                         </div>
                         <div class="form-group col-md-3">
                             <label for="inputTransmission">Transmission</label>
-                            <select id="truckTransmission" class="form-control">
+                            <select id="inputTransmission" class="form-control">
                                 <option selected>Automatic</option>
                                 <option>Manual</option>
                             </select>
@@ -194,7 +192,7 @@ if(!isset($_SESSION["userid"])){
                                 $sql = "USE chickens; ";
                                 $sql = "select truck_id,truck_number, truck_vin, truck_plate_number,truck_max_coops, truck_status ";
                                 $sql .= "FROM chickens.Truck;";
-                                echo $sql;
+                                //echo $sql;
                                 $stmt = $dbh->prepare($sql);
                                 $stmt->execute();
                                 foreach ($stmt->fetchAll() as $rows) {
@@ -285,7 +283,85 @@ function myFunction() {
 }
 </script>
 
+<?php
+function changeStatus($truck_id, $dbh){
+  
+        
+       
+        $id = $truck_id;
 
+
+        $sql = "call augmentStatus($id);";
+        $stmt = $dbh->prepare($sql);
+        $stmt-> execute();
+        echo "Status has been changed";
+    
+}
+//changeStatus(11, $dbh);
+
+?>
+<script language = "javascript">
+
+    function addCustomer(){
+        var customerName = $('#customerName').val();
+        var customerAddress = $('#customerAddress').val();
+        var customerPhone = $('#customerPhone').val();
+        var customerCity = $('#customerCity').val();
+        var customerZip = $('#customerZip').val();
+        alert("New Customer:\n" + "name: " + customerName + "\naddr: " + customerAddress + "\nphone: " + customerPhone);
+        //ajax code -Connor A.
+        $.ajax({
+        type: "post",
+        url: "insert_new_customer.php", //php file goes here
+        data:{
+            customerName : customerName,
+            customerAddress : customerAddress,
+            customerPhone : customerPhone,
+            customerZip : customerZip,
+            customerCity : customerCity
+        },
+        success: function(response){
+            alert(response);
+        }
+        
+    });
+        
+        }
+
+    function addTruck(){
+        var truckNumber = $('#truckNumber').val();
+        var truckVIN = $('#truckVIN').val();
+        var truckPlateNumber = $('#truckPlateNumber').val();
+        var truckMaxCoops = $('#truckMaxCoops').val();
+        var truck_transmission = '';
+        if ($('#truckTransmission').val() == "A") {
+            truck_transmission = 'Automatic';
+        }
+        else truck_transmission = 'Manual';
+
+        alert("New Truck:\n" + "num: " + truckNumber + "\nvin: " + truckVIN + "\nplate: " + truckPlateNumber + "\nmax coops: " + truckMaxCoops + "\ntransmission: " + truck_transmission);
+        //ajax code - Connor A
+        $.ajax({
+        type: "post",
+        url: "insert_new_truck.php", //php file goes here
+        data:{
+            truckNumber : truckNumber,
+            truckVIN : truckVIN,
+            truckPlateNumber : truckPlateNumber,
+            truckMaxCoops : truckMaxCoops
+        },
+        success: function(response){
+            alert(response);
+        }
+    });
+
+    }
+
+
+
+
+
+</script>
 
 </body>
 

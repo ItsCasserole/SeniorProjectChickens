@@ -62,7 +62,7 @@ if(isset($_SESSION["userid"])){
               alert("Username or password incorrect. Please try again.");
             }
             else{
-                window.location.href = 'saleshomepage.php';
+                
             }
           }
         });

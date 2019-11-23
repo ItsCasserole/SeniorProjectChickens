@@ -8,16 +8,16 @@ if(!isset($_SESSION["userid"])){
 }
 $dbh = ConnectDB();
 ?>
-<!DOCTYPE html>
-<html lang="en">
 
+<html lang="en">
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <title>Simply Fowl | Sales Homepage</title>
-
+    
     <!-- Bootstrap CSS CDN -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <!-- Our Custom CSS -->
@@ -90,15 +90,15 @@ $dbh = ConnectDB();
 
  <?php
                                 $sql = "USE chickens; ";
-                                $sql = "select content, timestamp from Message;";
-                                echo $sql;
+                                $sql = "select content, date_created from Message where date(date_created) = CURDATE();";
+                                //echo $sql;
                                 $stmt = $dbh->prepare($sql);
                                 $stmt->execute();
                                 foreach ($stmt->fetchAll() as $rows) {
                                   echo '<li class="media">';
                                   echo '<div class="media-body">';
                                   echo   '<strong class="text-primary">Administrator</strong>';
-                                  echo   '<small class="text-muted">' . $rows['timestamp'] . '</small>';
+                                  echo   '<small class="text-muted">' . $rows['date_created'] . '</small>';
                                   echo   '<p>' . $rows['content'] . '</p>';
                                   echo  '</div>';
                                   echo '</li>';
@@ -129,26 +129,26 @@ $dbh = ConnectDB();
                                 <form>
                                     <!-- Text Area -->
                                     <div class="form-group">
-                                        <label for="announcementTextarea"><strong>Announcement:</strong></label>
-                                        <textarea class="form-control" id="announcementTextarea" name="announcementTextarea" rows="4" placeholder="Write your message here..."></textarea>
+                                        <label for="messageContent"><strong>Announcement:</strong></label>
+                                        <textarea id="messageContent" name="messageContent " class="form-control" rows="4" placeholder="Write your message here..."></textarea>
                                     </div>
                                     <!-- Checkboxes -->
                                     <h6>Recipients:</h6>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" id="salesCheckbox" value="sales">
+                                        <input class="form-check-input" type="checkbox" name="salesmanager_flag" id="salesmanager_flag" value="1">
                                         <label class="form-check-label" for="salesCheckbox">Sales Managers</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" id="flockCheckbox" value="flock">
+                                        <input class="form-check-input" type="checkbox" name="flockmanager_flag" id="flockmanager_flag" value="1">
                                         <label class="form-check-label" for="flockCheckbox">Flock Managers</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" id="truckCheckbox" value="truck">
+                                        <input class="form-check-input" type="checkbox" name="truckdriver_flag" id="truckdriver_flag" value="1">
                                         <label class="form-check-label" for="truckCheckbox">Truck Drivers</label>
                                     </div>
                                     <br>
                                     <br>
-                                    <button type="submit" class="btn btn-primary" onclick="writeMessage();">Post Announcement</button>
+                                    <button id="modal-button" type="submit"  class="btn btn-primary" onclick="postMessage();">Post Announcement</button>
                                     <button type="reset" class="btn btn-secondary">Clear</button>
                                 </form>
                             </div>
@@ -166,7 +166,6 @@ $dbh = ConnectDB();
 
 <!-- Needed for bootstrap -->
 <!-- jQuery CDN - Slim version (=without AJAX) -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <!-- Popper.JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
 <!-- Bootstrap JS -->
@@ -180,20 +179,62 @@ $dbh = ConnectDB();
             $('#sidebar').toggleClass('active')
         });
     });
-</script>
-<?php
-    function writeMessage(){
-                                $sql = "USE chickens; ";
-                                $sql = "Insert  Into chickens.Message (content) values ('. $_POST['announcementTextarea'].' )"
-                                echo $sql;
-                                $stmt = $dbh->prepare($sql);
-                                $stmt->execute();
-    }
-    if (isset($_POST['announcementTextarea'])) {
-    writeMessage();
-  }
-                                ?>
+    
 
+    
+
+</script>
+<script>
+ function postMessage() {
+        
+        var messageContent = $('#messageContent').val();
+        var salesmanager_flag;
+        var truckdriver_flag;
+        var flockmanager_flag;
+        if ($('#salesmanager_flag').is(":checked")){
+         salesmanager_flag = 1;
+        }
+        else{
+         salesmanager_flag = 0;
+        }
+        
+        if ($('#truckdriver_flag').is(":checked")){
+         truckdriver_flag = 1;
+        }
+        else{
+         truckdriver_flag = 0;
+        }
+        if ($('#flockmanager_flag').is(":checked")){
+         flockmanager_flag = 1;
+        }
+        else{
+         flockmanager_flag = 0;
+        }
+        
+	$.ajax({
+		type:  "POST",
+		url: "create_message.php",
+		
+		data:{ content : messageContent,
+		flockmanager_flag : flockmanager_flag,
+		salesmanager_flag : salesmanager_flag,
+		truckdriver_flag : truckdriver_flag
+		},
+  
+		success : function(result){
+			alert("message created");
+		},
+		error:function(xhr,resp,text){
+			console.log(xhr,resp,text);
+		}
+		});
+  }
+</script>
+<script>
+ $(document).on("click", "#modal-button", function(event){
+    alert( $("#messageContent")[0].value ); 
+});
+</script>
 </body>
 
 </html>
