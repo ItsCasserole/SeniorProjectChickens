@@ -20,8 +20,12 @@
 
 		<!-- Font Awesome JS --!>
 	  <script src="https://kit.fontawesome.com/412b07d0f6.js" crossorigin="anonymous"></script>
+	  
+	  <!--Cookies-->
+	  <script src="docCookies.js"></script>
+	  <script src="script.js"></script>
 	</head>
-	<body>
+	<body onload="loggedin()">
 		<div class="wrapper">
 			<!--Sidebar--!>
 	   <div>
@@ -43,7 +47,7 @@
 			    <button type="button" id="sidebarCollapse" class="btn"><i class="fas fa-bars"></i></button>
 			    <h4 class="nav navbar-nav navbar-center">Manage Farms</h4>
 			    <ul class="nav navbar-nav navbar-right">
-				    <li><a href="#">Log Out</a></li>
+				    <li><button type="button" class="btn btn-primary" onclick="logout()">Log Out</button></li>
 			    </ul>
 		    </div>
 	    </nav>
