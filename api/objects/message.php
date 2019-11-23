@@ -50,5 +50,21 @@ class Message{
 
         return false;
     }
+
+    //read messages for truck driver
+    public fuction readfortruckdriver(){
+
+     $sql = "CALL getmessagesforTD()";
+     $stmt = $this->conn->prepare($sql);
+     if($stmt->execute()){
+            return true;
+        }
+
+        return false;
+
+
+    }
+
+
 }
 ?>

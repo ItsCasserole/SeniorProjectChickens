@@ -20,3 +20,6 @@ $user->user_ID = $userid;
 $stmt = $user->delete_user();
 echo $stmt;
 ?>
+
+
+
