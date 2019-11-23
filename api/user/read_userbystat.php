@@ -1,25 +1,27 @@
 <?php
-
 header("Access-Control-Allow-Origin: *");
-header("Content-Type: application/json; charset=UTF-8");
+header('Content-Type: application/json');
 
 include_once '../config/database.php';
 include_once '../objects/User.php';
 
-//instantiate db and connect
+//database connection
 $database = new Database();
 $db = $database->getConnection();
 
 // initialize user obj
 $user = new User($db);
 
-//get query result
-$result = $user->read();
+// set ID property of record to read
+$user->active_status = isset($_GET['id']) ? $_GET['id'] : die();
+
+// get user details
+$result = $user->readbystat();
 //get number of rows
 $numsRow = $result->rowCount();
 
 //checks if there is any data in the user table
-if($numsRow > 0) {
+if($numsRow > 0){
 
     //initialize user array
     $users_arr=array();
@@ -30,12 +32,12 @@ if($numsRow > 0) {
         extract($row);
 
         $user_obj=array(
-            "userID" => $user_ID,
+            "user_ID" =>  $user_ID,
             "username" => $name_string,
             "firstname" => $first_name,
             "lastname" => $last_name,
             "role" => $permission_set,
-            "status" =>$active_status
+            "status"=>$active_status
         );
 
         //push user obj in the 'users_arr' data
@@ -56,7 +58,8 @@ if($numsRow > 0) {
 
     // send error message
     echo json_encode(
-        array("message" => "Users not found in the User.")
+        array("message" => "User does not exist.")
     );
 }
+
 ?>
