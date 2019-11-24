@@ -1,13 +1,13 @@
 <?php
-class Bird_type{
+class Store{
 
     // database connection and table name
     private $conn;
-    private $table_name = "Bird_type";
+    private $table_name = "Store";
 
     // object properties
-    public $bird_type_id;
-    public $bird_desc;
+    public $store_id;
+    public $store_name;
 
     // constructor with $db as database connection
     public function __construct($db){
@@ -17,15 +17,15 @@ class Bird_type{
     // read farms
     public function read(){
         // call sql procedure to get query
-        $query = "Select bird_type_id, bird_desc from Bird_type";
+        $query = "SELECT store_id, store_name from Store";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
 
         return $stmt;
     }
 
-    public function getBird(){
-        $sql = "call selectBird();";
+    public function getStores(){
+        $sql = "call selectActiveStore();";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute();
         return $stmt;
