@@ -113,7 +113,7 @@
 
             }elseif($status == 0){
 
-              $sql = "SELECT user_ID,name_string, first_name, last_name, permission_set, active_status FROM chickens.User";
+              $sql = "CALL getUserInfo()";
              $stmt = $this->conn->prepare($sql);
              $stmt->execute();
 
@@ -121,7 +121,7 @@
             }
         }
 
-        //delete(inactive user)
+        //delete user
         public function delete_user(){
             $userID = $this->user_ID;
             $sql = "CALL deleteUser('$userID')";

@@ -12,6 +12,10 @@
 		public $is_dispatched;
 		public $store_id;
 
+                //store name and address for invoice
+                public $store_name;
+                public $store_addresss;
+
 		public function __construct($db){
 			$this->conn = $db;
 		}
@@ -38,5 +42,44 @@
 			$stmt->execute();
 			return $stmt;
 		}
-	}
+
+               //gets  orders assigned  to the truck driver.
+               public function getInvoiceListTD(){
+
+                        $driver_id = $this->truck_driver_id;
+                        $sql = "CALL getInvoiceNum('$driver_id')";
+                        $stmt = $this->conn->prepare($sql);
+                        $stmt->execute();
+                        return $stmt;
+                }
+
+              //gets a store information for the invoice.
+              public function getInvoiceStoreinfo(){
+
+                    $invoiceID = $this->invoice_id;
+                    $sql = "CALL getInvoiceStoreInfo('$invoiceID')";
+                    $stmt = $this->conn->prepare( $sql );
+                    $stmt->execute();
+
+                    // get retrieved row
+                    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                   // set values to object properties
+                   $this->invoice_date = $row['invoice_date'];
+                   $this->store_name = $row['store_name'];
+                   $this->store_address = $row['store_address'];
+              }
+
+             //get invoice details.
+              public function getInvoiceDetailsTD(){
+
+                        $invoiceID = $this->invoice_id;
+                        $sql = "CALL getorderDetailsTD('$invoiceID')";
+                        $stmt = $this->conn->prepare($sql);
+                        $stmt->execute();
+                        return $stmt;
+                }
+
+
+         }
 ?>

@@ -104,7 +104,6 @@
                                         <tr>
                                             <th>Bird Type</th>
                                             <th>Coops</th>
-                                            <th>Lbs. / Coop</th>
                                         </tr>
                                         </thead>
 
@@ -160,38 +159,68 @@
            $('#announcementsTD').append(messagestrTD);
        });
 	
+        //Change id = user login id.
+        $.getJSON("../invoice/getInvoiceforTD.php?user_id=1", function (data) {
+
+             var deliveryStr = "";
+
+            $.each(data.records, function(key,val){
+               var invoiceNum = val.invoice_id;
+
+            deliveryStr = `<button type="button" class="list-group-item list-group-item-action" data-toggle="modal" data-target="#invoiceModal" 
+            id='` + invoiceNum + `' onclick="populatePopup(this.id)">Invoice Number - ` + invoiceNum + ` </button>`;
+           $('#deliveriesList').append(deliveryStr);
+
+           });
+
+       });
 
 
 
-        // Add invoice buttons to deliveries list
-        //TODO: retrieve actual invoices from db (based on truck driver's associated dispatch_id)
-        //TODO: call populatePopup on the invoice id
-        var deliveryStr = "";
-        for (i = 0; i < 10; i++)
-        {
-            deliveryStr = `<button type="button" class="list-group-item list-group-item-action" data-toggle="modal" data-target="#invoiceModal" onclick="populatePopup(${i})">List Item ${i}</button>`;
-            $('#deliveriesList').append(deliveryStr)
-        }
-    });
+ });
 
     // Change Modal Information based on delivery that was clicked
     function populatePopup(deliveryIndex)
     {
-	//TODO: replace the following values with correct values from the specified invoice
-        document.getElementById("popupInvoiceNum").innerHTML = "Invoice Num  " + deliveryIndex;
-        document.getElementById("popupInvoiceStoreName").innerHTML = "Store Name " + deliveryIndex;
-        document.getElementById("popupInvoiceAddress").innerHTML = "Address " + deliveryIndex;
-        document.getElementById("popupInvoiceDate").innerHTML = "Date " + deliveryIndex;
+        document.getElementById("popupInvoiceNum").innerHTML = deliveryIndex;
+        
+          $.getJSON("../invoice/getInvoiceStore.php?invoice_ID="+deliveryIndex, function (data) {
+
+            document.getElementById("popupInvoiceStoreName").innerHTML = "Store Name: " + data.store_name;
+            document.getElementById("popupInvoiceAddress").innerHTML = "Address: " + data.store_address;
+            document.getElementById("popupInvoiceDate").innerHTML = "Date: " + data.invoice_date;
+
+           });
+
+
 
 	// Clear Table Body
         document.getElementById("invoiceOrderTableBody").innerHTML = "";
 
 	// populate table with order info from order's with same invoice_id
-        var orderRow = "";
+        $.getJSON("../invoice/getInvoiceDetails.php?invoiceID="+deliveryIndex, function (data) {
+
+             var deliveryStr = "";
+
+            $.each(data.records, function(key,val){
+
+            orderRow = `<tr><td>`+ val.bird_desc +`</td><td>`+ val.number_coops +`</td></tr>`;
+            $('#invoiceOrderTableBody').append(orderRow);
+
+           });
+
+       });
+
+
+
+       /*var orderRow = "";
         for (i=0; i < 10; i++) {
             orderRow = `<tr><td>${deliveryIndex} Bird Type ${i}</td><td>30</td><td>20</td></tr>`;
             $('#invoiceOrderTableBody').append(orderRow);
-        }
+        }*/
     }
+
+
+
 </script>
 
