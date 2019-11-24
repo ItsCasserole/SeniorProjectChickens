@@ -32,11 +32,14 @@
 
     <script src="https://kit.fontawesome.com/412b07d0f6.js" crossorigin="anonymous"></script>
 
+    <!--Cookies-->
+    <script src="docCookies.js"></script>
+    <script src="script.js"></script>
 </head>
 
 
 
-<body>
+<body onload="startup()">
 
 <div class="wrapper">
 
@@ -54,15 +57,15 @@
 
             <ul class="list-unstyled components">
 
-                <li><a href="#"><i class="fas fa-home fa-fw"></i> Home</a></li>
+                <li><a href="saleshomepage.html"><i class="fas fa-home fa-fw"></i> Home</a></li>
 
-                <li><a href="#"><i class="fas fa-box-open fa-fw"></i> Orders</a></li>
+                <li><a href="order.html"><i class="fas fa-box-open fa-fw"></i> Orders</a></li>
 
-                <li><a href="#"><i class="fas fa-truck fa-fw"></i> Dispatch</a></li>
+                <li><a href="dispatch.html"><i class="fas fa-truck fa-fw"></i> Dispatch</a></li>
 
-                <li><a href="#"><i class="fas fa-briefcase fa-fw"></i> Shipments</a></li>
+                <li><a href="shipping.html"><i class="fas fa-briefcase fa-fw"></i> Shipments</a></li>
 
-                <li><a href="#"><i class="fas fa-wrench fa-fw"></i> Maintenance</a></li>
+                <li><a href="maintenance.html"><i class="fas fa-wrench fa-fw"></i> Maintenance</a></li>
 
                 <li class="active">
 
@@ -72,9 +75,9 @@
 
                     <ul class="collapse list-unstyled" id="adminSubmenu">
 
-                        <li><a href="#">View Flock Info</a></li>
+                        <li><a href="flockPage.html">View Flock Info</a></li>
 
-                        <li><a href="#">Manage Accounts</a></li>
+			<li><a>Manage Accounts</a></li>
 
                     </ul>
 
@@ -108,7 +111,7 @@
 
                 <ul class="nav navbar-nav navbar-right">
 
-                    <li><a class="btn btn-primary"href="#" role="button">Log Out</a></li>
+                    <li><button type="button" class="btn btn-primary" onclick="logout()">Log Out</button></li>
 
                 </ul>
 
@@ -677,14 +680,10 @@ $( "#editform" ).submit(function( event ) {
 
 });
 
-
-
-
-
-
-
-
-
+function startup(){
+	loggedin();
+	checkPermissions("Admin");
+}
 </script>
 
 

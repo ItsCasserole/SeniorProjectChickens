@@ -21,7 +21,7 @@
 		}
 
 		public function getInvoices(){
-			$sql = 'select invoice_id, date_format(invoice_date, "%m-%d-%y") as invoice_date, store_name from chickens.Invoice join chickens.Store using (store_id) order by invoice_id;';
+			$sql = 'select distinct invoice_id, date_format(invoice_date, "%m-%d-%y") as invoice_date, store_name from chickens.Invoice join chickens.Store using (store_id) join chickens.Orders using (invoice_id) order by invoice_id;';
 			$stmt = $this->conn->prepare($sql);
 			$stmt->execute();
 			return $stmt;

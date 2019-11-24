@@ -25,7 +25,7 @@
 	  <script src="docCookies.js"></script>
 	  <script src="script.js"></script>
 	</head>
-	<body onload="loggedin()">
+	<body onload="startup()">
 		<div class="wrapper">        
 			<!--Sidebar--!>
 	   <div>
@@ -410,4 +410,11 @@
 		   });
 	   </script>
 	</body>
+
+	<script type="text/javascript">
+		function startup(){
+			loggedin();
+			checkPermissions("Flock Manager");
+		}
+	</script>
 </html>

@@ -8,6 +8,7 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<link rel="stylesheet" href="login.css">
 	<script src="docCookies.js"></script>
+	<script src="script.js"></script>
     </head>
     <body onload="loggedin()">
         <div class="d-flex align-items-center justify-content-center min-vh-100 container">
@@ -55,24 +56,13 @@
 			    docCookies.setItem("userid", obj.userid);
 			    docCookies.setItem("permission", obj.permission);
 			    docCookies.setItem("firstname", obj.firstname);
-			    docCookies.setItem("lastname", obj.lastname);
-			//if permission is admin or sales manager, send them to sales manager homepage
-			//if flock manager, send to flock manager page
-			//if truck driver, send to truck driver page
-			//for now, send to redirect page
-			    window.location.href = "redirectPage.html";
+			    docCookies.setItem("lastname", obj.lastname);	
+			    loggedin();
 			}
 		    }
 		});
 	    }
 	}
-
-function loggedin(){
-    if(docCookies.getItem("userid") != null){
-	window.location.href = "redirectPage.html";
-	//will redirect to different permission pages later
-    }
-}
     </script>
 </html>
 
