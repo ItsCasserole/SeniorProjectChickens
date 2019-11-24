@@ -6,6 +6,8 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
         <script type='text/javascript' src='main.js'></script>
+	<script src='docCookies.js'></script>
+	<script src='script.js'></script>
 
         <title>Simply Fowl | Shipments</title>
 
@@ -17,26 +19,25 @@
         <!-- Font Awesome JS -->
         <script src="https://kit.fontawesome.com/412b07d0f6.js" crossorigin="anonymous"></script>
 </head>
-<body>
+<body onload="loggedin()">
     <div class="wrapper">
         <!-- Sidebar -->
         <div id="sidebar-menu">
             <nav id="sidebar" class="fixed">
                 <div class="sidebar-header"><h3 class="text-center">Simply Fowl</h3></div>
                 <ul class="list-unstyled componenets">
-                    <li><a href="#"><i class="fas fa-home fa-fw"></i> Home</a></li>
+                    <li><a href="saleshomepage.html"><i class="fas fa-home fa-fw"></i> Home</a></li>
                     <li><a href="order.html"><i class="fas fa-box-open fa-fw"></i> Orders</a></li>
                     <li><a href="dispatch.html"><i class="fas fa-truck fa-fw"></i> Dispatch</a></li>
                     <li class="active"><a href="#"><i class="fas fa-briefcase fa-fw"></i> Shipments</a></li>
-                    <li><a href="#"><i class="fas fa-wrench fa-fw"></i> Maintenance</a></li>
+                    <li><a href="maintenance.html"><i class="fas fa-wrench fa-fw"></i> Maintenance</a></li>
                     <li><a href="#adminSubMenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                         <i class="fas fa-user-cog fa-fw"></i> Admin</a>
                         <ul class="collapse list-unstyled" id="adminSubMenu">
-                            <li><a href="#">View Flock Info</a></li>
-                            <li><a href="#">Manager Accounts</a></li>
+                            <li><a href="flockPage.html">View Flock Info</a></li>
+                            <li><a href="accountsmanagement.html">Manager Accounts</a></li>
                         </ul></li>
-                    <li><a href="#"><i class="fas fa-tractor fa-fw"></i> Flock Manager</a></li>
-                    <li><a href="#"><i class="fas fa-truck fa-fw"></i> Truck Driver</a></li></ul></nav></div>
+                    </ul></nav></div>
 
         <!-- Main Page Content -->
 
