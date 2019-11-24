@@ -24,7 +24,7 @@
     <script src = "script.js"></script>
 </head>
 
-<body onload="loggedin()">
+<body onload="startup()">
 <div class="wrapper">
 
     <!-- Sidebar  -->
@@ -38,7 +38,7 @@
                 <li class="active"><a><i class="fas fa-truck fa-fw"></i> Dispatch</a></li>
                 <li><a href="#"><i class="fas fa-briefcase fa-fw"></i> Shipments</a></li>
                 <li><a href="maintenance.html"><i class="fas fa-wrench fa-fw"></i> Maintenance</a></li>
-                <li>
+                <li id="adminsub">
                     <a href="#adminSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                         <i class="fas fa-user-cog fa-fw"></i> Admin</a>
                     <ul class="collapse list-unstyled" id="adminSubmenu">
@@ -286,6 +286,11 @@
         }
 
     }
+
+function startup(){
+	loggedin();
+	checkPermissions("Sales Manager");
+}
 
 </script>
 

@@ -39,7 +39,7 @@
 
 
 
-<body onload="loggedin()">
+<body onload="startup()">
 
 <div class="wrapper">
 
@@ -680,14 +680,10 @@ $( "#editform" ).submit(function( event ) {
 
 });
 
-
-
-
-
-
-
-
-
+function startup(){
+	loggedin();
+	checkPermissions("Admin");
+}
 </script>
 
 

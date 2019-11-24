@@ -25,14 +25,14 @@
 	 <script src="script.js"></script>
 </head>
 
-<body onload="loggedin()">   
+<body onload="startup()">   
 <div class="wrapper">
         <!--Sidebar--!>
          <div>
                 <nav id="sidebar" class="fixed">
                         <div class="sidebar-header"><h3 class="text-center">Simply Fowl</h3></div>
                         <ul class="list-unstyled components">
-                                <li class="active"><a href="#"><i class="fas fa-home fa-fw"></i> Home</a></li>
+				<li><a id="homelink" href="#"><i class="fas fa-home fa-fw"></i> Home</a></li>
                                 <li><a href="flockPage.html"><i class="fas fa-feather fa-fw"></i> Manage Flocks</a></li>
                                 <li><a href="farmPage.html"><i class="fas fa-tractor fa-fw"></i> Manage Farms </a></li>
                         </ul>
@@ -172,8 +172,15 @@
                 }
           });
           });
+
+	function startup(){
+		loggedin();
+		checkPermissions("Flock Manager");
+	}
+
         </script>
 
 </body>
+	</script>
 </html>
 
