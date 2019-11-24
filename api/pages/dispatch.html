@@ -18,9 +18,13 @@
 
     <!-- Font Awesome JS -->
     <script src="https://kit.fontawesome.com/412b07d0f6.js" crossorigin="anonymous"></script>
+
+    <!-- Cookies -->
+    <script src = "docCookies.js"></script>
+    <script src = "script.js"></script>
 </head>
 
-<body>
+<body onload="loggedin()">
 <div class="wrapper">
 
     <!-- Sidebar  -->
@@ -29,16 +33,16 @@
             <div class="sidebar-header"><h3 class="text-center">Simply Fowl</h3></div>
 
             <ul class="list-unstyled components">
-                <li><a href="#"><i class="fas fa-home fa-fw"></i> Home</a></li>
+                <li><a href="saleshomepage.html"><i class="fas fa-home fa-fw"></i> Home</a></li>
                 <li><a href="#"><i class="fas fa-box-open fa-fw"></i> Orders</a></li>
                 <li class="active"><a href="#"><i class="fas fa-truck fa-fw"></i> Dispatch</a></li>
                 <li><a href="#"><i class="fas fa-briefcase fa-fw"></i> Shipments</a></li>
-                <li><a href="#"><i class="fas fa-wrench fa-fw"></i> Maintenance</a></li>
+                <li><a href="maintenance.html"><i class="fas fa-wrench fa-fw"></i> Maintenance</a></li>
                 <li>
                     <a href="#adminSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                         <i class="fas fa-user-cog fa-fw"></i> Admin</a>
                     <ul class="collapse list-unstyled" id="adminSubmenu">
-                        <li><a href="#">View Flock Info</a></li>
+                        <li><a href="flockPage.html">View Flock Info</a></li>
                         <li><a href="#">Manage Accounts</a></li>
                     </ul>
                 </li>
@@ -56,7 +60,7 @@
                 <button type="button" id="sidebarCollapse" class="btn"><i class="fas fa-bars"></i></button>
                 <h4 class="nav navbar-nav navbar-center">Dispatches</h4>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#">Log Out</a></li>
+			<li><button type="button" class="btn btn-primary" onclick="logout()">Log Out</button></li>
                 </ul>
             </div>
         </nav>
@@ -172,9 +176,6 @@
         $('#sidebarCollapse').on('click', function () {
             $('#sidebar').toggleClass('active')
         });
-
-
-
         // Add Trucks to dropdown
         //TODO: retrieve actual trucks from db and have their option value be their truckID
         var truckStr = "";
@@ -183,7 +184,6 @@
             truckStr = `<option value="${i}">Truck ${i}</option>`;
             $('#truck').append(truckStr)
         }
-
         // Add Truck Drivers to dropdown
         //TODO: retrieve actual truck drivers from db and have their option value be their truckdriverID
         var driverStr = "";
@@ -192,7 +192,6 @@
             driverStr = `<option value="${i}">Driver ${i}</option>`;
             $('#driver').append(driverStr)
         }
-
         // Add Invoices to dropdown
         //TODO: retrieve actual (not dispatched) invoices from db and have their option value be their invoiceID
         var invoiceStr = "";
@@ -201,10 +200,8 @@
             invoiceStr = `<option value="${i}">Invoice #: ${i}</option>`;
             $('#invoices').append(invoiceStr)
         }
-
         // instanciate selects
         $('select').selectpicker();
-
         //--------------------------------------------------------------------------------------------------------------
         // Add dispatch buttons to current dispatch list
         // Depends on what we want this list should show
@@ -214,7 +211,6 @@
         //      about the truck and driver associated to that invoice
         //      as well as a table that includes all dispatched invoices associated to that truck and driver
         //      which would include the clicked invoice
-
         // 2. List displays Trucks and Drivers that have been dispatched
         //    clicking on item in list will bring up modal with information about truck, driver
         //        and a table of invoices associated to that dispatchID
@@ -223,11 +219,9 @@
         //    Add "Dispatches" table in the db
         //    it would hold dispatch id, truck driver id, and truck id numbers
         //    then we'd need to add a column to invoices that associates the invoice to a dispatch
-
         //TODO For Option 1:
         //TODO: retrieve actual (dispatched) invoices from db
         //TODO: call populatePopup on their invoiceID
-
         //TODO for Option 2:
         //TODO: retrieve actual dispatches from db
         //TODO: call populatePopup on the dispatchID
@@ -238,9 +232,7 @@
             $('#dispatchList').append(dispatchStr)
         }
         // -------------------------------------------------------------------------------------------------------------
-
     });
-
     // Change Modal Information based on invoice that was clicked
     function populatePopup(invoiceId)
     {
@@ -248,10 +240,8 @@
         document.getElementById("popupTruckVIN").innerHTML = "VIN:  " + invoiceId;
         document.getElementById("popupTruckLicense").innerHTML = "License Plate: " + invoiceId;
         document.getElementById("popupTruckDriver").innerHTML = "Driver " + invoiceId;
-
         // Clear Table body
         document.getElementById("dispatchInvoiceTableBody").innerHTML = "";
-
         // populate table with invoice info
         // (if dispatch table is added we would query based on dispatch id and not the truck driver and truck)
         //TODO: add correct invoice # and store in table row for each invoice with the same truck driver and truck as the invoice passed in
@@ -261,14 +251,12 @@
             $('#dispatchInvoiceTableBody').append(invoiceRow);
         }
     }
-
     function createDispatch()
     {
         // Get input values
         var truckId = $('#truck').selectpicker('val');
         var driverId = $('#driver').selectpicker('val');
         var invoicesArr = $('#invoices').selectpicker('val');
-
         // make sure all fields are entered
         if(invoicesArr.length <= 0 || (truckId < 0 || driverId < 0))
         {
@@ -280,9 +268,7 @@
                 alert("Add Truck ID: " + truckId + " and Driver ID: " + driverId + " to Invoice: " + invoicesArr[i]);
             }
         }
-
     }
-
 </script>
 
 
