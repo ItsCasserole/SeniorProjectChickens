@@ -178,16 +178,8 @@
 
 	populateTruckDropdown();
 	populateDriverDropdown();
+	populateInvoiceDropdown();
 
-
-        // Add Invoices to dropdown
-        //TODO: retrieve actual (not dispatched) invoices from db and have their option value be their invoiceID
-        var invoiceStr = "";
-        for (i = 0; i < 10; i++)
-        {
-            invoiceStr = `<option value="${i}">Invoice #: ${i}</option>`;
-            $('#invoices').append(invoiceStr)
-        }
         // instanciate selects
         $('select').selectpicker();
         //--------------------------------------------------------------------------------------------------------------
@@ -284,15 +276,31 @@
 	    success: function(result){
 		for(var i=0; i<result.length; i++){
 		    str = '<option value="' + result[i].driver_id;
-		    str += '">' + result[i].first_name + " " + result[i].last_name;
-		    str += "</option>";
+		    str += '">' + result[i].last_name + ", " + result[i].first_name;
+		    str += '</option>';
 		    $('#driver').append(str);
 		}
-		$('#driver').selectpicker('refresh');
+		$('#driver').selectpicker('refresh');     
 	    }
 	});
     }
-    
+
+    function populateInvoiceDropdown(){
+	$.ajax({
+	    type: 'post',
+	    url: '../invoice/getInvoices.php',
+	    data: {},
+	    success: function(result){
+		for(var i=0; i<result.length; i++){
+		    str = '<option value="' + result[i].invoice_id;
+		    str += '">' + result[i].store_name + '</option>';
+		    $('#invoices').append(str);
+		}
+		$('#invoices').selectpicker('refresh');
+	    }
+	});
+    }
+
     function startup(){
 	loggedin();
 	checkPermissions("Sales Manager");
