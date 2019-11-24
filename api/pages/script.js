@@ -7,6 +7,7 @@ function logout(){
     window.location.href = "login.html";
 }
 
+
 function loggedin(){
     if(docCookies.getItem("userid") == null &&
        window.location.href.indexOf("login.html") == -1){
@@ -35,5 +36,11 @@ function checkPermissions(permissionNeeded){
     var perm = docCookies.getItem("permission");
     if(perm != permissionNeeded && perm != "Admin"){
 	redirectOnPermissions();
+    }
+    
+    if(perm != "Admin"){
+        document.getElementById("adminsub").style.display = 'none';
+    } else {
+        document.getElementById("adminsub").style.display = 'block';
     }
 }
