@@ -53,41 +53,8 @@
             <div class="card-header">
                 <h4 class="card-title text-center">Announcements</h4>
             </div>
-            <div class="card-body">
+            <div class="card-body"  id="announcementsTD" >
                 <!-- Comment List -->
-                <ul class="media-list">
-
-                    <!-- Dummy Comments for reference. To be removed later on -->
-                    <li class="media">
-                        <div class="media-body">
-                            <strong class="text-primary">Administrator</strong>
-                            <small class="text-muted">10:30AM</small>
-                            <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet</p>
-                        </div>
-		    </li>
-
-		    <li class="media">
-                        <div class="media-body">
-                            <strong class="text-primary">Administrator</strong>
-                            <small class="text-muted">10:30AM</small>
-			    <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet</p>
-                        </div>
-                    </li>
-		    <li class="media">
-                        <div class="media-body">
-                            <strong class="text-primary">Administrator</strong>
-                            <small class="text-muted">10:30AM</small>
-                            <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet</p>
-                        </div>
-                    </li>
-		    <li class="media">
-                        <div class="media-body">
-                            <strong class="text-primary">Administrator</strong>
-                            <small class="text-muted">10:30AM</small>
-                            <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet</p>
-                        </div>
-                    </li>
-                </ul>
             </div>
         </div>
 
@@ -169,11 +136,31 @@
             $('#sidebar').toggleClass('active')
         });
 
-        //TODO: Get and display messages --------
 
-	// --------------------------------------
+         $.getJSON("../message/readforTD.php", function (data) {
+            
+            var messagestrTD = '<ul class="media-list">';
 
+            $.each(data.records, function(key,val){
+            var message = val.content;
+            var date_time = val.date_created;
+            var role =   val.role;
+      
+            messagestrTD += `<li class="media">   
+                            <div class="media-body">
+                            <strong class="text-primary">`+ role +`</strong>
+                            <small class="text-muted">` + date_time + `</small>
+                            <p>` + message + `</p>
+                        </div></li>`;
+        
+           });
+
+           $('#announcementsTD').append(messagestrTD);
+       });
 	
+
+
+
         // Add invoice buttons to deliveries list
         //TODO: retrieve actual invoices from db (based on truck driver's associated dispatch_id)
         //TODO: call populatePopup on the invoice id
