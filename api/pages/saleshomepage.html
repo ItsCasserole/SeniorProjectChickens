@@ -15,9 +15,14 @@
 
     <!-- Font Awesome JS -->
     <script src="https://kit.fontawesome.com/412b07d0f6.js" crossorigin="anonymous"></script>
+
+    <!--Cookies-->
+    <script src="docCookies.js"></script>
+    <script src ="script.js"></script>
+
 </head>
 
-<body>
+<body onload="startup()">
 <div class="wrapper">
 
     <!-- Sidebar  -->
@@ -26,17 +31,17 @@
             <div class="sidebar-header"><h3 class="text-center">Simply Fowl</h3></div>
 
             <ul class="list-unstyled components">
-                <li class="active"><a href="#"><i class="fas fa-home fa-fw"></i> Home</a></li>
-                <li><a href="#"><i class="fas fa-box-open fa-fw"></i> Orders</a></li>
-                <li><a href="#"><i class="fas fa-truck fa-fw"></i> Dispatch</a></li>
-                <li><a href="#"><i class="fas fa-briefcase fa-fw"></i> Shipments</a></li>
-                <li><a href="#"><i class="fas fa-wrench fa-fw"></i> Maintenance</a></li>
-                <li>
+                <li class="active"><a><i class="fas fa-home fa-fw"></i> Home</a></li>
+                <li><a href="orders.html"><i class="fas fa-box-open fa-fw"></i> Orders</a></li>
+		<li><a href="dispatch.html"><i class="fas fa-truck fa-fw"></i> Dispatch</a></li>
+                <li><a href="shipping.html"><i class="fas fa-briefcase fa-fw"></i> Shipments</a></li>
+                <li><a href="maintenance.html"><i class="fas fa-wrench fa-fw"></i> Maintenance</a></li>
+                <li id="adminsub">
                     <a href="#adminSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                         <i class="fas fa-user-cog fa-fw"></i> Admin</a>
                     <ul class="collapse list-unstyled" id="adminSubmenu">
-                        <li><a href="#">View Flock Info</a></li>
-                        <li><a href="#">Manage Accounts</a></li>
+                        <li><a href="flockPage.html">View Flock Info</a></li>
+                        <li><a href="accountsmanagement.html">Manage Accounts</a></li>
                     </ul>
                 </li>
             </ul>
@@ -53,7 +58,7 @@
                 <button type="button" id="sidebarCollapse" class="btn"><i class="fas fa-bars"></i></button>
                 <h4 class="nav navbar-nav navbar-center">Sales Homepage</h4>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#">Log Out</a></li>
+                    <li><button type="button" class="btn btn-primary" onclick="logout()">Log Out</button></li>
                 </ul>
             </div>
         </nav>
@@ -78,69 +83,6 @@
                         </div>
                     </li>
 
-                    <li class="media">
-                        <div class="media-body">
-                            <strong class="text-primary">Administrator</strong>
-                            <small class="text-muted">10:30AM</small>
-                            <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet</p>
-                        </div>
-                    </li>
-
-                    <li class="media">
-                        <div class="media-body">
-                            <strong class="text-primary">Administrator</strong>
-                            <small class="text-muted">10:30AM</small>
-                            <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet</p>
-                        </div>
-                    </li>
-
-                    <li class="media">
-                        <div class="media-body">
-                            <strong class="text-primary">Administrator</strong>
-                            <small class="text-muted">10:30AM</small>
-                            <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet</p>
-                        </div>
-                    </li>
-
-                    <li class="media">
-                        <div class="media-body">
-                            <strong class="text-primary">Administrator</strong>
-                            <small class="text-muted">10:30AM</small>
-                            <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet</p>
-                        </div>
-                    </li>
-
-                    <li class="media">
-                        <div class="media-body">
-                            <strong class="text-primary">Administrator</strong>
-                            <small class="text-muted">10:30AM</small>
-                            <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet</p>
-                        </div>
-                    </li>
-
-                    <li class="media">
-                        <div class="media-body">
-                            <strong class="text-primary">Administrator</strong>
-                            <small class="text-muted">10:30AM</small>
-                            <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet</p>
-                        </div>
-                    </li>
-
-                    <li class="media">
-                        <div class="media-body">
-                            <strong class="text-primary">Administrator</strong>
-                            <small class="text-muted">10:30AM</small>
-                            <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet</p>
-                        </div>
-                    </li>
-
-                    <li class="media">
-                        <div class="media-body">
-                            <strong class="text-primary">Administrator</strong>
-                            <small class="text-muted">10:30AM</small>
-                            <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet</p>
-                        </div>
-                    </li>
 
                     <li class="media">
                         <div class="media-body">
@@ -237,4 +179,10 @@
 
 </body>
 
+	<script type="text/javascript">
+		function startup(){
+			loggedin();
+			checkPermissions("Sales Manager");
+		}
+	</script>
 </html>
