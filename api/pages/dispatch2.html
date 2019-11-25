@@ -1,0 +1,396 @@
+<html lang="en" class="gr__ec2-18-207-195-213_compute-1_amazonaws_com"><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <title>Simply Fowl | Dispatch Page</title>
+
+    <!-- Bootstrap CSS CDN -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
+
+
+    <!-- Our Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Font Awesome JS -->
+    <script src="https://kit.fontawesome.com/412b07d0f6.js" crossorigin="anonymous"></script><link rel="stylesheet" href="https://kit-free.fontawesome.com/releases/latest/css/free.min.css" media="all"><link rel="stylesheet" href="https://kit-free.fontawesome.com/releases/latest/css/free-v4-font-face.min.css" media="all"><link rel="stylesheet" href="https://kit-free.fontawesome.com/releases/latest/css/free-v4-shims.min.css" media="all">
+</head>
+
+<body data-gr-c-s-loaded="true">
+<div class="wrapper">
+
+    <!-- Sidebar  -->
+    <div>
+        <nav id="sidebar" class="fixed dispatch">
+            <div class="sidebar-header"><h3 class="text-center">Simply Fowl</h3></div>
+
+            <ul class="list-unstyled components">
+                <li><a href="#"><i class="fas fa-home fa-fw" aria-hidden="true"></i> Home</a></li>
+                <li><a href="#"><i class="fas fa-box-open fa-fw" aria-hidden="true"></i> Orders</a></li>
+                <li class="active"><a href="#"><i class="fas fa-truck fa-fw" aria-hidden="true"></i> Dispatch</a></li>
+                <li><a href="#"><i class="fas fa-briefcase fa-fw" aria-hidden="true"></i> Shipments</a></li>
+                <li><a href="#"><i class="fas fa-wrench fa-fw" aria-hidden="true"></i> Maintenance</a></li>
+                <li>
+                    <a href="#adminSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-user-cog fa-fw" aria-hidden="true"></i> Admin</a>
+                    <ul class="collapse list-unstyled" id="adminSubmenu">
+                        <li><a href="#">View Flock Info</a></li>
+                        <li><a href="#">Manage Accounts</a></li>
+                    </ul>
+                </li>
+            </ul>
+
+        </nav>
+    </div>
+
+
+    <!-- Page Content  -->
+    <div id="content">
+        <!-- Page Header Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <button type="button" id="sidebarCollapse" class="btn"><i class="fas fa-bars" aria-hidden="true"></i></button>
+                <h4 class="nav navbar-nav navbar-center">Dispatches</h4>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#">Log Out</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Individual Page Content Goes Here -->
+
+        <!-- Create New Dispatch Card -->
+        <div class="card mx-auto">
+            <div class="card-header">
+                <h4 class="card-title">Create New Dispatch</h4>
+            </div>
+            <div class="card-body">
+
+                <form>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="truck">Truck</label>
+                            <select id="truck" class="form-control selectpicker ">
+                                <option value="-1">Choose Truck...</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="driver">Driver</label>
+                            <select id="driver" class="form-control selectpicker">
+                                <option value="-1">Choose Driver...</option>
+
+                            </select>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-primary" onclick="selectTruckAndDriver()">Create</button>
+                </form>
+            </div>
+        </div>
+
+        <br>
+
+        <!-- Route Creation -->
+        <div id="routeCard" class="card mx-auto">
+            <div class="card-header">
+                <h4 class="card-title">Create Delivery Route</h4>
+            </div>
+            <div class="card-body">
+                <h5 id="coopsRemaining">No Truck Has Been Selected</h5>
+                <br>
+                <h6 id="currentRouteHeading">Current Route:</h6>
+                <ul id="sortablelist" class="list-group">
+                </ul>
+
+            </div>
+            <div class="card-footer">
+                <button type=button class="btn btn-primary" onclick="createDispatch()">Submit</button>
+                <button type=button class="btn btn-secondary" onclick="clearRoute()">Clear</button>
+            </div>
+        </div>
+
+
+        <br>
+
+        <div id="invoices" class="card mx-auto">
+            <div class="card-header">
+                <h4 class="card-title text-center">Invoices</h4>
+            </div>
+            <div class="card-body">
+                <input id="search" class="form-control" type="text" placeholder="Search">
+                <br>
+                <!-- List of Invoices -->
+                <div id="invoiceList" class="list-group">
+
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+        <!-- Modal -->
+        <div class="modal fade" id="invoiceModal" tabindex="-1" role="dialog" aria-labelledby="invoiceModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="invoiceModalLabel">Invoice Details</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <!-- Individual Order Details will be filled in here -->
+                    <div id="popup" class="modal-body">
+                        <h5>Invoice Number:</h5>
+                        <p id="popupInvoiceNum"></p>
+                        <hr>
+                        <h5>Ordered By:</h5>
+                        <p id="popupInvoiceStoreName"></p>
+                        <p id="popupInvoiceAddress"></p>
+                        <p id="popupInvoiceDate"></p>
+                        <hr>
+
+                        <!-- Table for Orders in Invoice -->
+                        <h5>Order Details</h5>
+                        <div class="table-responsive" id="invoiceOrderTable">
+                            <table class="table table-bordered table-hover" >
+                                <thead>
+                                <tr>
+                                    <th>Bird Type</th>
+                                    <th>Coops</th>
+                                </tr>
+                                </thead>
+
+                                <!-- Orders -->
+                                <tbody id="invoiceOrderTableBody">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="modalAddBtn" type="button" class="btn btn-primary" data-dismiss="modal" onclick="addItem()" disabled>Add</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <br>
+
+
+
+        <!-- END OF INDIVIDUAL PAGE CONTENT -->
+
+    </div>
+</div>
+
+<!-- Needed for bootstrap -->
+<!-- Popper.JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+<!-- Bootstrap JS -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+<!-- Sortable List -->
+<script src="https://cdn.jsdelivr.net/gh/RubaXa/Sortable/Sortable.min.js"></script>
+
+
+<script type="text/javascript">
+    // global variables
+    var truckId = -1;
+    var driverId = -1;
+    var coopsRemaining = -1;
+
+    // Collapse/Open Sidebar
+    $(document).ready(function () {
+        $('#sidebarCollapse').on('click', function () {
+            $('#sidebar').toggleClass('active')
+        });
+
+        // Set up Sortable List
+        Sortable.create(sortablelist, {
+            animation: 150,
+            group: 'list-1',
+            draggable: '.list-group-item',
+            handle: '.list-group-item',
+            sort: true,
+            filter: '.sortable-disabled',
+            chosenClass: 'active'
+        });
+
+
+        // Search Bar Functionality for invoice list
+        $("#search").on("keyup", function()
+            {
+                var value = $(this).val().toLowerCase();
+                $("#invoiceList button").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+
+
+
+        // Add Trucks to dropdown
+        //TODO: retrieve actual trucks from db and have their option value be their truckID
+        var truckStr = "";
+        for (i = 0; i < 10; i++)
+        {
+            truckStr = `<option value="${i}">Truck ${i}</option>`;
+            $('#truck').append(truckStr)
+        }
+
+        // Add Truck Drivers to dropdown
+        //TODO: retrieve actual truck drivers from db and have their option value be their truckdriverID
+        var driverStr = "";
+        for (i = 0; i < 10; i++)
+        {
+            driverStr = `<option value="${i}">Driver ${i}</option>`;
+            $('#driver').append(driverStr)
+        }
+
+
+        // Add invoice buttons to invoice list
+        //TODO: retrieve all non dispatched invoices and add to invoice list,
+        //TODO: where the onclick calls the populatePopup method with the invId as its parameter
+        var invoiceStr = "";
+        var invId = -1;
+        for (i = 0; i < 100; i++)
+        {
+            // TODO: Set invId
+            invId = i;
+            deliveryStr = `<button type="button" class="list-group-item list-group-item-action" data-toggle="modal" data-target="#invoiceModal" onclick="populatePopup(${invId})">List Item ${invId}</button>`;
+            $('#invoiceList').append(deliveryStr)
+        }
+
+        // instanciate selects
+        $('select').selectpicker();
+
+
+        // Hide route card
+        document.getElementById("routeCard").style.display = "none";
+
+    });
+    // End of ready ----------------------------------------------------------------------------------------------------
+
+
+
+    //TODO: Creating the dispatch/route and adding that info into the db
+    function createDispatch() {
+        alert("THIS NEEDS TO BE DONE");
+    }
+
+
+
+    // Change Modal Information based on invoice that was clicked
+    function populatePopup(invoiceId)
+    {
+        //TODO: set coopsInInvoice to the number of coops in an invoice, given an invoice id
+        var coopsInInvoice = invoiceId;
+
+        //TODO: replace the following values with correct values from the specified invoice
+        document.getElementById("popupInvoiceNum").innerHTML = "Invoice Num  " + invoiceId;
+        document.getElementById("popupInvoiceStoreName").innerHTML = "Store Name " + invoiceId;
+        document.getElementById("popupInvoiceAddress").innerHTML = "Address " + invoiceId;
+        document.getElementById("popupInvoiceDate").innerHTML = "Date " + invoiceId;
+
+        // clear table
+        document.getElementById("invoiceOrderTableBody").innerHTML = "";
+
+        // fill table with bird typess and number of coops associated to a given invoiceId
+        var birdType = "";
+        var coopsOfType = 0;
+        var orderRow = "";
+
+        //TODO: fill table with actual bird types and numbers, given invoiceId
+        for (i=0; i < 10; i++) {
+            birdType = `Bird Type ${i}`;
+            coopsOfType = 30;
+            orderRow = `<tr><td>${birdType}</td><td>${coopsOfType}</td></tr>`;
+            $('#invoiceOrderTableBody').append(orderRow);
+        }
+
+
+
+        // check to see if we have a truck and driver
+        if(!(truckId < 0 || driverId < 0))
+        {
+            var addBtn = document.getElementById("modalAddBtn");
+
+            // check to make sure we have enough coops on truck still
+            if(coopsInInvoice <= coopsRemaining) {
+                addBtn.removeAttribute("disabled");
+                addBtn.setAttribute("onclick", `addItem(${invoiceId})`);
+            }
+            else
+            {
+                addBtn.setAttribute("disabled", "true");
+            }
+        }
+    }
+
+    // display route creation card with accurate # of coopsRemaining
+    function selectTruckAndDriver()
+    {
+        truckId = $('#truck').selectpicker('val');
+        driverId = $('#driver').selectpicker('val');
+
+        // check that we have a truck and a driver
+        if (truckId < 0 || driverId < 0)
+        {
+            alert("Please Select a Truck and a Driver");
+        }
+        else
+        {
+
+            document.getElementById("routeCard").style.display = "block";
+
+            //TODO: Set a truck's coop capacity to the coopsRemaining, given truckId
+            coopsRemaining = 100;
+            document.getElementById("coopsRemaining").innerHTML = "Coops Remaining: " + coopsRemaining;
+        }
+
+    }
+
+    // Add Invoice Item to Sortable List
+    function addItem(invoiceId)
+    {
+        //TODO: set coopsInInvoice to the number of coops in an invoice, given an invoice id
+        var coopsInInvoice = invoiceId;
+
+        //TODO: Add Invoice to sortable list, given the invoice ID
+        $('#sortablelist').append(`<li class="list-group-item">List Item ${invoiceId}<span class="delete">x</span></li>`)
+
+        // set up delete button for newly added invoice
+        var deletebtns = document.getElementsByClassName("delete");
+        deletebtns[deletebtns.length-1].addEventListener("click", function () {
+            this.parentElement.remove();
+            // update coopsRemaining
+            coopsRemaining += coopsInInvoice;
+            document.getElementById("coopsRemaining").innerHTML = "Coops Remaining: " + coopsRemaining;
+        });
+
+
+        // Update coops remaining
+        coopsRemaining -= coopsInInvoice;
+        document.getElementById("coopsRemaining").innerHTML = "Coops Remaining: " + coopsRemaining;
+    }
+
+
+    // reset all values, hide route card, disable modal add button.
+    function clearRoute()
+    {
+        document.getElementById("coopsRemaining").innerHTML = "No Truck Has Been Selected";
+        document.getElementById("sortablelist").innerHTML = "";
+        document.getElementById("routeCard").style.display = "none";
+        truckId = -1;
+        driverId = -1;
+        coopsRemaining = -1;
+        document.getElementById("modalAddBtn").setAttribute("disabled","true")
+    }
+
+</script>
+</body>
+</html>
+
