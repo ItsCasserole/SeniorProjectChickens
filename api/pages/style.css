@@ -246,12 +246,7 @@ a[data-toggle="collapse"] {
 
 .delete:hover {background: #bbb;}
 
-#invoiceList {
-    max-height: 300px;
-    overflow: auto;
-}
-
-#sortablelist {
-    max-height: 300px;
-    overflow: auto;
+#invoices .card-body {
+    max-height:400px;
+    overflow:auto;
 }
