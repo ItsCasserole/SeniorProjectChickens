@@ -146,6 +146,16 @@
 				   // get farm id
 				   var id = $(this).find(":selected").val();
 				   // read farm record based on given ID
+				   // if flock not found, alert user
+				   $.ajax({
+    					 url: "../flock/read_farms.php?farm_id=" + id,
+     					success: function(returnData){
+         				         
+     					},
+     					error: function(xhr, status, error){
+         					alert('No flocks found!');
+     					}					
+				    });
 				   $.getJSON("../flock/read_farms.php?farm_id=" + id, function(data){
 					   var readFlock='';
 					   $.each(data.records, function(key,val){
