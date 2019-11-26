@@ -143,7 +143,6 @@
 				   var id = $(this).find(":selected").val();
 				   // read farm record based on given ID
 				   $.getJSON("../flock/read_farms.php?farm_id=" + id, function(data){
-
 					   var readFlock='';
 					   $.each(data.records, function(key,val){
 						   readFlock +=`
@@ -179,6 +178,7 @@
 							   <button class='btn btn-danger m-r-10px removeFlock' data-id='` + val.flock_id + `'>Remove</button>
 							   </td>    
 							   </tr>`;
+						   
 					   });
 					   readFlock += `</table>`;
 					   $('#flockInfo').empty();
