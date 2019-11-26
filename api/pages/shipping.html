@@ -18,8 +18,12 @@
 
         <!-- Font Awesome JS -->
         <script src="https://kit.fontawesome.com/412b07d0f6.js" crossorigin="anonymous"></script>
+
+	<!--Cookies-->
+	<script src="docCookies.js"></script>
+	<script src="script.js"></script>
 </head>
-<body onload="loggedin()">
+<body onload="startup()">
     <div class="wrapper">
         <!-- Sidebar -->
         <div id="sidebar-menu">
@@ -29,15 +33,15 @@
                     <li><a href="saleshomepage.html"><i class="fas fa-home fa-fw"></i> Home</a></li>
                     <li><a href="order.html"><i class="fas fa-box-open fa-fw"></i> Orders</a></li>
                     <li><a href="dispatch.html"><i class="fas fa-truck fa-fw"></i> Dispatch</a></li>
-                    <li class="active"><a href="#"><i class="fas fa-briefcase fa-fw"></i> Shipments</a></li>
+                    <li class="active"><a><i class="fas fa-briefcase fa-fw"></i> Shipments</a></li>
                     <li><a href="maintenance.html"><i class="fas fa-wrench fa-fw"></i> Maintenance</a></li>
-                    <li><a href="#adminSubMenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                    <li id="adminsub"><a href="#adminSubMenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                         <i class="fas fa-user-cog fa-fw"></i> Admin</a>
                         <ul class="collapse list-unstyled" id="adminSubMenu">
                             <li><a href="flockPage.html">View Flock Info</a></li>
                             <li><a href="accountsmanagement.html">Manager Accounts</a></li>
                         </ul></li>
-                    </ul></nav></div>
+		</ul></nav></div>
 
         <!-- Main Page Content -->
 
@@ -267,7 +271,10 @@ var modalTableStr;
 
         }
         
-
+function startup(){
+	loggedin();
+	checkPermissions("Sales Manager");
+}
 
     </script>
 </body>
