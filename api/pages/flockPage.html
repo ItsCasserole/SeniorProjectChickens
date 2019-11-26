@@ -230,9 +230,9 @@
 			   $.getJSON(farm, function(farmData){
 				   $.getJSON(building, function(buildingData){
 					   $.getJSON(bird, function(birdData){
-						   var farmStr = '';
-						   var buildingStr = '';
-						   var birdStr = '';
+						   var farmStr = `<option value=''>Select Farm</option>`;
+						   var buildingStr = `<option value=''>Select Building</option>`;
+						   var birdStr = `<option value=''>Select Bird Type</option>`;
 
 						   $.each(farmData.records, function(key,val){
 							   farmStr +=`<option value='` + val.farm_id + `'>` + val.farm_name + `</option>`;
