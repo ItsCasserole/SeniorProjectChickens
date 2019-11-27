@@ -1,4 +1,7 @@
-<html lang="en" class="gr__ec2-18-207-195-213_compute-1_amazonaws_com"><head>
+
+<html lang="en">
+
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -16,10 +19,10 @@
     <link rel="stylesheet" href="style.css">
 
     <!-- Font Awesome JS -->
-    <script src="https://kit.fontawesome.com/412b07d0f6.js" crossorigin="anonymous"></script><link rel="stylesheet" href="https://kit-free.fontawesome.com/releases/latest/css/free.min.css" media="all"><link rel="stylesheet" href="https://kit-free.fontawesome.com/releases/latest/css/free-v4-font-face.min.css" media="all"><link rel="stylesheet" href="https://kit-free.fontawesome.com/releases/latest/css/free-v4-shims.min.css" media="all">
+    <script src="https://kit.fontawesome.com/412b07d0f6.js" crossorigin="anonymous"></script>
 </head>
 
-<body data-gr-c-s-loaded="true">
+<body>
 <div class="wrapper">
 
     <!-- Sidebar  -->
@@ -111,7 +114,6 @@
             </div>
         </div>
 
-
         <br>
 
         <div id="invoices" class="card mx-auto">
@@ -179,7 +181,74 @@
             </div>
         </div>
 
+
+
+        <!-- ------------------------------------------------------------------------------------------------------- -->
+        <!-- ------------------  COPY THE FOLLOWING HTML AFTER THE FIRST MODAL ------------------------------------- -->
+        <!-- ---------------------- BUT STILL INSIDE THE PAGE CONTENT ---------------------------------------------- -->
+        <!-- ------------------------------------------------------------------------------------------------------- -->
+        <!-- Current Dispatches Card -->
         <br>
+        <div id="dispatches" class="card mx-auto">
+            <div class="card-header">
+                <h4 class="card-title text-center">Current Dispatches</h4>
+            </div>
+            <div class="card-body">
+                <!-- List of Invoices in Route assigned to truck driver -->
+                <div id="dispatchList" class="list-group">
+                </div>
+            </div>
+
+            <!-- Modal -->
+            <div class="modal fade" id="dispatchModal" tabindex="-1" role="dialog" aria-labelledby="dispatchModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="dispatchModalLabel">Dispatch Details</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+
+                        <!-- Individual dispatch Details will be filled in here -->
+                        <div id="dispatchPopup" class="modal-body">
+                            <h5>Truck:</h5>
+                            <p id="popupTruckVIN"></p>
+                            <p id="popupTruckLicense"></p>
+                            <hr>
+                            <h5>Truck Driver:</h5>
+                            <p id="popupTruckDriver"></p>
+
+                            <hr>
+
+                            <!-- Table for deliveries in Dispatch -->
+                            <h5>Dispatch Details</h5>
+                            <div class="table-responsive" id="dispatchTable">
+                                <table class="table table-bordered table-hover" >
+                                    <thead>
+                                    <tr>
+                                        <th>Delivery Route</th>
+                                    </tr>
+                                    </thead>
+
+                                    <!-- Deliveries -->
+                                    <tbody id="dispatchTableBody">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button id="modalEditBtn" type="button" class="btn btn-primary" data-dismiss="modal" onclick="editDispatch()">Edit</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ------------------------------------------------------------------------------------------------------- -->
+        <!-- ------------------------------------------------------------------------------------------------------- -->
+        <!-- ------------------------------------------------------------------------------------------------------- -->
+
 
 
 
@@ -223,12 +292,12 @@
 
         // Search Bar Functionality for invoice list
         $("#search").on("keyup", function()
-            {
-                var value = $(this).val().toLowerCase();
-                $("#invoiceList button").filter(function() {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                });
+        {
+            var value = $(this).val().toLowerCase();
+            $("#invoiceList button").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
             });
+        });
 
 
 
@@ -260,9 +329,34 @@
         {
             // TODO: Set invId
             invId = i;
-            deliveryStr = `<button type="button" class="list-group-item list-group-item-action" data-toggle="modal" data-target="#invoiceModal" onclick="populatePopup(${invId})">List Item ${invId}</button>`;
-            $('#invoiceList').append(deliveryStr)
+            invoiceStr = `<button type="button" class="list-group-item list-group-item-action" data-toggle="modal" data-target="#invoiceModal" onclick="populatePopup(${invId})">List Item ${invId}</button>`;
+            $('#invoiceList').append(invoiceStr)
         }
+
+
+        //==============================================================================================================
+        //=========================     COPY THIS INTO THE READY FU(N)CTION     ========================================
+        //==============================================================================================================
+
+        // Add invoice buttons to invoice list
+        //TODO: retrieve all dispatches and add to dispatch list,
+        //TODO: where the onclick calls the populateDispatchPopup method with the dispId as its parameter
+        var dispatchStr = "";
+        var dispId = -1;
+        for (i = 0; i < 10; i++)
+        {
+            // TODO: Set dispId
+            dispId = i;
+            dispatchStr = `<button type="button" class="list-group-item list-group-item-action" data-toggle="modal" data-target="#dispatchModal" onclick="populateDispatchPopup(${dispId})">Dispatch Item ${dispId}</button>`;
+            $('#dispatchList').append(dispatchStr)
+        }
+        //==============================================================================================================
+        //==============================================================================================================
+        //==============================================================================================================
+
+
+
+
 
         // instanciate selects
         $('select').selectpicker();
@@ -311,8 +405,6 @@
             $('#invoiceOrderTableBody').append(orderRow);
         }
 
-
-
         // check to see if we have a truck and driver
         if(!(truckId < 0 || driverId < 0))
         {
@@ -329,6 +421,70 @@
             }
         }
     }
+
+
+    //==================================================================================================================
+    //==============     COPY THE FOLLOWING TWO FU(N)CTIONS INTO THE PAGE'S JAVASCRIPT      ============================
+    //==================================================================================================================
+
+    function populateDispatchPopup(dispatchId)
+    {
+        //TODO: replace the following values with correct values from the specified dispatch
+        document.getElementById("popupTruckVIN").innerHTML = "VIN:  " + dispatchId;
+        document.getElementById("popupTruckLicense").innerHTML = "License Plate: " + dispatchId;
+        document.getElementById("popupTruckDriver").innerHTML = "Driver " + dispatchId;
+
+        // Clear Table body
+        document.getElementById("dispatchTableBody").innerHTML = "";
+
+        // populate table with dispatch info
+        //TODO: add correct route in table row for each delivery in the dispatch
+        var dispatchRow = "";
+        for (i=0; i < 10; i++) {
+            dispatchRow = `<tr><td>${i+1}. Store: ${i+1}</td></tr>`;
+            $('#dispatchTableBody').append(dispatchRow);
+        }
+
+        // set up modal edit button to display a dispatches delivery route in the sortable list
+        document.getElementById("modalEditBtn").setAttribute("onclick", `editDispatch(${dispatchId})`);
+    }
+
+    function editDispatch(dispatchId) {
+
+        //TODO: update truck and driver values based on dispatchID
+        truckId = dispatchId;
+        driverId = dispatchId;
+
+        //TODO: set coops remaining to truck's max coop capacity
+        coopsRemaining = 100;
+
+        // display truck and driver in selects (just a visual embellishment)
+        $('#truck').selectpicker('val', truckId);
+        $('#driver').selectpicker('val', driverId);
+
+        // reset list
+        document.getElementById("sortablelist").innerHTML = "";
+
+        //TODO: Add each delivery to sortable list using AddItem method
+        for(i=0; i < 5; i++)
+        {
+            addItem(i+1);
+        }
+
+
+        // display and scroll to route card
+        document.getElementById("routeCard").style.display = "block";
+        $('html, body').stop().animate({scrollTop:$('#routeCard').offset().top});
+
+    }
+
+    //==================================================================================================================
+    //==================================================================================================================
+    //==================================================================================================================
+
+
+
+
 
     // display route creation card with accurate # of coopsRemaining
     function selectTruckAndDriver()
@@ -361,7 +517,7 @@
         var coopsInInvoice = invoiceId;
 
         //TODO: Add Invoice to sortable list, given the invoice ID
-        $('#sortablelist').append(`<li class="list-group-item">List Item ${invoiceId}<span class="delete">x</span></li>`)
+        $('#sortablelist').append(`<li class="list-group-item">List Item ${invoiceId}<span class="delete">x</span></li>`);
 
         // set up delete button for newly added invoice
         var deletebtns = document.getElementsByClassName("delete");
