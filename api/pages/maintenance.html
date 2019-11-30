@@ -141,6 +141,45 @@
                 </form>
             </div>
         </div>
+        
+        <div class="card mx-auto">
+            <div class="card-body">
+                <form>
+                    <h3>Add New Driver</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="inputCustomerName">First Name</label>
+                            <input type="text" class="form-control" id="customerName" placeholder="First Name">
+                        </div>
+                    
+                        <div class="form-group">
+                            <label for="inputAddress">Last Name</label>
+                            <input type="text" class="form-control" id="customerAddress" placeholder="Last Name">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="inputCity">Date of Birth</label>
+                            <input type="text" class="form-control" id="customerCity" placeholder="DOB">
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="inputState">License Street</label>
+                            <input type="text" class="form-control" id="customerState" placeholder="Street">
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="inputZip">License Expiration</label>
+                            <input type="text" class="form-control" id="customerZip" placeholder="License Expiration">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPhone">Phone Number</label>
+                        <input type="text" class="form-control" id="customerPhone" placeholder="555 555 5555">
+                    </div>
+                    <button type="submit" class="btn btn-primary" onclick="addCustomer();">Add New Customer</button>
+                    <button type="reset" class="btn btn-secondary">Cancel</button>
+                </form>
+            </div>
+        </div>
 
         <br>
 
