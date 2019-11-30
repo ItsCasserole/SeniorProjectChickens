@@ -201,7 +201,7 @@ $(document).ready(function() {
                 $.getJSON(bird,function(birdData){
                         var birdStr = '';
                         $.each(birdData.records, function(key,val){
-                                birdStr+='<option value="' + val.flock_id + '">' + val.bird_desc + '</option>';
+                                birdStr+='<option value="' + val.flock_id + '">' + val.farm_name + " - " + val.bird_desc + '</option>';
                         });
                         $('.bird1').append(birdStr);
                         $('.bird2').append(birdStr);
