@@ -65,6 +65,8 @@
         <!-- Individual Page Content Goes Here -->
 
         <!-- Add New Customer Card -->
+            <button type="button" class="collapsible">Customer</button>
+    <div class="formContent">
         <div class="card mx-auto">
             <div class="card-body">
                 <form>
@@ -100,11 +102,13 @@
                 </form>
             </div>
         </div>
-
+    </div>
         <br>
 
         <!-- Add New Truck Card -->
-        <div class="card mx-auto">
+    <button type="button" class="collapsible">Truck</button>
+    <div class="formContent">
+          <div class="card mx-auto">
             <div class="card-body">
                 <form>
                     <h3>Add New Truck</h3>
@@ -141,7 +145,10 @@
                 </form>
             </div>
         </div>
-        
+    </div>
+
+            <button type="button" class="collapsible">Driver</button>
+    <div class="formContent">
         <div class="card mx-auto">
             <div class="card-body">
                 <form>
@@ -149,37 +156,38 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label for="inputCustomerName">First Name</label>
-                            <input type="text" class="form-control" id="customerName" placeholder="First Name">
+                            <input type="text" class="form-control" id="driverFirst" placeholder="First Name">
                         </div>
                     
                         <div class="form-group">
                             <label for="inputAddress">Last Name</label>
-                            <input type="text" class="form-control" id="customerAddress" placeholder="Last Name">
+                            <input type="text" class="form-control" id="driverLast" placeholder="Last Name">
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="inputCity">Date of Birth</label>
-                            <input type="text" class="form-control" id="customerCity" placeholder="DOB">
+                            <input type="text" class="form-control" id="driverBirth" placeholder="DOB">
                         </div>
                         <div class="form-group col-md-3">
                             <label for="inputState">License Street</label>
-                            <input type="text" class="form-control" id="customerState" placeholder="Street">
+                            <input type="text" class="form-control" id="driverStreet" placeholder="Street">
                         </div>
                         <div class="form-group col-md-3">
                             <label for="inputZip">License Expiration</label>
-                            <input type="text" class="form-control" id="customerZip" placeholder="License Expiration">
+                            <input type="text" class="form-control" id="driverLE" placeholder="License Expiration">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="inputPhone">Phone Number</label>
-                        <input type="text" class="form-control" id="customerPhone" placeholder="555 555 5555">
+                        <input type="text" class="form-control" id="driverPhone" placeholder="555 555 5555">
                     </div>
-                    <button type="submit" class="btn btn-primary" onclick="addCustomer();">Add New Customer</button>
+                    <button type="submit" class="btn btn-primary" onclick="addDriver();">Add New Driver</button>
                     <button type="reset" class="btn btn-secondary">Cancel</button>
                 </form>
             </div>
         </div>
+    </div>
 
         <br>
 
@@ -275,7 +283,22 @@
     });
 </script>
 
+<script>
+    var coll = document.getElementsByClassName("collapsible");
+    var i;
 
+for (i = 0; i < coll.length; i++) {
+  coll[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+    if (content.style.display === "block") {
+      content.style.display = "none";
+    } else {
+      content.style.display = "block";
+    }
+  });
+}
+</script>
 
 </body>
 	<script type="text/javascript">

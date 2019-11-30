@@ -75,6 +75,38 @@
 		
 
     }
+          function addDriver(){
+        var truckNumber = $('#driverFirst').val();
+        var truckVIN = $('#driverLast').val();
+        var truckPlateNumber = $('#driver').val();
+        var truckMaxCoops = $('#truckMaxCoops').val();
+        var customerZip = $('#customerZip').val();
+        var truck_transmission = '';
+        if ($('#truckTransmission').val() == "A") {
+            truck_transmission = 'Automatic';
+        }
+        else truck_transmission = 'Manual';
+
+        //alert("New Truck:\n" + "num: " + truckNumber + "\nvin: " + truckVIN + "\nplate: " + truckPlateNumber + "\nmax coops: " + truckMaxCoops + "\ntransmission: " + truck_transmission);
+        //ajax code - Connor A
+        $.ajax({
+        type: "POST",
+        url: "../truck/addTruck.php", //php file goes here
+        data:{
+            truckNumber : truckNumber,
+            truckVIN : truckVIN,
+            truckPlateNumber : truckPlateNumber,
+            truckMaxCoops : truckMaxCoops,
+            customerZip : customerZip
+        },
+        success: function(response){
+            alert(response);
+        }
+    });
+	alert("got passed ajax");
+		
+
+    }
     
         function addCustomer(){
         var customerName = $('#customerName').val();

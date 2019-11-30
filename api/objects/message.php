@@ -23,7 +23,7 @@ class Message{
     // read farms
     public function read(){
         // call sql procedure to get query
-	$query = "Select * From Message where date(date_created) = curdate()";
+        $query = "Select * From Message";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
 
