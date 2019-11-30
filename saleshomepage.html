@@ -5,9 +5,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
 
     <title>Simply Fowl | Sales Homepage</title>
-
+     <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
     <!-- Bootstrap CSS CDN -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <!-- Our Custom CSS -->
@@ -15,6 +16,7 @@
 
     <!-- Font Awesome JS -->
     <script src="https://kit.fontawesome.com/412b07d0f6.js" crossorigin="anonymous"></script>
+    <script src ="main.js"></script>
 </head>
 
 <body>
@@ -65,142 +67,53 @@
             <div class="card-header">
                 <h4 class="card-title text-center">Announcements</h4>
             </div>
-            <div class="card-body">
+            <div id="announcementBody" class="card-body">
                 <!-- Comment List -->
-                <ul class="media-list">
-
-                    <!-- Dummy Comments for reference. To be removed later on -->
-                    <li class="media">
-                        <div class="media-body">
-                            <strong class="text-primary">Administrator</strong>
-                            <small class="text-muted">10:30AM</small>
-                            <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet</p>
-                        </div>
-                    </li>
-
-                    <li class="media">
-                        <div class="media-body">
-                            <strong class="text-primary">Administrator</strong>
-                            <small class="text-muted">10:30AM</small>
-                            <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet</p>
-                        </div>
-                    </li>
-
-                    <li class="media">
-                        <div class="media-body">
-                            <strong class="text-primary">Administrator</strong>
-                            <small class="text-muted">10:30AM</small>
-                            <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet</p>
-                        </div>
-                    </li>
-
-                    <li class="media">
-                        <div class="media-body">
-                            <strong class="text-primary">Administrator</strong>
-                            <small class="text-muted">10:30AM</small>
-                            <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet</p>
-                        </div>
-                    </li>
-
-                    <li class="media">
-                        <div class="media-body">
-                            <strong class="text-primary">Administrator</strong>
-                            <small class="text-muted">10:30AM</small>
-                            <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet</p>
-                        </div>
-                    </li>
-
-                    <li class="media">
-                        <div class="media-body">
-                            <strong class="text-primary">Administrator</strong>
-                            <small class="text-muted">10:30AM</small>
-                            <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet</p>
-                        </div>
-                    </li>
-
-                    <li class="media">
-                        <div class="media-body">
-                            <strong class="text-primary">Administrator</strong>
-                            <small class="text-muted">10:30AM</small>
-                            <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet</p>
-                        </div>
-                    </li>
-
-                    <li class="media">
-                        <div class="media-body">
-                            <strong class="text-primary">Administrator</strong>
-                            <small class="text-muted">10:30AM</small>
-                            <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet</p>
-                        </div>
-                    </li>
-
-                    <li class="media">
-                        <div class="media-body">
-                            <strong class="text-primary">Administrator</strong>
-                            <small class="text-muted">10:30AM</small>
-                            <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet</p>
-                        </div>
-                    </li>
-
-                    <li class="media">
-                        <div class="media-body">
-                            <strong class="text-primary">Administrator</strong>
-                            <small class="text-muted">10:30AM</small>
-                            <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet</p>
-                        </div>
-                    </li>
-
-                    <li class="media">
-                        <div class="media-body">
-                            <strong class="text-primary">Administrator</strong>
-                            <small class="text-muted">10:30AM</small>
-                            <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet</p>
-                        </div>
-                    </li>
-                </ul>
+                
             </div>
             
             <div class="card-footer">
                 <!-- New Announcement Button to trigger modal -->
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newAnnouncementModal">
+                <button type="button" id="postAnnouncent" class="btn btn-primary" data-toggle="modal" data-target="#newAnnouncementModal">
                     New Announcement
                 </button>
-
+           
                 <!-- Modal -->
                 <div class="modal fade" id="newAnnouncementModal" tabindex="-1" role="dialog" aria-labelledby="newAnnouncementModal" aria-hidden="true">
                     <div class="modal-dialog modal-lg" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="newAnnouncementModalLabel">New Announcement</h5>
+                                <h5 class="modal-title" id="newAnnouncementModalLabel" onclick="return test();">New Announcement</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form>
+                                <form id="createMessage" action="#" method="POST">
                                     <!-- Text Area -->
                                     <div class="form-group">
+                                        
                                         <label for="announcementTextarea"><strong>Announcement:</strong></label>
-                                        <textarea class="form-control" id="announcementTextarea" rows="4" placeholder="Write your message here..."></textarea>
+                                        <textarea class="form-control" name="content" id="announcementTextarea" rows="4" placeholder="Write your message here..."></textarea>
                                     </div>
                                     <!-- Checkboxes -->
                                     <h6>Recipients:</h6>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" id="salesCheckbox" value="sales">
+                                        <input class="form-check-input"  type="checkbox" name='salesmanager_flag' id="salesCheckbox" value="sales">
                                         <label class="form-check-label" for="salesCheckbox">Sales Managers</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" id="flockCheckbox" value="flock">
+                                        <input class="form-check-input" type="checkbox" name='flockmanager_flag' id="flockCheckbox" value="flock">
                                         <label class="form-check-label" for="flockCheckbox">Flock Managers</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" id="truckCheckbox" value="truck">
+                                        <input class="form-check-input" type="checkbox" name='truckdriver_flag' id="truckCheckbox" value="truck">
                                         <label class="form-check-label" for="truckCheckbox">Truck Drivers</label>
                                     </div>
                                     <br>
                                     <br>
-                                    <button type="submit" class="btn btn-primary">Post Announcement</button>
-                                    <button type="reset" class="btn btn-secondary">Clear</button>
+                                    <button type="submit" class="btn btn-primary" onclick="postMessage();">Post Announcement</button>
+                                    <button type="button" class="btn btn-secondary" onclick="return test();">Clear</button>
                                 </form>
                             </div>
                         </div>
@@ -216,8 +129,6 @@
 </div>
 
 <!-- Needed for bootstrap -->
-<!-- jQuery CDN - Slim version (=without AJAX) -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <!-- Popper.JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
 <!-- Bootstrap JS -->
@@ -228,9 +139,26 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $('#sidebarCollapse').on('click', function () {
-            $('#sidebar').toggleClass('active')
+            $('#sidebar').toggleClass('active');
         });
     });
+    $.getJSON("../message/readForSH.php", function (data) {
+            
+            var messagestrTD = '<ul class="media-list">';
+
+            $.each(data.records, function(key,val){
+            var message = val.content;
+            var date_time = val.date_created;
+            var role =   val.role;
+      
+            messagestrTD += `<li class="media">   
+                            <div class="media-body">
+                            <strong class="text-primary">`+ role +`</strong>
+                            <small class="text-muted">` + date_time + `</small>
+                            <p>` + message + `</p>
+                        </div></li>`;
+        
+           });
 </script>
 
 

@@ -1,3 +1,13 @@
+<?php
+session_start();
+if (!include('connect.php')) {
+  die('error finding connect file');
+}
+if(!isset($_SESSION["userid"])){
+  header("location: login/login.php");
+}
+$dbh = ConnectDB();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,7 +15,6 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
 
     <title>Simply Fowl | Sales Homepage</title>
 
@@ -16,14 +25,9 @@
 
     <!-- Font Awesome JS -->
     <script src="https://kit.fontawesome.com/412b07d0f6.js" crossorigin="anonymous"></script>
-
-    <!--Cookies-->
-    <script src="docCookies.js"></script>
-    <script src ="sm_mt.js"></script>
-
 </head>
 
-<body onload="startup()">
+<body>
 <div class="wrapper">
 
     <!-- Sidebar  -->
@@ -32,17 +36,17 @@
             <div class="sidebar-header"><h3 class="text-center">Simply Fowl</h3></div>
 
             <ul class="list-unstyled components">
-                <li class="active"><a><i class="fas fa-home fa-fw"></i> Home</a></li>
-                <li><a href="orders.html"><i class="fas fa-box-open fa-fw"></i> Orders</a></li>
-		<li><a href="dispatch.html"><i class="fas fa-truck fa-fw"></i> Dispatch</a></li>
-                <li><a href="shipping.html"><i class="fas fa-briefcase fa-fw"></i> Shipments</a></li>
-                <li><a href="maintenance.html"><i class="fas fa-wrench fa-fw"></i> Maintenance</a></li>
-                <li id="adminsub">
+                <li class="active"><a href="#"><i class="fas fa-home fa-fw"></i> Home</a></li>
+                <li><a href="#"><i class="fas fa-box-open fa-fw"></i> Orders</a></li>
+                <li><a href="#"><i class="fas fa-truck fa-fw"></i> Dispatch</a></li>
+                <li><a href="#"><i class="fas fa-briefcase fa-fw"></i> Shipments</a></li>
+                <li><a href="#"><i class="fas fa-wrench fa-fw"></i> Maintenance</a></li>
+                <li>
                     <a href="#adminSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                         <i class="fas fa-user-cog fa-fw"></i> Admin</a>
                     <ul class="collapse list-unstyled" id="adminSubmenu">
-                        <li><a href="flockPage.html">View Flock Info</a></li>
-                        <li><a href="accountsmanagement.html">Manage Accounts</a></li>
+                        <li><a href="#">View Flock Info</a></li>
+                        <li><a href="#">Manage Accounts</a></li>
                     </ul>
                 </li>
             </ul>
@@ -57,9 +61,9 @@
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
                 <button type="button" id="sidebarCollapse" class="btn"><i class="fas fa-bars"></i></button>
-                <h4 class="nav navbar-nav navbar-center">Sales Homepage</h4>
+                <h4 class="nav navbar-nav navbar-center">Sales Home</h4>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><button type="button" class="btn btn-primary" onclick="logout()">Log Out</button></li>
+                    <li><a href="#">Log Out</a></li>
                 </ul>
             </div>
         </nav>
@@ -71,7 +75,7 @@
             <div class="card-header">
                 <h4 class="card-title text-center">Announcements</h4>
             </div>
-            <div class="card-body" id="announcementsSM">
+            <div class="card-body">
                 <!-- Comment List -->
                 <ul class="media-list">
 
@@ -84,30 +88,28 @@
                         </div>
                     </li>
 
-
-                    <li class="media">
-                        <div class="media-body">
-                            <strong class="text-primary">Administrator</strong>
-                            <small class="text-muted">10:30AM</small>
-                            <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet</p>
-                        </div>
-                    </li>
-
-                    <li class="media">
-                        <div class="media-body">
-                            <strong class="text-primary">Administrator</strong>
-                            <small class="text-muted">10:30AM</small>
-                            <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet</p>
-                        </div>
-                    </li>
+ <?php
+                                $sql = "USE chickens; ";
+                                $sql = "select content, timestamp from Message;";
+                                echo $sql;
+                                $stmt = $dbh->prepare($sql);
+                                $stmt->execute();
+                                foreach ($stmt->fetchAll() as $rows) {
+                                  echo '<li class="media">';
+                                  echo '<div class="media-body">';
+                                  echo   '<strong class="text-primary">Administrator</strong>';
+                                  echo   '<small class="text-muted">' . $rows['timestamp'] . '</small>';
+                                  echo   '<p>' . $rows['content'] . '</p>';
+                                  echo  '</div>';
+                                  echo '</li>';
+                                }
+                                ?>
                 </ul>
             </div>
             
             <div class="card-footer">
                 <!-- New Announcement Button to trigger modal -->
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newAnnouncementModal">
-                    New Announcement
-                </button>
+
 
                 <!-- Modal -->
                 <div class="modal fade" id="newAnnouncementModal" tabindex="-1" role="dialog" aria-labelledby="newAnnouncementModal" aria-hidden="true">
@@ -123,26 +125,26 @@
                                 <form>
                                     <!-- Text Area -->
                                     <div class="form-group">
-                                        <label for="messageContent"><strong>Announcement:</strong></label>
-                                        <textarea id="messageContent" name="messageContent " class="form-control" rows="4" placeholder="Write your message here..."></textarea>
+                                        <label for="announcementTextarea"><strong>Announcement:</strong></label>
+                                        <textarea class="form-control" id="announcementTextarea" name="announcementTextarea" rows="4" placeholder="Write your message here..."></textarea>
                                     </div>
                                     <!-- Checkboxes -->
                                     <h6>Recipients:</h6>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" name="salesmanager_flag" id="salesmanager_flag" value="1">
+                                        <input class="form-check-input" type="checkbox" id="salesCheckbox" value="sales">
                                         <label class="form-check-label" for="salesCheckbox">Sales Managers</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" name="flockmanager_flag" id="flockmanager_flag" value="1">
+                                        <input class="form-check-input" type="checkbox" id="flockCheckbox" value="flock">
                                         <label class="form-check-label" for="flockCheckbox">Flock Managers</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" name="truckdriver_flag" id="truckdriver_flag" value="1">
+                                        <input class="form-check-input" type="checkbox" id="truckCheckbox" value="truck">
                                         <label class="form-check-label" for="truckCheckbox">Truck Drivers</label>
                                     </div>
                                     <br>
                                     <br>
-                                    <button id="modal-button" type="submit"  class="btn btn-primary" onclick="postMessage();">Post Announcement</button>
+                                    <button type="submit" class="btn btn-primary" onclick="writeMessage();">Post Announcement</button>
                                     <button type="reset" class="btn btn-secondary">Clear</button>
                                 </form>
                             </div>
@@ -159,6 +161,8 @@
 </div>
 
 <!-- Needed for bootstrap -->
+<!-- jQuery CDN - Slim version (=without AJAX) -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <!-- Popper.JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
 <!-- Bootstrap JS -->
@@ -171,47 +175,21 @@
         $('#sidebarCollapse').on('click', function () {
             $('#sidebar').toggleClass('active')
         });
-
-
-         $.getJSON("../message/readforSM.php", function (data) {
-            
-            var messagestrTD = '<ul class="media-list">';
-
-            $.each(data.records, function(key,val){
-            var message = val.content;
-            var date_time = val.date_created;
-            var role =   val.role;
-      
-            messagestrTD += `<li class="media">   
-                            <div class="media-body">
-                            <strong class="text-primary">`+ role +`</strong>
-                            <small class="text-muted">` + date_time + `</small>
-                            <p>` + message + `</p>
-                        </div></li>`;
-        
-           });
-
-           $('#announcementsSM').append(messagestrTD);
-       });
-	
-
-
-
- });
+    });
 </script>
-
-<script>
- $(document).on("click", "#modal-button", function(event){
-    alert( $("#messageContent")[0].value ); 
-});
-</script>
+<?php
+    function writeMessage(){
+                                $sql = "USE chickens; ";
+                                $sql = "Insert  Into chickens.Message (content) values ('". $_POST['announcementTextarea'. "].' )"
+                                echo $sql;
+                                $stmt = $dbh->prepare($sql);
+                                $stmt->execute();
+    }
+    if (isset($_POST['announcementTextarea'])) {
+    writeMessage();
+  }
+                                ?>
 
 </body>
 
-	<script type="text/javascript">
-		function startup(){
-			loggedin();
-			checkPermissions("Admin");
-		}
-	</script>
 </html>

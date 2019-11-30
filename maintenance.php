@@ -1,12 +1,10 @@
 <?php
-session_start();
+
 if (!include('connect.php')) {
   die('error finding connect file');
   
 }
-if(!isset($_SESSION["userid"])){
-  header("location:login/login.php");
-}
+
  $dbh = ConnectDB();
 ?>
 <!DOCTYPE html>

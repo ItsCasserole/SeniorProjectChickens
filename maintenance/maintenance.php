@@ -1,3 +1,10 @@
+<?php
+session_start();
+if(!isset($_SESSION["userid"])){
+  header("location:login/login.php");
+}
+ $dbh = ConnectDB();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,6 +13,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+    <script type='text/javascript' src='main.js'></script>
+
     <title>Simply Fowl | Maintenance</title>
 
     <!-- Bootstrap CSS CDN -->
@@ -15,13 +24,10 @@
 
     <!-- Font Awesome JS -->
     <script src="https://kit.fontawesome.com/412b07d0f6.js" crossorigin="anonymous"></script>
-    
-    <!--Cookies-->
-    <script src="docCookies.js"></script>
-    <script src="sm_mt.js"></script>
+     
 </head>
 
-<body onload="startup()">
+<body>
 <div class="wrapper">
 
     <!-- Sidebar  -->
@@ -30,17 +36,17 @@
             <div class="sidebar-header"><h3 class="text-center">Simply Fowl</h3></div>
 
             <ul class="list-unstyled components">
-                <li><a href="saleshomepage.html"><i class="fas fa-home fa-fw"></i> Home</a></li>
-		<li><a href="order.html"><i class="fas fa-box-open fa-fw"></i> Orders</a></li>
-                <li><a href="dispatch.html"><i class="fas fa-truck fa-fw"></i> Dispatch</a></li>
-                <li><a href="shipping.html"><i class="fas fa-briefcase fa-fw"></i> Shipments</a></li>
-                <li class="active"><a><i class="fas fa-wrench fa-fw"></i> Maintenance</a></li>
-		<li id="adminsub"> 
+                <li><a href="#"><i class="fas fa-home fa-fw"></i> Home</a></li>
+                <li><a href="#"><i class="fas fa-box-open fa-fw"></i> Orders</a></li>
+                <li><a href="#"><i class="fas fa-truck fa-fw"></i> Dispatch</a></li>
+                <li><a href="#"><i class="fas fa-briefcase fa-fw"></i> Shipments</a></li>
+                <li class="active"><a href="#"><i class="fas fa-wrench fa-fw"></i> Maintenance</a></li>
+                <li>
                     <a href="#adminSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                         <i class="fas fa-user-cog fa-fw"></i> Admin</a>
                     <ul class="collapse list-unstyled" id="adminSubmenu">
-                        <li><a href="flockPage.html">View Flock Info</a></li>
-                        <li><a href="accountsmanagement.html">Manage Accounts</a></li>
+                        <li><a href="#">View Flock Info</a></li>
+                        <li><a href="#">Manage Accounts</a></li>
                     </ul>
                 </li>
             </ul>
@@ -56,8 +62,9 @@
             <div class="container-fluid">
                 <button type="button" id="sidebarCollapse" class="btn"><i class="fas fa-bars"></i></button>
                 <h4 class="nav navbar-nav navbar-center">Maintenance</h4>
+                <p id="text" style="display:none">Checkbox is CHECKED!</p>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><button type="button" class="btn btn-primary" onclick="logout()">Log Out</button></li>
+                    <li><a href="#">Log Out</a></li>
                 </ul>
             </div>
         </nav>
@@ -71,31 +78,31 @@
                     <h3>Add New Customer</h3>
                     <div class="form-group">
                         <label for="inputCustomerName">Customer Name</label>
-                        <input type="text" class="form-control" id="customerName" placeholder="Name">
+                        <input type="text" class="form-control" id="inputCustomerName" placeholder="Name">
                     </div>
                     <div class="form-group">
                         <label for="inputAddress">Address</label>
-                        <input type="text" class="form-control" id="customerAddress" placeholder="1234 Main St">
+                        <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="inputCity">City</label>
-                            <input type="text" class="form-control" id="customerCity" placeholder="City">
+                            <input type="text" class="form-control" id="inputCity" placeholder="City">
                         </div>
                         <div class="form-group col-md-3">
                             <label for="inputState">State</label>
-                            <input type="text" class="form-control" id="customerState" placeholder="State">
+                            <input type="text" class="form-control" id="inputState" placeholder="State">
                         </div>
                         <div class="form-group col-md-3">
                             <label for="inputZip">Zip Code</label>
-                            <input type="text" class="form-control" id="customerZip" placeholder="Zip Code">
+                            <input type="text" class="form-control" id="inputZip" placeholder="Zip Code">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="inputPhone">Phone Number</label>
-                        <input type="text" class="form-control" id="customerPhone" placeholder="555 555 5555">
+                        <input type="text" class="form-control" id="inputPhone" placeholder="555 555 5555">
                     </div>
-                    <button type="submit" class="btn btn-primary" onclick="addCustomer();">Add New Customer</button>
+                    <button type="submit" class="btn btn-primary" onclick="addCustomer()">Add New Customer</button>
                     <button type="reset" class="btn btn-secondary">Cancel</button>
                 </form>
             </div>
@@ -119,7 +126,7 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label for="inputLicensePlate">License Plate</label>
-                            <input type="text" class="form-control" id="truckLicensePlate" placeholder="License Plate">
+                            <input type="text" class="form-control" id="truckPlateNumber" placeholder="License Plate">
                         </div>
                     </div>
                     <div class="form-row">
@@ -129,14 +136,14 @@
                         </div>
                         <div class="form-group col-md-3">
                             <label for="inputTransmission">Transmission</label>
-                            <select id="inputTransmission" class="form-control">
+                            <select id="truckTransmission" class="form-control">
                                 <option selected>Automatic</option>
                                 <option>Manual</option>
                             </select>
                         </div>
                     </div>
 
-                    <button type="submit" class="btn btn-primary" onclick="addTruck();">Add New Truck</button>
+                    <button type="submit" class="btn btn-primary" onclick="addTruck()">Add New Truck</button>
                     <button type="reset" class="btn btn-secondary">Cancel</button>
                 </form>
             </div>
@@ -163,10 +170,56 @@
                                 </tr>
                             </thead>
                             <tbody id="myTable">
+                            <!-- Dummy table rows, to be replaced with actually Database values -->
+                                <tr>
+                                    <td>1</td>
+                                    <td>12345678901234567</td>
+                                    <td>LICENSE</td>
+                                    <td>400</td>
+                                    <td class="text-center">
+                                        <div class="btn-group-toggle " data-toggle="buttons">
+                                          <label class="btn  btn-circle btn-sm active ">
+                                                <input id = "myCheck" type="checkbox"  onclick="changeStatus(11);"/>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                
+                                <?php
+                                $sql = "USE chickens; ";
+                                $sql = "select truck_id,truck_number, truck_vin, truck_plate_number,truck_max_coops, truck_status ";
+                                $sql .= "FROM chickens.Truck;";
+                                echo $sql;
+                                $stmt = $dbh->prepare($sql);
+                                $stmt->execute();
+                                foreach ($stmt->fetchAll() as $rows) {
+                                  if ($rows['truck_status'] == 1)
+                                    $state = 'active';
+                                  else
+                                    $state = '';
+                                  
+                                  echo '<tr>';
+                                  echo "<td>". $rows['truck_number'] . "</td>";
+                                  echo  "<td>".$rows['truck_vin']."</td>";
+                                  echo  "<td>".$rows['truck_plate_number']."</td>";
+                                  echo  "<td>".$rows['truck_max_coops']."</td>";
+                                  echo '<td class="text-center">';
+                                  echo      '<div class="btn-group-toggle " data-toggle="buttons">';
+                                  echo          '<label class="btn  btn-circle btn-sm ' .$state . ' ">';
+                                  echo             '<input type="checkbox" id = "checkBox" checked autocomplete = off onclick="changeStatus(' . $rows['truck_id']. ')" />';
+                                  echo          '</label>';
+                                  echo      '</div>';
+                                  echo  '</td>';
+                                  echo '</tr>';
+                                }
+                                ?>
 
 
                             </tbody>
+                            
                         </table>
+                        
                     </div>
                 </div>
             </div>
@@ -179,8 +232,10 @@
     </div>
 </div>
 
-<!-- Needed for bootstrap -->
 
+
+<!-- Needed for bootstrap -->
+<!-- jQuery CDN - Slim version (=without AJAX) -->
 <!-- Popper.JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
 <!-- Bootstrap JS -->
@@ -193,35 +248,7 @@
         $('#sidebarCollapse').on('click', function () {
             $('#sidebar').toggleClass('active')
         });
-
-
-         $.getJSON("../truck/read.php", function (data) {
-            
-            var trucks = ''
-
-            $.each(data.records, function(key,val){
-            var truck_status = val.truck_status;
-            var truck_vin = val.truck_vin;
-            var truck_plate_number =   val.truck_plate_number;
-            var truck_transmition = val.truck_transmition;
-            var truck_number = val.truck_number;
-            var truck_max_coops = val.truck_max_coops;
-
-            trucks +='<tr> <td>' + truck_number + '</td> <td>'+ truck_vin +'</td> <td>'+ truck_plate_number +'</td> <td>'+truck_max_coops +'</td> <td class="text-center"> <div class="btn-group-toggle " data-toggle="buttons"> <label class="btn  btn-circle btn-sm active"> <input type="checkbox" checked autocomplete="off"> </label> </div> </td> </tr>	';
-            
-            
-            
-
-        
-           });
-
-           $('#myTable').append(trucks);
-       });
-
-
-
-
- });
+    });
 </script>
 
 <!-- Search Table functionality -->
@@ -234,17 +261,31 @@
             });
         });
     });
+
+</script>
+
+
+<script>
+function myFunction() {
+  // Get the checkbox
+  var checkBox = document.getElementById("myCheck");
+  // Get the output text
+  var text = document.getElementById("text");
+
+  // If the checkbox is checked, display the output text
+  if (checkBox.checked == true){
+    text.style.display = "block";
+  } else {
+    text.style.display = "none";
+  }
+}
 </script>
 
 
 
 </body>
-	<script type="text/javascript">
-	 	function startup(){
-			loggedin();
-			checkPermissions("Sales Manager");
-		}
-        </script>
+
+
 
 </html>
 

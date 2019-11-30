@@ -1,5 +1,7 @@
 @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
 
+
+
 .wrapper {
     display: flex;
     align-items: stretch;
@@ -8,7 +10,6 @@
 #content {
     width: 100%;
     padding: 20px;
-    min-height: 100vh;
     transition: all 0.3s;
 }
 
@@ -32,13 +33,15 @@ a, a:hover, a:focus {
 #sidebar {
     min-width: 250px;
     max-width: 250px;
-    min-height: 100vh;
-    height: 100%;
+    height: 200vh;
     background: saddlebrown;
     color: #fff;
     transition: all 0.3s;
 }
 
+#sidebar.maintenance{
+    height: 200vh;
+}
 
 #sidebar.active {
     margin-left: -250px;
@@ -84,6 +87,8 @@ a[data-toggle="collapse"] {
     right: 20px;
     transform: translateY(-50%);
 }
+
+
 
 .navbar {
     padding: 15px 10px;
@@ -148,102 +153,3 @@ a[data-toggle="collapse"] {
     overflow: auto;
 }
 
-#truckAnnouncements .card-body {
-    max-height:250px;
-    overflow:auto;
-}
-
-#deliveries .card-body {
-    max-height:400px;
-    overflow:auto;
-}
-
-.btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited, .btn-primary:visited, .btn-primary:focus{
-    color: #fff;
-    background: saddlebrown;
-    border-color: saddlebrown;
-}
-
-.list-group-item.active {
-    background: saddlebrown;
-    border-color: saddlebrown;
-}
-
-.custom-select option:hover {
-    background: saddlebrown;
-    border-color: saddlebrown;
-}
-
-.btn-primary:disabled{
-    color: #fff;
-    background-color: #5e5a5a;
-    border-color: #5e5a5a;
-}
-
-.m-r-10px{ margin-right:10px; }
-.m-b-10px{ margin-bottom:10px; }
-.m-b-15px{ margin-bottom:15px; }
-.m-b-20px{ margin-bottom:20px; }
-.w-5-pct{ width:5%; }
-.w-10-pct{ width:10%; }
-.w-15-pct{ width:15%; }
-.w-20-pct{ width:20%; }
-.w-25-pct{ width:25%; }
-.w-30-pct{ width:30%; }
-.w-35-pct{ width:35%; }
-.w-40-pct{ width:40%; }
-.w-45-pct{ width:45%; }
-.w-50-pct{ width:50%; }
-.w-55-pct{ width:55%; }
-.w-60-pct{ width:60%; }
-.w-65-pct{ width:65%; }
-.w-70-pct{ width:70%; }
-.w-75-pct{ width:75%; }
-.w-80-pct{ width:80%; }
-.w-85-pct{ width:85%; }
-.w-90-pct{ width:90%; }
-.w-95-pct{ width:95%; }
-.w-100-pct{ width:100%; }
-.display-none{ display:none; }
-.padding-bottom-2em{ padding-bottom:2em; }
-.width-30-pct{ width:30%; }
-.width-40-pct{ width:40%; }
-.overflow-hidden{ overflow:hidden; }
-.margin-right-1em{ margin-right:1em; }
-.right-margin{ margin:0 .5em 0 0; }
-.margin-bottom-1em { margin-bottom:1em; }
-.margin-zero{ margin:0; }
-.text-align-center{ text-align:center; }
-
-
-
-#invoiceOrderTable{
-    max-height: 300px;
-    overflow: auto;
-}
-
-#dispatchInvoiceTable{
-    max-height: 300px;
-    overflow: auto;
-}
-
-#dispatches .card-body {
-    max-height:600px;
-    overflow:auto;
-}
-
-.delete {
-    cursor: pointer;
-    position: absolute;
-    top: 50%;
-    right: 0%;
-    padding: 12px 16px;
-    transform: translate(0%, -50%);
-}
-
-.delete:hover {background: #bbb;}
-
-#invoices .card-body {
-    max-height:400px;
-    overflow:auto;
-}

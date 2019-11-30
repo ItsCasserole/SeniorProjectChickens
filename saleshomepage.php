@@ -1,11 +1,9 @@
 <?php
-session_start();
+//session_start();
 if (!include('connect.php')) {
   die('error finding connect file');
 }
-if(!isset($_SESSION["userid"])){
-  header("location: login/login.php");
-}
+
 $dbh = ConnectDB();
 ?>
 
@@ -110,7 +108,7 @@ $dbh = ConnectDB();
             <div class="card-footer">
                 <!-- New Announcement Button to trigger modal -->
 		<?php
-			if($_SESSION["permission"] == "Admin"){
+			if(1 == 1){
 			    echo "<button type=\"button\" class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#newAnnouncementModal\">New Announcement</button>";
 			}
 		?>
