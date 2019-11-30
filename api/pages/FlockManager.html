@@ -35,6 +35,14 @@
 				<li><a id="homelink" href="#"><i class="fas fa-home fa-fw"></i> Home</a></li>
                                 <li><a href="flockPage.html"><i class="fas fa-feather fa-fw"></i> Manage Flocks</a></li>
                                 <li><a href="farmPage.html"><i class="fas fa-tractor fa-fw"></i> Manage Farms </a></li>
+				<li id="adminsub">
+                    			<a href="#adminSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        		<i class="fas fa-user-cog fa-fw"></i> Admin</a>
+                    			<ul class="collapse list-unstyled" id="adminSubmenu">
+                        			<li><a href="saleshomepage.html">Sales Homepage</a></li>
+                        			<li><a href="accountsmanagement.html">Manage Accounts</a></li>
+                    			</ul>
+                		</li>
                         </ul>
                 </nav>
         </div>
@@ -138,7 +146,7 @@
 
         <script type="text/javascript">
                 $(document).ready(function () {
-			                $.getJSON("../message/read.php",function(data){
+			$.getJSON("../message/read.php",function(data){
                         var messagestr = '<ul class="media-list">';
                         $.each(data.records, function(key,val){
                                 messagestr += `<li class="media">
