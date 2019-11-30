@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content = "width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content = "IE=edge">
+		<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+		<script type='text/javascript' src='main.js'></script>
+		<title>Simply Fowl | Flock Manager</title>
+
+		<!-- Bootstrap CSS CDN -->
+		<link rel="stylesheet" 
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" 
+ integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" 
+ crossorigin="anonymous">
+
+		<!-- Our Custom CSS -->
+		<link rel="stylesheet" href="style.css">
+
+		<!-- Font Awesome JS --!>
+	  <script src="https://kit.fontawesome.com/412b07d0f6.js" crossorigin="anonymous"></script>
+	  
+	  <!--Cookies-->
+	  <script src="docCookies.js"></script>
+	  <script src="script.js"></script>
+	</head>
+	<body onload="startup()">
+		<div class="wrapper">
+			<!--Sidebar--!>
+	   <div>
+	   <nav id="sidebar" class="fixed">
+	   <div class="sidebar-header"><h3 class="text-center">Simply Fowl</h3></div>
+	   <ul class="list-unstyled components">
+	   <li><a href="FlockManager.html"><i class="fas fa-home fa-fw"></i> Home</a></li>
+	   <li><a href="flockPage.html"><i class="fas fa-feather fa-fw"></i> Manage Flocks</a></li>
+	   <li class="active"><a href="#"><i class="fas fa-tractor fa-fw"></i> Manage Farms </a></li>
+	   </ul>
+	   </nav>
+	   </div>
+	   <!--page content--!>
+	    <div id="content">
+
+	    <!-- Page Header Navbar -->
+	    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+		    <div class="container-fluid">
+			    <button type="button" id="sidebarCollapse" class="btn"><i class="fas fa-bars"></i></button>
+			    <h4 class="nav navbar-nav navbar-center">Manage Farms</h4>
+			    <ul class="nav navbar-nav navbar-right">
+				    <li><button type="button" class="btn btn-primary" onclick="logout()">Log Out</button></li>
+			    </ul>
+		    </div>
+	    </nav>
+
+
+	    <!--farm info box--!>
+	     <div class="card">
+	     <div class ="card-body">
+	     <h5 class="card-title">Available Farms</h5>
+
+	     <!--dropdown--!>
+	      <select class="farmList" class="form-control"></select>
+	      <br><br>
+	      <div class='btn btn-primary pull-right m-b-15px showFarmTable'>
+	      <span class='glyphicon glyphicon-plus'></span> Show All Farms
+	      </div>
+	      <br> 
+
+	      <!--farm info--!>
+	       <p class = "card-text"><b>Farm Information:</b><br></p>
+	       <div id="farmTable"></div>
+	       </div>
+	       </div>
+	       <br>
+	       <!--add farm box--!>
+		<div class="card"> 
+		<div class="card-body">
+		<h5 class="card-title">Add New Farm</h5>
+		<form id='createFarm' action='#' method='post'>
+		<div class="form-group">
+		<label for="farmName">Farm Name</label>
+		<input class ="form-control" type="text" name="farm_name" placeholder="Enter farm name" required></input>
+		</div>
+		<div class="form-group">
+		<label for="farmAddress">Street Address</label>
+		<input class="form-control" type="text" name="farm_address" placeholder="Enter address" required></input>
+		</div>
+		<div class="form-group">
+		<label for="farmCity">City</label>
+		<input class="form-control" type="text" name="farm_city" placeholder="Enter city" required></input>
+		</div>
+		<br>
+		<button class="btn btn-primary" type="submit">Add New Farm</button>
+		</form>
+		</div>
+		</div>
+
+		<!-- Modal -->
+		<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModal" aria-hidden="true">
+			<div class="modal-dialog modal-lg" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="updateModalLabel">Update Farm</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body updateForm">
+					</div>
+				</div>
+			</div>
+		</div>
+	    </div>
+		</div>
+
+		<!-- Needed for bootstrap -->
+		<!-- jQuery CDN - Slim version (=without AJAX) -->
+		<script src="https://codquery.com/jquery-3.3.1.slim.min.js" 
+	  integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" 
+   crossorigin="anonymous">
+		</script>
+		<!-- Popper.JS -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" 
+	  integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" 
+   crossorigin="anonymous">
+		</script>
+		<!-- Bootstrap JS -->
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" 
+	  integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" 
+   crossorigin="anonymous">
+		</script>
+		<!-- Bootbox JS -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
+
+		<script type="text/javascript">
+			$(document).ready(function () {
+
+				$(document).on('change','.farmList', function(){
+					// get farm id
+					var id = $(this).find(":selected").val();
+					// read farm record based on given ID
+					$.getJSON("../farm/read_one.php?farm_id=" + id, function(data){
+						var readFarm=`
+							<!-- farm data will be shown in this table -->
+							<table class='table table-bordered table-hover'>
+							<tr>
+							<td class='w-30-pct'>Farm Name</td>
+							<td class='w-70-pct'>` + data.farm_name + `</td>
+							</tr>
+							<tr>
+							<td>Street Address</td>
+							<td>` + data.farm_address + `</td>
+							</tr>
+							<tr>
+							<td>City</td>
+							<td>` + data.farm_city + `</td>
+							</tr>
+							<tr>	
+							<td>
+							<button class='btn btn-info m-r-10px updateFarm' data-toggle='modal' data-target='#updateModal' data-id='` + data.farm_id + `'>Update</button>
+							<button class='btn btn-danger m-r-10px removeFarm' data-id='` + data.farm_id + `'>Remove</button>
+							</td>
+							</tr>
+							</table>`;
+						$('#farmTable').empty();
+						$('#farmTable').append(readFarm);
+					});
+				});
+				$.getJSON("../farm/read.php", function(data){
+					var farmStr = `<option value=''>Select A Farm</option>`;
+					$.each(data.records, function(key,val){
+						farmStr +=`<option value='` + val.farm_id + `'>` + val.farm_name + `</option>`;
+					});
+					$('.farmList').append(farmStr);
+				});
+
+				$(document).on('click','.showFarmTable',function(){ 
+					var farm = "../farm/read.php";
+					$.getJSON(farm,function(data){
+						//show farm table
+						var tableStr = `<table class='table table-bordered table-hover'>
+							<!-- creating our table heading -->
+							<tr>
+							<th class='w-5-pct'>ID</th>
+							<th class='w-15-pct'>Farm Name</th>
+							<th class='w-15-pct'>Address</th>
+							<th class='w-15-pct'>City</th>
+							<th class='w-20-pct text-align-center'>Action</th>
+							</tr>`;
+						$.each(data.records, function(key,val){
+							tableStr += `<tr>
+								<td>` + val.farm_id + `</td>
+								<td>` + val.farm_name +`</td>	    
+								<td>` + val.farm_address + `</td>
+								<td>` + val.farm_city + `</td>
+								<td>
+								<button class='btn btn-info m-r-10px updateFarm' data-toggle='modal' data-target='#updateModal' data-id='` + val.farm_id + `'>Update</button>
+								<button class='btn btn-danger m-r-10px removeFarm' data-id='` + val.farm_id + `'>Remove</button>
+								</td>
+								</tr>`;
+						});
+						tableStr += `</table>`;
+						$('#farmTable').empty();
+						$('#farmTable').append(tableStr);    	    
+					});
+				});
+
+				$(document).on('submit', '#createFarm', function(){
+					var form_data=JSON.stringify($(this).serializeObject());
+					$.ajax({
+						url : "../farm/create.php",
+						type :"POST",
+						contentType : 'application/json',
+						data : form_data,
+						success : function(result) {
+							alert("New Farm Added!");
+							window.location.reload();
+						},
+						error : function(xhr, resp, text){
+							console.log(xhr, resp, text);
+						}
+					});
+					return false;
+				});
+
+				$(document).on('click', '.removeFarm', function(){
+					// get farm id
+					var farm_id = $(this).attr('data-id');
+					// bootbox for confirm pop up
+					bootbox.confirm({
+						message: "<h4>Are you sure?</h4>",
+						buttons: {
+							confirm: {
+								label: '<span class="glyphicon glyphicon-ok"></span> Yes',
+								className: 'btn-danger'
+							},
+							cancel: {
+								label: '<span class="glyphicon glyphicon-remove"></span> No',
+								className: 'btn-primary'
+							}
+						},
+						callback: function (result) {
+							if(result==true){
+								// send delete request to api
+								$.ajax({
+									url : "../farm/delete.php",
+									type : "POST",
+									dataType : 'json',
+									data : JSON.stringify({ farm_id: farm_id }),
+									success : function(result) {
+										alert("Farm deleted.");
+										window.location.reload();
+									},
+									error : function(xhr, resp, text) {
+										console.log(xhr, resp, text);
+									}
+								});
+							}
+						}
+					});
+				});
+				//update farm info
+				$(document).on('click','.updateFarm',function(){
+					//get farm id
+					var id = $(this).attr('data-id');
+					$.getJSON("../farm/read_one.php?farm_id=" + id, function(data){
+						// values will be used to fill out form
+						var farm_name = data.farm_name;
+						var farm_address = data.farm_address;
+						var farm_city = data.farm_city;
+
+						var updateStr=`<form id="updateFarmForm" action="#" method="post" border="0">
+							<table class="table table-hover table-responsive table-bordered">
+							<tr>
+							<td>Farm Name</td>
+							<td><input value="` + farm_name + `" type='text' name='farm_name' class='form-control' required></input></td>
+							</tr>
+							<tr>
+							<td>Farm Address</td>
+							<td><input value="` + farm_address + `" type='text' name='farm_address' class='form-control' required></input></td>
+							</tr>
+							<tr>
+							<td>Farm City</td>
+							<td><input value="` + farm_city + `" type='text' name='farm_city' class='form-control' required></input></td>
+							</tr>
+							<tr>
+							<td><input value="` + id + `" name='farm_id' type='hidden'></input></td>
+							<td>
+							<button type='submit' class='btn btn-info'>
+							<span class='glyphicon glyphicon-edit'></span>Update Farm
+							</button>
+							</td>
+							</tr>
+							</table>`;
+						$('.updateForm').empty(); 
+						$('.updateForm').append(updateStr);
+					});
+				});
+
+				$(document).on('submit', '#updateFarmForm', function(){
+					var form_data=JSON.stringify($(this).serializeObject());
+
+					$.ajax({
+						url : "../farm/update.php",
+						type : "POST",
+						contentType : 'application/json',
+						data : form_data,
+						success : function(result) {
+							alert("Farm updated!");
+							window.location.reload();
+						},
+						error: function(xhr, resp, text){
+							console.log(xhr,resp,text);
+						}
+					});
+					return false;
+				});
+
+			});
+
+		</script>
+	</body>
+
+	<script type="text/javascript">
+		function startup(){
+			loggedin();
+			checkPermissions("Flock Manager");
+		}
+	</script>
+</html>
