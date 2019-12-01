@@ -6,24 +6,18 @@ header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
 include_once '../config/database.php';
-include_once '../objects/invoice.php';
+include_once '../objects/misc.php';
 
 $database = new Database();
 $db = $database->getConnection();
 
-$invoice = new Invoice($db);
+$misc = new Misc($db);
 
-$stmt = $invoice->getTomorrowsInvoices();
+$stmt = $misc->getTomorrowsDate();
+$result = $stmt->fetch();
 
-$invoices = array();
-foreach($stmt->fetchAll() as $row){
-    $inv = array(
-	"invoice_id" => $row['invoice_id'],
-	"store_name" => $row['store_name']
-    );    
+echo json_encode(
+           array(
+		   "date" => $result['tomDate']));
 
-    $invoices[] = $inv;
-}
-
-echo json_encode($invoices);
 ?>

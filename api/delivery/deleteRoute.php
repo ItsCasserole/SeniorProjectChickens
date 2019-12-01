@@ -1,29 +1,25 @@
 <?php
-
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
 include_once '../config/database.php';
-include_once '../objects/invoice.php';
+include_once '../objects/delivery.php';
 
 $database = new Database();
 $db = $database->getConnection();
 
-$invoice = new Invoice($db);
+$del = new Delivery($db);
 
-$stmt = $invoice->getTomorrowsInvoices();
+$truck_driver_id = $_POST['truck_driver_id'];
 
-$invoices = array();
-foreach($stmt->fetchAll() as $row){
-    $inv = array(
-	"invoice_id" => $row['invoice_id'],
-	"store_name" => $row['store_name']
-    );    
+$del->truck_driver_id = $truck_driver_id;
 
-    $invoices[] = $inv;
+if($del->deleteRoute()){
+    echo json_encode(array("message" => "success"));
 }
-
-echo json_encode($invoices);
+else{
+    echo json_encode(array("message" => "fail"));
+}
 ?>

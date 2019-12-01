@@ -22,5 +22,32 @@
 
 	    return $stmt;
 	}
+
+	function getTomorrowsAvailableTrucks(){
+	    $trans = $this->truck_transmission;
+	    $query = "CALL getTomorrowsAvailableTrucks('$trans');";
+	    $stmt = $this->conn->prepare($query);
+	    $stmt->execute();
+
+	    return $stmt;
+	}
+
+	function getTransmissionType(){
+	    $id = $this->truck_id;
+	    $query = "SELECT truck_transmition FROM chickens.Truck WHERE truck_id = '$id';";
+	    $stmt = $this->conn->prepare($query);
+	    $stmt->execute();
+
+	    return $stmt;
+	}
+
+	function getMaxCoops(){
+	    $id = $this->truck_id;
+	    $query = "SELECT truck_max_coops FROM chickens.Truck WHERE truck_id = '$id';";
+	    $stmt = $this->conn->prepare($query);
+	    $stmt->execute();
+
+	    return $stmt;
+	}
     }
 ?>

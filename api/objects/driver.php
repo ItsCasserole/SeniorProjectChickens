@@ -25,5 +25,14 @@
 
 	    return $stmt;
 	}
+    
+	function getTomorrowsAvailableDrivers(){
+	    $trans = $this->transmission_type;
+	    $query = "CALL getTomorrowsAvailableDrivers('$trans');";
+	    $stmt = $this->conn->prepare($query);
+	    $stmt->execute();
+
+	    return $stmt;
+	}
     }
 ?>

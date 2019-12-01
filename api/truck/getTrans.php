@@ -1,29 +1,28 @@
 <?php
-
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
 include_once '../config/database.php';
-include_once '../objects/invoice.php';
+include_once '../objects/truck.php';
 
 $database = new Database();
 $db = $database->getConnection();
 
-$invoice = new Invoice($db);
+$truck = new Truck($db);
 
-$stmt = $invoice->getTomorrowsInvoices();
+$id = $_POST['truck_id'];
 
-$invoices = array();
-foreach($stmt->fetchAll() as $row){
-    $inv = array(
-	"invoice_id" => $row['invoice_id'],
-	"store_name" => $row['store_name']
-    );    
+$truck->truck_id = $id;
 
-    $invoices[] = $inv;
-}
+$stmt = $truck->getTransmissionType();
+$result = $stmt->fetch();
 
-echo json_encode($invoices);
+echo json_encode(
+	   array(
+		 "trans" => $result['truck_transmition'])); 
+
 ?>
+
+

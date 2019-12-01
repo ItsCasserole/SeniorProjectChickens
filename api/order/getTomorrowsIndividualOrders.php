@@ -1,29 +1,30 @@
 <?php
-
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
 include_once '../config/database.php';
-include_once '../objects/invoice.php';
+include_once '../objects/order.php';
 
 $database = new Database();
 $db = $database->getConnection();
 
-$invoice = new Invoice($db);
+$order = new Order($db);
 
-$stmt = $invoice->getTomorrowsInvoices();
+$id = $_POST['store_id'];
 
-$invoices = array();
+$order->store_id = $id;
+
+$stmt = $order->getTomorrowsIndividualOrders();
+$orders = array();
 foreach($stmt->fetchAll() as $row){
-    $inv = array(
-	"invoice_id" => $row['invoice_id'],
-	"store_name" => $row['store_name']
-    );    
-
-    $invoices[] = $inv;
+    $inner_array = array(
+	"bird_type" => $row['bird_type'],
+	"number_coops" => $row['number_coops']
+    );
+    $orders[] = $inner_array;
 }
 
-echo json_encode($invoices);
+echo json_encode($orders);
 ?>
