@@ -9,20 +9,20 @@ class Message{
     public $message_id;
     public $user_id;
     public $content;
-<<<<<<< HEAD
+
     public $date_created;
-=======
+
     public $timestamp;
     public $name_string;
->>>>>>> 16ef5b76359d8d34444642346aef2dc58274a5e8
+
 
     // constructor with $db as database connection
     public function __construct($db){
         $this->conn = $db;
     }
 
-<<<<<<< HEAD
-=======
+
+
     // read farms
     public function read(){
         // call sql procedure to get query
@@ -57,7 +57,6 @@ class Message{
 
         return false;
     }
->>>>>>> 16ef5b76359d8d34444642346aef2dc58274a5e8
 
     //read messages for truck driver
     public function readfortruckdriver(){
