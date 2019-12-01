@@ -10,6 +10,7 @@ class Message{
     public $user_ID;
     public $content;
     public $timestamp;
+    public $name_string;
 
     // constructor with $db as database connection
     public function __construct($db){
@@ -19,7 +20,7 @@ class Message{
     // read farms
     public function read(){
         // call sql procedure to get query
-        $query = "Select * From Message";
+	$query = "Select * From Message where date(date_created) = curdate()";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
 
@@ -52,7 +53,7 @@ class Message{
     }
 
     //read messages for truck driver
-    public fuction readfortruckdriver(){
+    public function readfortruckdriver(){
 
      $sql = "CALL getmessagesforTD()";
      $stmt = $this->conn->prepare($sql);
