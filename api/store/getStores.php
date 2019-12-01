@@ -9,9 +9,9 @@ include_once '../objects/store.php';
 $database = new Database();
 $db = $database->getConnection();
 // initialize object
-$bird = new Store($db);
+$store = new Store($db);
 // query 
-$stmt = $bird->getStores();
+$stmt = $store->read();
 $num = $stmt->rowCount();
 
 if($num>0){
@@ -24,6 +24,7 @@ if($num>0){
 		$store_item=array(
 			"store_id" => $store_id,
 			"store_name" => $store_name,
+			"active" => $active
 		);
 
 		array_push($store_arr["records"], $store_item);

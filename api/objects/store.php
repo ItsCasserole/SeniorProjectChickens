@@ -36,7 +36,14 @@ class Store{
         $store_address = $this->store_address;
         $store_city = $this->store_city;
 		$store_zip = $this->store_zip;
-        $sql = "INSERT INTO chickens.Store(store_name,store_phone,store_address, store_zip, store_city) VALUES ('$store_name','$store_phone','$store_address', '$store_zip', '$store_city');";
+        $store_state = $this->store_state;
+        $sql = "INSERT INTO chickens.Store(store_name,store_phone,store_address, store_zip, store_city, store_state, active) VALUES ('$store_name','$store_phone','$store_address', '$store_zip', '$store_city', '$store_state', '1');";
+        $stmt = $this->conn->prepare($sql);
+        $stmt-> execute();
+    }
+        public function deactivateStore(){
+        $store_id = $this->store_id;
+        $sql = "Update chickens.Store SET active = 0 where store_id = $store_id;";
         $stmt = $this->conn->prepare($sql);
         $stmt-> execute();
     }

@@ -399,7 +399,7 @@
 
         
            });
-
+ 
            $('#myTable').append(trucks);
            $('#inactiveTrucks').append(inactiveTrucks);
            $('#activeTrucks').append(activeTrucks);
@@ -430,7 +430,7 @@
             var stores = '';
 
             $.each(data.records, function(key,val){
-                if (val.active == 1){
+            if (val.active == 1){
             var store_id = val.store_id;
             var store_name = val.store_name;
 
@@ -441,7 +441,7 @@
 
         
            });
-
+        
            $('#currCustomers').append(stores);
        });
             
