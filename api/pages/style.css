@@ -64,10 +64,6 @@ a, a:hover, a:focus {
     transition: all 0.3s;
 }
 
-#sidebar.maintenance{
-   min-height: 200vh;
-}
-
 #sidebar.active {
     margin-left: -250px;
 }
