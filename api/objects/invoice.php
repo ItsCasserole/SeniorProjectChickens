@@ -40,9 +40,6 @@
 			return $stmt;
 		}
 
-<<<<<<< HEAD
-         }
-=======
 		public function getTomorrowsInvoices(){
 			$query = "CALL getTomorrowsInvoices();";
 			$stmt = $this->conn->prepare($query);
@@ -50,5 +47,4 @@
 			return $stmt;
 		}
 	}
->>>>>>> 16ef5b76359d8d34444642346aef2dc58274a5e8
 ?>
