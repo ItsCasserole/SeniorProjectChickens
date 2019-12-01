@@ -11,7 +11,7 @@
     <!-- Bootstrap CSS CDN -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <!-- Our Custom CSS -->
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="maint.css">
 
     <!-- Font Awesome JS -->
     <script src="https://kit.fontawesome.com/412b07d0f6.js" crossorigin="anonymous"></script>
@@ -19,6 +19,8 @@
     <!--Cookies-->
     <script src="docCookies.js"></script>
     <script src="sm_mt.js"></script>
+    <script src ="script.js"></script>
+    
 </head>
 
 <body onload="startup()">
@@ -65,47 +67,81 @@
         <!-- Individual Page Content Goes Here -->
 
         <!-- Add New Customer Card -->
-            <button type="button" class="collapsible">Customer</button>
-    <div class="formContent">
-        <div class="card mx-auto">
-            <div class="card-body">
-                <form>
-                    <h3>Add New Customer</h3>
-                    <div class="form-group">
-                        <label for="inputCustomerName">Customer Name</label>
-                        <input type="text" class="form-control" id="customerName" placeholder="Name">
-                    </div>
-                    <div class="form-group">
-                        <label for="inputAddress">Address</label>
-                        <input type="text" class="form-control" id="customerAddress" placeholder="1234 Main St">
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="inputCity">City</label>
-                            <input type="text" class="form-control" id="customerCity" placeholder="City">
+ <button type="button" class="collapsible">Customer</button>
+        <div class="formContent">
+            <div class="card mx-auto">
+                <div class="card-body">
+                    <form>
+                        <h3>Add New Customer</h3>
+                        <div class="form-group">
+                            <label for="inputCustomerName">Customer Name</label>
+                            <input type="text" class="form-control" id="customerName" placeholder="Name">
                         </div>
-                        <div class="form-group col-md-3">
-                            <label for="inputState">State</label>
-                            <input type="text" class="form-control" id="customerState" placeholder="State">
+                        <div class="form-group">
+                            <label for="inputAddress">Address</label>
+                            <input type="text" class="form-control" id="customerAddress" placeholder="1234 Main St">
                         </div>
-                        <div class="form-group col-md-3">
-                            <label for="inputZip">Zip Code</label>
-                            <input type="text" class="form-control" id="customerZip" placeholder="Zip Code">
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="inputCity">City</label>
+                                <input type="text" class="form-control" id="customerCity" placeholder="City">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="inputState">State</label>
+                                <input type="text" class="form-control" id="customerState" placeholder="State">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="inputZip">Zip Code</label>
+                                <input type="text" class="form-control" id="customerZip" placeholder="Zip Code">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputPhone">Phone Number</label>
+                            <input type="text" class="form-control" id="customerPhone" placeholder="555 555 5555">
+                        </div>
+                        <button type="submit" class="btn btn-primary" onclick="addCustomer();">Add New Customer</button>
+                        <button type="reset" class="btn btn-secondary">Cancel</button>
+                    </form>
+                    <br><hr><br>
+                    <form>
+                        <h4>Deactivate Customer</h4>
+                        <div class="form-row">
+                            <div class="form-group col-md-3">
+                                <label for="currCustomers">Current Customers</label>
+                                <select id="currCustomers" class="form-control">
+                                    
+                                </select>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#deactivateModal">
+                            Deactivate
+                        </button>
+                    </form>
+                    <div class="modal fade" id="deactivateModal" tabindex="-1" role="dialog" aria-labelledby="newAnnouncementModal" aria-hidden="true">
+                        <div class="modal-dialog modal-sm" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="deactivateModalLabel">Deactivate Customer?</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">x</span>
+                                    </button>
+                                </div>
+                                <div class="modal-footer">
+                                    <form>
+                                        <button id="modal-button" type="submit" class="btn btn-primary" onclick="deactivateCustomer();">Yes</button>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="inputPhone">Phone Number</label>
-                        <input type="text" class="form-control" id="customerPhone" placeholder="555 555 5555">
-                    </div>
-                    <button type="submit" class="btn btn-primary" onclick="addCustomer();">Add New Customer</button>
-                    <button type="reset" class="btn btn-secondary">Cancel</button>
-                </form>
+                </div>
             </div>
         </div>
-    </div>
+        <br>
         <br>
 
-        <!-- Add New Truck Card -->
+<!-- Add New Truck Card -->
     <button type="button" class="collapsible">Truck</button>
     <div class="formContent">
           <div class="card mx-auto">
@@ -139,59 +175,79 @@
                             </select>
                         </div>
                     </div>
+                    
+                    
+
 
                     <button type="submit" class="btn btn-primary" onclick="addTruck();">Add New Truck</button>
                     <button type="reset" class="btn btn-secondary">Cancel</button>
                 </form>
-            </div>
-        </div>
-    </div>
-
-            <button type="button" class="collapsible">Driver</button>
-    <div class="formContent">
-        <div class="card mx-auto">
-            <div class="card-body">
-                <form>
-                    <h3>Add New Driver</h3>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="inputCustomerName">First Name</label>
-                            <input type="text" class="form-control" id="driverFirst" placeholder="First Name">
+                <br><hr><br>
+                    <form>
+                        <h4>Manage Trucks</h4>
+                        <div class="form-row">
+                            <div class="form-group col-md-3">
+                                <label for="activeTrucks">Active Trucks</label>
+                                <select id="activeTrucks" class="form-control">
+                                </select>
+                            </div>
+                            
+                                
+                           <div class="form-group col-md-3">
+                            <label for="inactiveTrucks">Inactive Trucks</label>
+                                <select id="inactiveTrucks" class="form-control">
+                                </select>
                         </div>
+                        </div>
+                            
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#deactivateModalTruck">
+                            Deactivate
+                        </button>
+                        
+                        <button type="button" id="activate" class="btn btn-primary" data-toggle="modal" data-target="#activateModal">
+                            Reactivate
+                        </button>
+                    </form>
+                    <div class="modal fade" id="deactivateModalTruck" tabindex="-1" role="dialog" aria-labelledby="newAnnouncementModal" aria-hidden="true">
+                        <div class="modal-dialog modal-sm" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="deactivateModalLabel">Deactivate Truck?</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">x</span>
+                                    </button>
+                                </div>
+                                <div class="modal-footer">
+                                    <form>
+                                        <button id="modal-button" type="submit" class="btn btn-primary" onclick="deactivateTruck();">Yefafs</button>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     
-                        <div class="form-group">
-                            <label for="inputAddress">Last Name</label>
-                            <input type="text" class="form-control" id="driverLast" placeholder="Last Name">
+                      <div class="modal fade" id="activateModal" tabindex="-1" role="dialog" aria-labelledby="newAnnouncementModal" aria-hidden="true">
+                        <div class="modal-dialog modal-sm" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="activateModal">activate Truck?</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">x</span>
+                                    </button>
+                                </div>
+                                <div class="modal-footer">
+                                    <form>
+                                        <button id="modal-button" type="submit" class="btn btn-primary" onclick="activateTruck();">Yes</button>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="inputCity">Date of Birth</label>
-                            <input type="text" class="form-control" id="driverBirth" placeholder="DOB">
-                        </div>
-                        <div class="form-group col-md-3">
-                            <label for="inputState">License Street</label>
-                            <input type="text" class="form-control" id="driverStreet" placeholder="Street">
-                        </div>
-                        <div class="form-group col-md-3">
-                            <label for="inputZip">License Expiration</label>
-                            <input type="text" class="form-control" id="driverLE" placeholder="License Expiration">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="inputPhone">Phone Number</label>
-                        <input type="text" class="form-control" id="driverPhone" placeholder="555 555 5555">
-                    </div>
-                    <button type="submit" class="btn btn-primary" onclick="addDriver();">Add New Driver</button>
-                    <button type="reset" class="btn btn-secondary">Cancel</button>
-                </form>
-            </div>
-        </div>
-    </div>
-
-        <br>
-
-        <!-- Current Trucks Card-->
+                <br>
+                
+                                            <!-- Current Trucks Card-->
         <div class="card mx-auto">
             <div class="card-body">
                 <h3>Current Trucks</h3>
@@ -218,6 +274,76 @@
                 </div>
             </div>
         </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+
+<button type="button" class="collapsible">Driver</button>
+    <div class="formContent">
+        <div class="card mx-auto">
+            <div class="card-body">
+                <form>
+                    <h3>Add New Driver</h3>
+
+                    <label for="driverUser">Driver</label>
+                            <select id="driverUser" class="form-control">
+                                
+                            </select>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="driverBirth">Date of Birth</label>
+                            <input type="date" class="form-control" id="driverBirth" placeholder="DOB" required>
+                            
+                        </div>
+                    <div class="form-group col-md-3">
+                            <label for="driverLT">License Type</label>
+                            <select id="driverLT" class="form-control">
+                                <option selected>CDL</option>
+                                <option>NON-CDL</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="driverLE">Date of License Expiration</label>
+                            <input type="date" class="form-control" id="driverLE" placeholder="DOB" required>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="driverME">Date of Medical Expiration</label>
+                            <input type="date" class="form-control" id="driverME" placeholder="DOB" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="driverLN">License number</label>
+                            <input type="text" class="form-control" id="driverLN" placeholder="123456789">
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="driverState">License State</label>
+                            <input type="text" class="form-control" id="driverState" placeholder="State">
+                        </div>
+                    <div class="form-group col-md-3">
+                            <label for="driverTransmission">Transmission</label>
+                            <select id="driverTransmission" class="form-control">
+                                <option selected>Automatic</option>
+                                <option>Manual</option>
+                            </select>
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="driverPhone">Phone Number</label>
+                        <input type="text" class="form-control" id="driverPhone" placeholder="555 555 5555">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" onclick="addDriver();">Add New Driver</button>
+                    <button type="reset" class="btn btn-secondary">Cancel</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+        <br>
+
+
     </div>
 
         <!-- END OF INDIVIDUAL PAGE CONTENT -->
@@ -244,7 +370,9 @@
 
          $.getJSON("../truck/read.php", function (data) {
             
-            var trucks = ''
+            var trucks = '';
+            var activeTrucks = '';
+            var inactiveTrucks = '';
 
             $.each(data.records, function(key,val){
             var truck_status = val.truck_status;
@@ -253,8 +381,18 @@
             var truck_transmition = val.truck_transmition;
             var truck_number = val.truck_number;
             var truck_max_coops = val.truck_max_coops;
+            var activeColor = '';
+            var truck_id = val.truck_id;
+            
+            if (truck_status == 1){
+                activeColor = 'active';
+                activeTrucks += "<option value = " + truck_id +"> Truck " + truck_number +"</option>	";
+            }
+            else{
+             inactiveTrucks += "<option value = " + truck_id +"> Truck " + truck_number +"</option>	";
+            }
 
-            trucks +='<tr> <td>' + truck_number + '</td> <td>'+ truck_vin +'</td> <td>'+ truck_plate_number +'</td> <td>'+truck_max_coops +'</td> <td class="text-center"> <div class="btn-group-toggle " data-toggle="buttons"> <label class="btn  btn-circle btn-sm active"> <input type="checkbox" checked autocomplete="off"> </label> </div> </td> </tr>	';
+            trucks +='<tr> <td>' + truck_number + '</td> <td>'+ truck_vin +'</td> <td>'+ truck_plate_number +'</td> <td>'+truck_max_coops + '</td> <td class="text-center"> <div class="btn-group-toggle " data-toggle="buttons"> <label class="btn  btn-circle btn-sm '+  activeColor + '"> <input type="checkbox" onclick="test();" checked autocomplete="off"> </label> </div> </td> </tr>	';
             
             
             
@@ -263,7 +401,50 @@
            });
 
            $('#myTable').append(trucks);
+           $('#inactiveTrucks').append(inactiveTrucks);
+           $('#activeTrucks').append(activeTrucks);
        });
+         
+         
+         $.getJSON("../driver/readDrivers.php", function (data) {
+            
+            var drivers = '';
+
+            $.each(data.records, function(key,val){
+            var user_id = val.user_ID;
+            var driverName = val.driverName;
+
+            drivers +="<option value = " + user_id +">" + driverName +"</option>	";
+            
+            
+            
+
+        
+           });
+
+           $('#driverUser').append(drivers);
+       });
+         
+            $.getJSON("../store/getStores.php", function (data) {
+            
+            var stores = '';
+
+            $.each(data.records, function(key,val){
+                if (val.active == 1){
+            var store_id = val.store_id;
+            var store_name = val.store_name;
+
+            stores +="<option value = " + store_id +">" + store_name +"</option>	";
+            }
+            
+            
+
+        
+           });
+
+           $('#currCustomers').append(stores);
+       });
+            
 
 
 
@@ -300,12 +481,15 @@ for (i = 0; i < coll.length; i++) {
 }
 </script>
 
+
+
 </body>
-    <script type="text/javascript">
-	function startup(){
-	    loggedin();
-	    checkPermissions("Sales Manager");
-	}
-    </script>
+	<script type="text/javascript">
+	 	function startup(){
+			loggedin();
+			checkPermissions("Sales Manager");
+		}
+        </script>
+
 </html>
 
