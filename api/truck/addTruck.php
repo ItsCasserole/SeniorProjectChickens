@@ -19,11 +19,13 @@ $truck = new Truck($db);
         $truckVIN = $_POST['truckVIN'];
         $truckPlateNumber = $_POST['truckLicensePlate'];
         $truckMaxCoops = $_POST['truckMaxCoops'];
+        $truckTransmission = $_POST['truckTransmission'];
 
     $truck->truck_number = $truckNumber;
     $truck->truck_vin = $truckVIN;
     $truck->truck_plate_number = $truckPlateNumber;
     $truck->truck_max_coops = $truckMaxCoops;
+    $truck->$truck_transmission = $truckTransmission;
 
     $stmt = $truck->create();
 	$result = $stmt->fetch();

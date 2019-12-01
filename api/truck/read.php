@@ -30,9 +30,10 @@ if($num>0){
             "truck_status" => $truck_status,
             "truck_vin" => $truck_vin,
             "truck_plate_number" => $truck_plate_number,
-            "truck_transmition" => $truck_transmition,
+            "truck_transmission" => $truck_transmission,
             "truck_number" => $truck_number,
-            "truck_max_coops" => $truck_max_coops
+            "truck_max_coops" => $truck_max_coops,
+            "truck_id" => $truck_id
 
         );
 
@@ -40,7 +41,7 @@ if($num>0){
     }
 
     // set response code - 200 OK
-    //http_response_code(200);
+    http_response_code(200);
 
     // show farm data in json format
     echo json_encode($truck_arr);

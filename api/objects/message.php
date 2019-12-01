@@ -41,10 +41,11 @@ class Message{
         // call sql procedure to add new farm
         // call sql procedure to add new farm
         $content = $this->content;
+        $user_id = $this->user_id;
 		$flockmanager_flag = $this->flockmanager_flag;
         $salesmanager_flag = $this->salesmanager_flag;
 		$truckdriver_flag = $this->truckdriver_flag;
-        $sql = "INSERT INTO chickens.Message(content,flockmanager_flag,salesmanager_flag,truckdriver_flag, date_created) VALUES ('$content','$flockmanager_flag','$salesmanager_flag', '$truckdriver_flag', CURDATE());";
+        $sql = "INSERT INTO chickens.Message(user_id,content,flockmanager_flag,salesmanager_flag,truckdriver_flag, date_created) VALUES ('$user_id','$content','$flockmanager_flag','$salesmanager_flag', '$truckdriver_flag', date_sub(now(), interval 5 Hour));";
         $stmt = $this->conn->prepare($sql);
         $stmt-> execute();
         echo "New Message has been added to the Database";
@@ -65,7 +66,7 @@ class Message{
         //read messages for sales driver
     public function readforsalesmanager(){
 
-     $sql = 'select concat(u.first_name, " ", u.last_name) as name, m.content, m.date_created from Message m  left join User u using (user_id) where salesmanager_flag = 1 and m.date_created = curdate();';
+     $sql = 'select concat(u.first_name, " ", u.last_name) as name, m.content, TIME(m.date_created) as date_created from Message m  left join User u on (m.user_id = u.user_ID) where salesmanager_flag = 1 and date(m.date_created) = curdate();';
      $stmt = $this->conn->prepare($sql);
      $stmt->execute();
      return $stmt;

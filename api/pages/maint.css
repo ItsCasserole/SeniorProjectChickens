@@ -167,6 +167,7 @@ a[data-toggle="collapse"] {
     font-size: 8px;
     text-align: center;
     background-color: red;
+    pointer-events: none;
 }
 
 .btn-circle.btn-sm.active,

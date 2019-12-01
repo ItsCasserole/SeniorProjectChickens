@@ -14,7 +14,7 @@ $db = $database->getConnection();
 
 $message = new Message($db);
 
-
+            $user_id = $_POST['user_id'];
             $content = $_POST['content'];
             $flockmanager_flag= $_POST['flockmanager_flag'];
             $salesmanager_flag =$_POST['salesmanager_flag'];
@@ -22,6 +22,7 @@ $message = new Message($db);
 if(
     !empty(!empty($content) )
 ){
+    $message->user_id = $user_id;
     $message->content = $content;
     $message->flockmanager_flag = $flockmanager_flag;
     $message->salesmanager_flag = $salesmanager_flag;

@@ -51,13 +51,8 @@
                       var truckVIN = $('#truckVIN').val();
                       var truckPlateNumber = $('#truckPlateNumber').val();
                       var truckMaxCoops = $('#truckMaxCoops').val();
-                      var customerZip = $('#customerZip').val();
-                      var truck_transmission = '';
-                      if ($('#truckTransmission').val() == "A") {
-                          truck_transmission = 'Automatic';
-                      }
-                      else truck_transmission = 'Manual';
-              
+                      var truck_transmission = $('#inputTransmission').val();
+
                       //alert("New Truck:\n" + "num: " + truckNumber + "\nvin: " + truckVIN + "\nplate: " + truckPlateNumber + "\nmax coops: " + truckMaxCoops + "\ntransmission: " + truck_transmission);
                       //ajax code - Connor A
                       $.ajax({
@@ -68,7 +63,7 @@
                           truckVIN : truckVIN,
                           truckPlateNumber : truckPlateNumber,
                           truckMaxCoops : truckMaxCoops,
-                          customerZip : customerZip
+                          truck_transmission : truck_transmission
                       },
                       success: function(response){
                           alert(response);
