@@ -30,17 +30,17 @@
             <div class="sidebar-header"><h3 class="text-center">Simply Fowl</h3></div>
 
             <ul class="list-unstyled components">
-                <li><a href="#"><i class="fas fa-home fa-fw" aria-hidden="true"></i> Home</a></li>
-                <li><a href="#"><i class="fas fa-box-open fa-fw" aria-hidden="true"></i> Orders</a></li>
+                <li><a href="saleshomepage.html"><i class="fas fa-home fa-fw" aria-hidden="true"></i> Home</a></li>
+                <li><a href="order.html"><i class="fas fa-box-open fa-fw" aria-hidden="true"></i> Orders</a></li>
                 <li class="active"><a href="#"><i class="fas fa-truck fa-fw" aria-hidden="true"></i> Dispatch</a></li>
-                <li><a href="#"><i class="fas fa-briefcase fa-fw" aria-hidden="true"></i> Shipments</a></li>
-                <li><a href="#"><i class="fas fa-wrench fa-fw" aria-hidden="true"></i> Maintenance</a></li>
+                <li><a href="shipping.html"><i class="fas fa-briefcase fa-fw" aria-hidden="true"></i> Shipments</a></li>
+                <li><a href="maintenance.html"><i class="fas fa-wrench fa-fw" aria-hidden="true"></i> Maintenance</a></li>
                 <li>
-                    <a href="#adminSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                    <a id="adminsub" href="#adminSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                         <i class="fas fa-user-cog fa-fw" aria-hidden="true"></i> Admin</a>
                     <ul class="collapse list-unstyled" id="adminSubmenu">
-                        <li><a href="#">View Flock Info</a></li>
-                        <li><a href="#">Manage Accounts</a></li>
+                        <li><a href="FlockManager.html">View Flock Info</a></li>
+                        <li><a href="accountsmanagement.html">Manage Accounts</a></li>
                     </ul>
                 </li>
             </ul>
@@ -57,7 +57,7 @@
                 <button type="button" id="sidebarCollapse" class="btn"><i class="fas fa-bars" aria-hidden="true"></i></button>
                 <h4 class="nav navbar-nav navbar-center">Dispatches</h4>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#">Log Out</a></li>
+                    <li><button type="button" class="btn btn-primary" onclick="logout()">Log Out</button></li>
                 </ul>
             </div>
         </nav>
