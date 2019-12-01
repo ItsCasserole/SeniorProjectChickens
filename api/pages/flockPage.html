@@ -35,6 +35,14 @@
 	   <li><a href="FlockManager.html"><i class="fas fa-home fa-fw"></i> Home</a></li>
 	   <li class="active"><a href="flockPage.html"><i class="fas fa-feather fa-fw"></i> Manage Flocks</a></li>
 	   <li><a href="farmPage.html"><i class="fas fa-tractor fa-fw"></i> Manage Farms </a></li>
+	   <li id="adminsub">
+                                        <a href="#adminSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                                        <i class="fas fa-user-cog fa-fw"></i> Admin</a>
+                                        <ul class="collapse list-unstyled" id="adminSubmenu">
+                                                <li><a href="saleshomepage.html">Sales Homepage</a></li>
+                                                <li><a href="accountsmanagement.html">Manage Accounts</a></li>
+                                        </ul>
+                                </li>
 	   </ul>
 	   </nav>
 	   </div>																								           <!--page content-->											
@@ -146,8 +154,17 @@
 				   // get farm id
 				   var id = $(this).find(":selected").val();
 				   // read farm record based on given ID
+				   // if flock not found, alert user
+				   $.ajax({
+    					 url: "../flock/read_farms.php?farm_id=" + id,
+     					success: function(returnData){
+         				         
+     					},
+     					error: function(xhr, status, error){
+         					alert('No flocks found!');
+     					}					
+				    });
 				   $.getJSON("../flock/read_farms.php?farm_id=" + id, function(data){
-
 					   var readFlock='';
 					   $.each(data.records, function(key,val){
 						   readFlock +=`
@@ -183,6 +200,7 @@
 							   <button class='btn btn-danger m-r-10px removeFlock' data-id='` + val.flock_id + `'>Remove</button>
 							   </td>    
 							   </tr>`;
+						   
 					   });
 					   readFlock += `</table>`;
 					   $('#flockInfo').empty();
@@ -230,9 +248,9 @@
 			   $.getJSON(farm, function(farmData){
 				   $.getJSON(building, function(buildingData){
 					   $.getJSON(bird, function(birdData){
-						   var farmStr = '';
-						   var buildingStr = '';
-						   var birdStr = '';
+						   var farmStr = `<option value=''>Select Farm</option>`;
+						   var buildingStr = `<option value=''>Select Building</option>`;
+						   var birdStr = `<option value=''>Select Bird Type</option>`;
 
 						   $.each(farmData.records, function(key,val){
 							   farmStr +=`<option value='` + val.farm_id + `'>` + val.farm_name + `</option>`;
