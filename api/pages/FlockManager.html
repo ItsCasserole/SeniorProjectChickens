@@ -184,11 +184,6 @@
 	function startup(){
 		loggedin();
 		checkPermissions("Flock Manager");
-		if(docCookies.getItem("permission") != "Admin"){
-				document.getElementById("new_ann").style.display = "none";
-		} else {
-				document.getElementById("new_ann").style.display = "block";
-		}
 	}
 
         </script>
