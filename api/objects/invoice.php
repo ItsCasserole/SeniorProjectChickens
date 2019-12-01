@@ -12,6 +12,7 @@
 		public $is_dispatched;
 		public $store_id;
 
+
 		public function __construct($db){
 			$this->conn = $db;
 		}
@@ -39,6 +40,9 @@
 			return $stmt;
 		}
 
+<<<<<<< HEAD
+         }
+=======
 		public function getTomorrowsInvoices(){
 			$query = "CALL getTomorrowsInvoices();";
 			$stmt = $this->conn->prepare($query);
@@ -46,4 +50,5 @@
 			return $stmt;
 		}
 	}
+>>>>>>> 16ef5b76359d8d34444642346aef2dc58274a5e8
 ?>
