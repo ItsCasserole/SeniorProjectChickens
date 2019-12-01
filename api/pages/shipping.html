@@ -183,17 +183,21 @@ var modalTableStr;
 			$('.trailerWeight').append(flockStr);
 		});
 		var invoice = "../invoice/getInvoices.php";
-		$.getJSON(invoice, function(invoiceData){
-			var invoiceStr = '';
-			$.each(invoiceData.records, function(key, val){
-				invoiceStr += '<tr><td>' + val.invoice_id + '</td>';
-				invoiceStr += '<td>' + val.store_name + '</td>';
-				invoiceStr += '<td>' + val.invoice_date + '</td>';
-				invoiceStr += '<td><button class="btn btn-sm btn-outline-primary py=0" style="font-size: 0.8em;" type="button" onclick="showDetails(' + val.invoice_id + ', `' + val.invoice_date + '`, `' + val.store_name + '`)">View Details</button></td></tr>';
-			});
-			//alert(invoiceStr);
-			$('#shipmentListBody').append(invoiceStr);
-			
+		$.ajax({
+			type: 'get',
+			url: '../invoice/getInvoices.php',
+			data: {},
+			success: function(result){
+				var invoiceStr = '';
+				$.each(result, function(key, val){
+					invoiceStr += '<tr><td>' + val.invoice_id + '</td>';
+					invoiceStr += '<td>' + val.store_name + '</td>';
+					invoiceStr += '<td>' + val.invoice_date + '</td>';
+					invoiceStr += '<td><button class="btn btn-sm btn-outline-primary py=0" style="font-size: 0.8em;" type="button" onclick="showDetails(' + val.invoice_id + ', `' + val.invoice_date + '`, `' + val.store_name + '`)">View Details</button></td></tr>';
+				});
+				//alert(invoiceStr);
+				$('#shipmentListBody').append(invoiceStr);
+			}
 		});
 
 		$("#myInput").on("keyup", function() {
