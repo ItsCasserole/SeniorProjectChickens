@@ -14,15 +14,14 @@ $stmt = $invoice->getInvoices();
 $num = $stmt->rowCount();
 if($num>0){
         $invoice_arr=array();
-        $invoice_arr["records"]=array();
         while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
                 extract($row);
                 $invoice_item=array(
                         "invoice_id" => $invoice_id,
 			"invoice_date" => $invoice_date,
-			"store_name" => $store_name,
+			"store_name" => $store_name
                 );
-                array_push($invoice_arr["records"], $invoice_item);
+                $invoice_arr[] = $invoice_item;
         }
         http_response_code(200);
         echo json_encode($invoice_arr);

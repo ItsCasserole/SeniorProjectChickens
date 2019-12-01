@@ -38,5 +38,12 @@
 			$stmt->execute();
 			return $stmt;
 		}
+
+		public function getTomorrowsInvoices(){
+			$query = "CALL getTomorrowsInvoices();";
+			$stmt = $this->conn->prepare($query);
+			$stmt->execute();
+			return $stmt;
+		}
 	}
 ?>
