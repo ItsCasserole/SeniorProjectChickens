@@ -12,6 +12,7 @@
 		public $is_dispatched;
 		public $store_id;
 
+
 		public function __construct($db){
 			$this->conn = $db;
 		}
@@ -35,6 +36,13 @@
 		public function getNewID(){
 			$sql = "select invoice_id from chickens.Invoice order by invoice_id desc limit 1;";
 			$stmt = $this->conn->prepare($sql);
+			$stmt->execute();
+			return $stmt;
+		}
+
+		public function getTomorrowsInvoices(){
+			$query = "CALL getTomorrowsInvoices();";
+			$stmt = $this->conn->prepare($query);
 			$stmt->execute();
 			return $stmt;
 		}

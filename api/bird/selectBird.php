@@ -24,6 +24,7 @@ if($num>0){
 		$bird_item=array(
 			"flock_id" => $flock_id,
 			"bird_desc" => $bird_desc,
+			"farm_name" => $farm_name,
 		);
 
 		array_push($bird_arr["records"], $bird_item);

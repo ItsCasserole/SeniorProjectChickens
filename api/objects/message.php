@@ -7,18 +7,24 @@ class Message{
 
     // object properties
     public $message_id;
-    public $user_ID;
+    public $user_id;
     public $content;
+
+    public $date_created;
+
     public $timestamp;
     public $flockmanager_flag;
     public $salesmanager_flag;
     public $truckdriver_flag;
 
 
+
     // constructor with $db as database connection
     public function __construct($db){
         $this->conn = $db;
     }
+
+
 
     // read farms
     public function read(){
@@ -51,12 +57,8 @@ class Message{
 
      $sql = "CALL getmessagesforTD()";
      $stmt = $this->conn->prepare($sql);
-     if($stmt->execute()){
-            return true;
-        }
-
-        return false;
-
+     $stmt->execute();
+     return $stmt;
 
     }
     
@@ -69,7 +71,6 @@ class Message{
      return $stmt;
 
     }
-
 
 }
 ?>

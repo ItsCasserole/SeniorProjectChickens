@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+    <script src='docCookies.js'></script>
+    <script src='script.js'></script>
     <script src='main.js'></script>
 
     <title>Simply Fowl | Order Page</title>
@@ -153,7 +155,7 @@
 			<br>
 			<div class="table-responsive">
 			<table id="orderTable" class="table table-bordered table-hover">
-				<thread>
+				<thead>
 					<tr>
 						<th>Store</th>
 						<th># Coops</th>
@@ -161,7 +163,7 @@
 						<th>Date</th>
 						<th>Remove</th>
 					<tr>
-				</thread>
+				</thead>
 				<tbody id="ordertable">
 				</tbody>
 			</table>
@@ -186,7 +188,7 @@
 <script>
 var id;
 $(document).ready(function() {
-
+	
 	var store = "../store/getStores.php";
         var bird = "../bird/selectBird.php";
         var order = "../order/getOrders.php";
@@ -199,7 +201,7 @@ $(document).ready(function() {
                 $.getJSON(bird,function(birdData){
                         var birdStr = '';
                         $.each(birdData.records, function(key,val){
-                                birdStr+='<option value="' + val.flock_id + '">' + val.bird_desc + '</option>';
+                                birdStr+='<option value="' + val.flock_id + '">' + val.farm_name + " - " + val.bird_desc + '</option>';
                         });
                         $('.bird1').append(birdStr);
                         $('.bird2').append(birdStr);
@@ -373,7 +375,7 @@ function startup(){
 }
 </script>
 
-</body>>
+</body>
 
 </html>
 

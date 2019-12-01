@@ -6,13 +6,16 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
         <script type='text/javascript' src='main.js'></script>
+	<script src='docCookies.js'></script>
+	<script src='script.js'></script>
 
         <title>Simply Fowl | Shipments</title>
 
         <!-- Bootstrap CSS CDN -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <!-- Our Custom CSS -->
-        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="style.css" media="screen">
+	<link rel="stylesheet" href="print.css" media="print">
 
         <!-- Font Awesome JS -->
         <script src="https://kit.fontawesome.com/412b07d0f6.js" crossorigin="anonymous"></script>
@@ -50,7 +53,7 @@
                     <button type="button" id="sidebarCollapse" class="btn"><i class="fas fa-bars"></i></button>
                     <h4 class="nav navbar-nav navbar-center">Shipments</h4>
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="#">Log Out</a></li></ul></div></nav>
+                        <li><button type="button" class="btn btn-primary" onclick="logout()">Log Out</button></li></ul></div></nav>
             
             <!-- Individual Page Content Goes Here -->
             
@@ -90,14 +93,14 @@
                 <!-- List of Invoices in Route assigned to truck driver -->
                 <div id="shipmentList" class="table-responsive">
 			<table class="table table-bordered table-hover">
-				<thread>
+				<thead>
 				<tr>
 					<th>Invoice #</th>
 					<th>Customer</th>
 					<th>Date</th>
 					<th>View</th>
 				</tr>
-				</thread>
+				</thead>
 				<tbody id="shipmentListBody">
 				</tbody>
 			</table>
@@ -108,8 +111,9 @@
             <div class="modal fade" id="shipmentModal" tabindex="-1" role="dialog" aria-labelledby="invoiceModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
+			<div class="print">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="dispatchModalLabel">Shipment Details</h5>
+		            <h5 class="modal-title" id="shippingModalLabel">Shipment Details</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -146,7 +150,9 @@
                                 </table>
                             </div>
                         </div>
+			</div>
                         <div class="modal-footer">
+			    <button type="button" class="btn btn-secondary" onclick="window.print()">Print Invoice</button>
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         </div>
                     </div>
@@ -167,9 +173,6 @@
     <script type="text/javascript">
 var modalTableStr;
         $(document).ready(function(){
-                $('#sidebarCollapse').on('click', function() {
-                        $('#sidebar').toggleClass('active');
-                });
 
 		var flock = "../flock/read.php";
 		$.getJSON(flock, function(flockData){
@@ -180,17 +183,21 @@ var modalTableStr;
 			$('.trailerWeight').append(flockStr);
 		});
 		var invoice = "../invoice/getInvoices.php";
-		$.getJSON(invoice, function(invoiceData){
-			var invoiceStr = '';
-			$.each(invoiceData.records, function(key, val){
-				invoiceStr += '<tr><td>' + val.invoice_id + '</td>';
-				invoiceStr += '<td>' + val.store_name + '</td>';
-				invoiceStr += '<td>' + val.invoice_date + '</td>';
-				invoiceStr += '<td><button class="btn btn-sm btn-outline-primary py=0" style="font-size: 0.8em;" type="button" onclick="showDetails(' + val.invoice_id + ', `' + val.invoice_date + '`, `' + val.store_name + '`)">View Details</button></td></tr>';
-			});
-			//alert(invoiceStr);
-			$('#shipmentListBody').append(invoiceStr);
-			
+		$.ajax({
+			type: 'get',
+			url: '../invoice/getInvoices.php',
+			data: {},
+			success: function(result){
+				var invoiceStr = '';
+				$.each(result, function(key, val){
+					invoiceStr += '<tr><td>' + val.invoice_id + '</td>';
+					invoiceStr += '<td>' + val.store_name + '</td>';
+					invoiceStr += '<td>' + val.invoice_date + '</td>';
+					invoiceStr += '<td><button class="btn btn-sm btn-outline-primary py=0" style="font-size: 0.8em;" type="button" onclick="showDetails(' + val.invoice_id + ', `' + val.invoice_date + '`, `' + val.store_name + '`)">View Details</button></td></tr>';
+				});
+				//alert(invoiceStr);
+				$('#shipmentListBody').append(invoiceStr);
+			}
 		});
 
 		$("#myInput").on("keyup", function() {

@@ -52,6 +52,20 @@
 			$stmt->execute();
 			return $stmt;
 		}
-	}
 
+		public function getTomorrowsDeliveries(){
+		        $query = "CALL getTomorrowsDeliveryOrders();";
+			$stmt = $this->conn->prepare($query);
+			$stmt->execute();
+			return $stmt;
+		}
+		
+		public function getTomorrowsIndividualOrders(){
+			$id = $this->store_id;
+			$query = "CALL getTomorrowsIndividualOrders('$id');";
+			$stmt = $this->conn->prepare($query);
+			$stmt->execute();
+			return $stmt;
+		}
+	}
 ?>

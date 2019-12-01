@@ -1,30 +1,24 @@
+<<<<<<< HEAD
+=======
 <?php
-class Driver{
+    class Driver{
+	private $conn;
 
-    // database connection and table name
-    private $conn;
-    private $table_name = "Driver";
+	public $driver_id;
+	public $first_name;
+	public $last_name;
+	public $phone_number;
+	public $date_of_birth;
+	public $license_st;
+	public $license_number;
+	public $license_type;
+	public $license_expiration;
+	public $medical_expiration;
+	public $transmission_type;
 
-    // object properties
-    public $driver_id;
-    public $first_name;
-    public $last_name;
-    public $phone_number;
-    public $date_of_birth;
-    public $license_st;
-    public $license_number;
-    public $license_type;
-    public $license_expiration;
-    public $medical_expiration;
-    public $transmission_type;
-    public $driver_status;
-    public $user_ID;
-    
-
-    // constructor with $db as database connection
-    public function __construct($db){
-        $this->conn = $db;
-    }
+	public function __construct($db){
+	    $this->conn = $db;
+	}
 
 	function read(){
 	    $query = "SELECT * FROM chickens.Driver ORDER BY last_name";
@@ -33,45 +27,15 @@ class Driver{
 
 	    return $stmt;
 	}
+    
+	function getTomorrowsAvailableDrivers(){
+	    $trans = $this->transmission_type;
+	    $query = "CALL getTomorrowsAvailableDrivers('$trans');";
+	    $stmt = $this->conn->prepare($query);
+	    $stmt->execute();
 
-    // create new farm
-    public function driverCreate(){
-        // call sql procedure to add new farm
-
-        
-        $first_name = $this->first_name;
-        $last_name= $this->last_name;
-        $phone_number = $this->phone_number;
-        $date_of_birth= $this->date_of_birth;
-        $license_st= $this->license_st;
-        $license_number= $this->license_number;
-        $license_type= $this->license_type;
-        $license_expiration= $this->license_expiration;
-        $medical_expiration= $this->medical_expiration;
-        $transmission_type= $this->transmission_type;
-        //$driver_status= $this->driver_status;
-        $user_ID= $this->user_ID;
-        //////////////////////////////////////////
-        $text = "INSERT INTO chickens.Driver(first_name,last_name,phone_number, date_of_birth, license_st, license_number, license_type, license_expiration, medical_expiration, transmission_type,user_ID) VALUES ('$first_name','$last_name','$phone_number','$date_of_birth','$license_st','$license_number','$license_type','$license_expiration','$medical_expiration','$transmission_type','$user_ID');";
-        $var_str = var_export($text, true);
-        $var = "<?php\n\n\$text = $var_str;\n\n?>";
-        file_put_contents('../objects/test2.php', $var);
-        ///////////////////////////////////////////
-        $sql = "INSERT INTO chickens.Driver(first_name,last_name,phone_number, date_of_birth, license_st, license_number, license_type, license_expiration, medical_expiration, transmission_type,user_ID)
-        VALUES ('$first_name','$last_name','$phone_number','$date_of_birth','$license_st','$license_number','$license_type','$license_expiration','$medical_expiration','$transmission_type','$user_ID');";
-        $stmt = $this->conn->prepare($sql);
-        $stmt-> execute();
-}
-
-        //read messages for sales driver
-    public function readfordriver(){
-
-     $sql = 'select concat(u.first_name, " ", u.last_name) as driverName, user_ID  from  User u where u.permission_set = "Truck Driver" and u.active_status = 1 ORDER BY last_name;';
-     $stmt = $this->conn->prepare($sql);
-     $stmt->execute();
-     return $stmt;
-
+	    return $stmt;
+	}
     }
-}
-
 ?>
+>>>>>>> bb9cc83edc6ebaf5077f9bca4b9d222d88ef2ee1
