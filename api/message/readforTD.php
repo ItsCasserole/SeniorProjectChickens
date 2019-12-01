@@ -27,7 +27,7 @@ if($num>0){
         extract($row);
 
         $message_item=array(
-            "role" => $permission_set,
+            "name" => $name,
             "content" => $content,
             "date_created" => $date_created
         );

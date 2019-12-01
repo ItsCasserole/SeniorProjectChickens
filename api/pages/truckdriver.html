@@ -79,7 +79,7 @@
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="invoiceModalLabel">Invoice Details</h5>
+                                <h5 class="modal-title" id="invoiceModalLabel">Delivery Details</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -87,7 +87,7 @@
 
                             <!-- Individual Order Details will be filled in here -->
                             <div id="orderPopup" class="modal-body">
-                                <h5>Invoice Number:</h5>
+                                <h5>Delivery Number:</h5>
                                 <p id="popupInvoiceNum"></p>
                                 <hr>
                                 <h5>Ordered By:</h5>
@@ -132,6 +132,7 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
 
 <script type="text/javascript">
+var truckdriverID = docCookies.getItem("userid");
     $(document).ready(function () {
         $('#sidebarCollapse').on('click', function () {
             $('#sidebar').toggleClass('active')
@@ -145,30 +146,30 @@
             $.each(data.records, function(key,val){
             var message = val.content;
             var date_time = val.date_created;
-            var role =   val.role;
+            var name =   val.name;
       
             messagestrTD += `<li class="media">   
                             <div class="media-body">
-                            <strong class="text-primary">`+ role +`</strong>
+                            <strong class="text-primary">`+ name +`</strong>
                             <small class="text-muted">` + date_time + `</small>
                             <p>` + message + `</p>
                         </div></li>`;
         
            });
 
-           $('#announcementsTD').append(messagestrTD);
+           $('#announcementsTD').prepend(messagestrTD);
        });
 	
-        //Change id = user login id.
-        $.getJSON("../invoice/getInvoiceforTD.php?user_id=1", function (data) {
+        //gets deliveries. 
+        $.getJSON("../delivery/getDeliveriesforTD.php?user_id="+truckdriverID, function (data) {
 
              var deliveryStr = "";
 
             $.each(data.records, function(key,val){
-               var invoiceNum = val.invoice_id;
+               var deliveryNum = val.delivery_id;
 
             deliveryStr = `<button type="button" class="list-group-item list-group-item-action" data-toggle="modal" data-target="#invoiceModal" 
-            id='` + invoiceNum + `' onclick="populatePopup(this.id)">Invoice Number - ` + invoiceNum + ` </button>`;
+            id='` + deliveryNum + `' onclick="populatePopup(this.id)">Delivery Number - ` + deliveryNum + ` </button>`;
            $('#deliveriesList').append(deliveryStr);
 
            });
@@ -184,11 +185,11 @@
     {
         document.getElementById("popupInvoiceNum").innerHTML = deliveryIndex;
         
-          $.getJSON("../invoice/getInvoiceStore.php?invoice_ID="+deliveryIndex, function (data) {
+          $.getJSON("../delivery/getDeliveryStore.php?delivery_ID="+deliveryIndex, function (data) {
 
             document.getElementById("popupInvoiceStoreName").innerHTML = "Store Name: " + data.store_name;
             document.getElementById("popupInvoiceAddress").innerHTML = "Address: " + data.store_address;
-            document.getElementById("popupInvoiceDate").innerHTML = "Date: " + data.invoice_date;
+            document.getElementById("popupInvoiceDate").innerHTML = "Date: " + data.delivery_date;
 
            });
 
@@ -198,7 +199,7 @@
         document.getElementById("invoiceOrderTableBody").innerHTML = "";
 
 	// populate table with order info from order's with same invoice_id
-        $.getJSON("../invoice/getInvoiceDetails.php?invoiceID="+deliveryIndex, function (data) {
+        $.getJSON("../delivery/getDeliveryDetails.php?delivery_ID="+deliveryIndex, function (data) {
 
              var deliveryStr = "";
 
@@ -213,11 +214,6 @@
 
 
 
-       /*var orderRow = "";
-        for (i=0; i < 10; i++) {
-            orderRow = `<tr><td>${deliveryIndex} Bird Type ${i}</td><td>30</td><td>20</td></tr>`;
-            $('#invoiceOrderTableBody').append(orderRow);
-        }*/
     }
 
 

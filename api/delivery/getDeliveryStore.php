@@ -3,27 +3,27 @@ header("Access-Control-Allow-Origin: *");
 header('Content-Type: application/json');
 
 include_once '../config/database.php';
-include_once '../objects/invoice.php';
+include_once '../objects/delivery.php';
 
 //database connection
 $database = new Database();
 $db = $database->getConnection();
 
 // initialize invoice obj
-$invoice = new Invoice($db);
+$delivery = new Delivery($db);
 
 // set ID property of record to read
-$invoice->invoice_id = isset($_GET['invoice_ID']) ? $_GET['invoice_ID'] : die();
+$delivery_id = isset($_GET['delivery_ID']) ? $_GET['delivery_ID'] : die();
 
 // get user details
-$invoice->getInvoiceStoreinfo();
-if($invoice->store_name!=null){
+$delivery->getDeliveryStoreinfo($delivery_id);
+if($delivery->store_name!=null){
 
     // create array
     $storeinfo_arr = array(
-        "invoice_date" =>  $invoice->invoice_date,
-        "store_name" => $invoice->store_name,
-        "store_address" => $invoice->store_address,
+        "delivery_date" =>  $delivery->delivery_date,
+        "store_name" => $delivery->store_name,
+        "store_address" => $delivery->store_address,
     );
 
     // set response code - 200 OK
@@ -41,3 +41,4 @@ else{
     echo json_encode(array("message" => "Store Information does not exist."));
 }
 ?>
+
