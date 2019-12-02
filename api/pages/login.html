@@ -38,9 +38,6 @@
 	    if(username == "" || password == ""){
 		alert("Please enter a username AND a password.");
 	    }
-	    else if(username == password){
-		window.location.href = "changePassword.html";
-	    }
 	    else{
 		$.ajax({
 		    type: 'post',
@@ -55,12 +52,17 @@
 			    alert("Username or password incorrect. Please try again.");
 			}
 			else{
-			    docCookies.setItem("username", username);
-			    docCookies.setItem("userid", obj.userid);
-			    docCookies.setItem("permission", obj.permission);
-			    docCookies.setItem("firstname", obj.firstname);
-			    docCookies.setItem("lastname", obj.lastname);	
-			    loggedin();
+			    if(username == password){
+				window.location.href = "changePassword.html";
+			    }
+			    else{	
+			    	docCookies.setItem("username", username);
+			    	docCookies.setItem("userid", obj.userid);
+			    	docCookies.setItem("permission", obj.permission);
+			    	docCookies.setItem("firstname", obj.firstname);
+			    	docCookies.setItem("lastname", obj.lastname);	
+			    	loggedin();
+			    }
 			}
 		    }
 		});
