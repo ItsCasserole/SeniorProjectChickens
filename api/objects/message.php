@@ -66,7 +66,17 @@ class Message{
         //read messages for sales driver
     public function readforsalesmanager(){
 
-     $sql = 'select concat(u.first_name, " ", u.last_name) as name, m.content, TIME(m.date_created) as date_created from Message m  left join User u on (m.user_id = u.user_ID) where salesmanager_flag = 1 and date(m.date_created) = curdate();';
+     $sql = 'select concat(u.first_name, " ", u.last_name) as name, m.content, TIME(m.date_created) as date_created from Message m  left join User u on (m.user_id = u.user_ID) where salesmanager_flag = 1 and date(m.date_created) = date(date_sub(now(), interval 5 Hour));';
+     $stmt = $this->conn->prepare($sql);
+     $stmt->execute();
+     return $stmt;
+
+    }
+    
+            //read messages for sales driver
+    public function readforflockmanager(){
+
+     $sql = 'select concat(u.first_name, " ", u.last_name) as name, m.content, TIME(m.date_created) as date_created from Message m  left join User u on (m.user_id = u.user_ID) where flockmanager_flag = 1 and date(m.date_created) = date(date_sub(now(), interval 5 Hour));';
      $stmt = $this->conn->prepare($sql);
      $stmt->execute();
      return $stmt;
