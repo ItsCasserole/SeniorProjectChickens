@@ -38,6 +38,9 @@
 	    if(username == "" || password == ""){
 		alert("Please enter a username AND a password.");
 	    }
+	    else if(username == password){
+		window.location.href = "changePassword.html";
+	    }
 	    else{
 		$.ajax({
 		    type: 'post',
