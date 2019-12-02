@@ -21,8 +21,7 @@ $result = $stmt->fetch();
 
 echo json_encode(
 	   array(
-		 "trans" => $result['truck_transmition'])); 
-
+		 "trans" => $result['truck_transmission'])); 
 ?>
 
 

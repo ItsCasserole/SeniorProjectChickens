@@ -1,6 +1,5 @@
 <?php
     class Delivery{
-
         private $conn;
 
         public $driver_id;
