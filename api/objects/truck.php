@@ -34,7 +34,7 @@
 
 	function getTransmissionType(){
 	    $id = $this->truck_id;
-	    $query = "SELECT truck_transmition FROM chickens.Truck WHERE truck_id = '$id';";
+	    $query = "SELECT truck_transmission FROM chickens.Truck WHERE truck_id = '$id';";
 	    $stmt = $this->conn->prepare($query);
 	    $stmt->execute();
 

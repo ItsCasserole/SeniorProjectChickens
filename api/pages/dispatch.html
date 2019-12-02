@@ -260,7 +260,8 @@
     var coopsRemaining = -1;
     var currentDelivery;
     var buttonId = 0;
-
+    var dispatchStoreInfo = [];
+    var editMode = false;
     // Collapse/Open Sidebar
     $(document).ready(function () {
         $('#sidebarCollapse').on('click', function () {
@@ -349,6 +350,8 @@
                     arr[1] = result[i].first_name;
                     arr[2] = result[i].last_name;
                     arr[3] = result[i].truck_number;
+		    arr[4] = result[i].truck_id;
+		    arr[5] = result[i].driver_id;
                     deliveryStr += '<button type="button" class="list-group-item ';
                     deliveryStr += 'list-group-item-action" data-toggle="modal" ';
                     deliveryStr += 'data-target="#dispatchModal", name="' + arr;
@@ -361,6 +364,15 @@
                 }
             }
         });
+    }
+
+    function editDispatch(){
+	//dispatchTableBody
+	var x = document.getElementById("popupTruckDriverId").value;
+	editMode = true;
+	selectTruckAndDriver();
+	addEditItems(x);
+	deleteDispatch();
     }
 
     function deleteDispatch(){
@@ -392,7 +404,8 @@
 	document.getElementById('popupTruckVIN').innerHTML = routeInfo[3];
 	document.getElementById('popupTruckDriver').innerHTML = routeInfo[1] + " " + routeInfo[2];
 	    //dispatchTableBody
-
+	truckId = routeInfo[4];
+	driverId = routeInfo[5];
 	$.ajax({
 	    type: 'post',
 	    url: '../delivery/getDispatchDeliveries.php',
@@ -400,6 +413,8 @@
 		   truck_driver_id : routeInfo[0]
 	    },
 	    success: function(result){
+		dispatchStoreInfo = [];
+		document.getElementById("dispatchTableBody").innerHTML = "";
 		for(var i=0; i<result.length; i++){
 		    var arr = [];
 		    arr[0] = result[i].store_id;
@@ -410,9 +425,10 @@
 		    arr[5] = result[i].store_phone;
 		    arr[6] = result[i].total_coops;
 
-		    delRow = '<tr><td name="' + arr + '">' + result[i].store_name;
+		    delRow = '<tr><td>' + result[i].store_name;
 		    delRow += '   -   Total Coops : ' + result[i].total_coops + '</td></tr>';
 		    $('#dispatchTableBody').append(delRow);
+		    dispatchStoreInfo[i] = arr;
 		}
 	    }
 	});
@@ -427,10 +443,10 @@
 	}
 	else{
 	    var t = document.getElementById("truck");
-            var truck_id = t.options[t.selectedIndex].value;
+	    var truck_id = truckId;
 	    var d = document.getElementById("driver");
-	    var driver_id = d.options[d.selectedIndex].value;
-	
+	    var driver_id = driverId;
+
 	    var obj = { "truck_id" : truck_id, "driver_id" : driver_id, "deliveries" : []};
 
 	    for(var i=0; i<numDeliveries; i++){
@@ -444,20 +460,24 @@
 	        data: JSON.stringify(obj),
 	        success: function(result){
 		    $('#sortablelist').empty();
+			if(!editMode){
+		    	    var itemSelectorOption = $('#truck option:selected');
+        	    	    itemSelectorOption.remove();
+        	    	    $('#truck').selectpicker('refresh');
 
-		    var itemSelectorOption = $('#truck option:selected');
-        	    itemSelectorOption.remove();
-        	    $('#truck').selectpicker('refresh');
-
-		    itemSelectorOption = $('#driver option:selected');
-		    itemSelectorOption.remove();
-		    $('#driver').selectpicker('refresh');
-	            document.getElementById("driver").disabled = true;
-		    
+		    	    itemSelectorOption = $('#driver option:selected');
+		    	    itemSelectorOption.remove();
+		    	    $('#driver').selectpicker('refresh');
+	            	    document.getElementById("driver").disabled = true;
+			}
 		    $('#dispatchList').empty();
 		    populateDispatchList();
 	    
 	            document.getElementById("routeCard").style.display = "none";
+		    truckId = -1;
+		    driverId = -1;
+		    editMode = false;
+		    dispatchStoreInfo = [];
 	        }
 	    });
 	}
@@ -528,18 +548,11 @@
 	var coops = delivery_arr[6];
 	var coopsInInvoice = parseInt(coops, 10);
         var e = document.getElementById("truck");
-        var truck_id = e.options[e.selectedIndex].value;
-	var driver_id;
-	if(document.getElementById('driver').disabled){
-	    driver_id = -1
-	}
-	else{
-	    var e2 = document.getElementById("driver");
-	    driver_id = e2.options[e2.selectedIndex].value;
-	}
+        var truck_id = truckId;
+	var driver_id = driverId;
 	
         // check to see if we have a truck and driver
-        if(!(truck_id < 0 || driver_id < 0))
+	if(!(truck_id < 0 || driver_id < 0))
         {
             var addBtn = document.getElementById("modalAddBtn");
 	    
@@ -558,12 +571,18 @@
     // display route creation card with accurate # of coopsRemaining
     function selectTruckAndDriver()
     {
-        var truck = document.getElementById("truck");
-        var truck_id = truck.options[truck.selectedIndex].value;
-
-	var driver = document.getElementById("driver");
-	var driver_id = driver.options[driver.selectedIndex].value;
-
+	if(editMode){
+	    truck_id = truckId;
+	    driver_id = driverId;
+	}
+	else{
+            var truck = document.getElementById("truck");
+            var truck_id = truck.options[truck.selectedIndex].value;
+	    truckId = truck_id;
+	    var driver = document.getElementById("driver");
+	    var driver_id = driver.options[driver.selectedIndex].value;
+	    driverId = driver_id;
+	}
         // check that we have a truck and a driver
         if (truck_id < 0 || driver_id < 0)
         {
@@ -582,13 +601,65 @@
 		       truck_id: truck_id
 		},
 		success: function(result){
-		    document.getElementById("coopsRemaining").innerHTML = "Coops Remaining: " + result.max_coops;
 		    var coops = result.max_coops
 		    coopsRemaining = parseInt(coops, 10);
+		    if(dispatchStoreInfo.length > 0){
+			for(var i=0; i<dispatchStoreInfo.length; i++){
+			    var arr = dispatchStoreInfo[i];
+			    coopsRemaining -= parseInt(arr[6], 10);
+			}
+		    }
+		    document.getElementById("coopsRemaining").innerHTML = "Coops Remaining: " + coopsRemaining;
+		    var s = "selectTruckAndDriver" + coopsRemaining;
+		    alert(s);
 		}
 	    });
 	}
 
+    }
+
+    function addEditItems(truckDriverId){
+	var len = dispatchStoreInfo.length;
+	for(var i=0; i<len; i++){
+	    var arr = dispatchStoreInfo[i];
+	    var coops = arr[6];
+	    var coopsInInvoice = parseInt(coops, 10);
+	
+	    var s = 'TotalCoops : ' + arr[6] + '   -   ' + arr[1];
+	    s += '   -   ' + arr[3] + ', ' + arr[4];
+
+	    var li = '<li class="list-group-item" value="' + arr[0] + '">' + s;
+	    li += '<span class="delete">x</span></li>';
+	    $('#sortablelist').append(li);
+
+	    // Update coops remaining
+            var p = "addEditItems" + coopsRemaining;
+            alert(p);
+            coopsRemaining -= coopsInInvoice;
+            document.getElementById("coopsRemaining").innerHTML = "Coops Remaining: " + coopsRemaining;
+
+	    var deletebtns = document.getElementsByClassName("delete");
+            deletebtns[deletebtns.length-1].addEventListener("click", function () {
+                this.parentElement.remove();
+                // update coopsRemaining
+                coopsRemaining += coopsInInvoice;
+                document.getElementById("coopsRemaining").innerHTML = "Coops Remaining: " + coopsRemaining;
+
+                deliveryStr = '<button type="button" class="list-group-item ';
+                deliveryStr += 'list-group-item-action" data-toggle="modal" ';
+                deliveryStr += 'data-target="#invoiceModal", name="' + buttonId + '" value="' + arr;
+                deliveryStr += '" onclick="populatePopup(this.name)"';
+                deliveryStr += '>' + 'Total Coops : ' + arr[6];
+                deliveryStr += '   -   ' + arr[1];
+                deliveryStr += '   -   ' + arr[3];
+                deliveryStr += ', ' + arr[4] + '</button>';
+                buttonId = buttonId + 1;
+
+	    
+                $('#invoiceList').append(deliveryStr);
+
+            });
+	}
     }
 
     // Add Invoice Item to Sortable List
@@ -625,6 +696,7 @@
             arr[4] = deliveryInfo[4];
             arr[5] = deliveryInfo[5];
             arr[6] = deliveryInfo[6];
+
             deliveryStr = '<button type="button" class="list-group-item ';
             deliveryStr += 'list-group-item-action" data-toggle="modal" ';
             deliveryStr += 'data-target="#invoiceModal", name="' + buttonId + '" value="' + arr;
