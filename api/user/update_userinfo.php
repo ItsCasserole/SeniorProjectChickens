@@ -20,8 +20,7 @@ if( !empty($data->userName) &&
     !empty($data->firstName) &&
     !empty($data->lastName) &&
     !empty($data->permission)&&
-    !empty($data->userid) &&
-    !empty($data->activestatus)){
+    !empty($data->userid)){
 
     $user->first_name = $data->firstName;
     $user->last_name = $data->lastName;
