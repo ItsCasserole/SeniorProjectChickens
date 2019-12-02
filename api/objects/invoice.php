@@ -12,6 +12,7 @@
 		public $is_dispatched;
 		public $store_id;
 
+
 		public function __construct($db){
 			$this->conn = $db;
 		}
