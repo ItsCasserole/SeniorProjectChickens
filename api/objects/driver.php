@@ -67,7 +67,7 @@
             //read messages for sales driver
     public function readfordriver(){
 
-     $sql = 'select concat(u.first_name, " ", u.last_name) as driverName, user_ID  from  User u where u.permission_set = "Truck Driver" and u.active_status = 1 ORDER BY last_name;';
+     $sql = 'select concat(u.first_name, " ", u.last_name) as driverName, u.user_ID from chickens.User u where u.user_ID not in (select d.user_ID from chickens.Driver d) and u.permission_set = "Truck Driver" and u.active_status = 1;';
      $stmt = $this->conn->prepare($sql);
      $stmt->execute();
      return $stmt;

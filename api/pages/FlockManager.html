@@ -32,7 +32,7 @@
                 <nav id="sidebar" class="fixed">
                         <div class="sidebar-header"><h3 class="text-center">Simply Fowl</h3></div>
                         <ul class="list-unstyled components">
-				<li><a href="#"><i class="fas fa-home fa-fw"></i> Home</a></li>
+				<li class="active"><a href="#"><i class="fas fa-home fa-fw"></i> Home</a></li>
                                 <li><a href="flockPage.html"><i class="fas fa-feather fa-fw"></i> Manage Flocks</a></li>
                                 <li><a href="farmPage.html"><i class="fas fa-tractor fa-fw"></i> Manage Farms </a></li>
 				<li id="adminsub">
@@ -145,17 +145,20 @@
 
 
         <script type="text/javascript">
-                $(document).ready(function () {
-			$.getJSON("../message/read.php",function(data){
+               $(document).ready(function () {
+				document.getElementById("new_ann").style.display = "none";
+			$.getJSON("../message/readforFM.php",function(data){
                         var messagestr = '<ul class="media-list">';
                         $.each(data.records, function(key,val){
-                                messagestr += `<li class="media">
-                        <div class="media-body">
-                            <strong class="text-primary">Administrator</strong>
-                            <small class="text-muted">` + val.timestamp + `</small>
-                            <p>` + val.content + `</p>
-                        </div>
-                    </li>`;
+			var message = val.content;
+            var date_time = val.date_created;
+            var name =   val.name;
+                                messagestr += `<li class="media">   
+                            <div class="media-body">
+                            <strong class="text-primary">`+ name +`</strong>
+                            <small class="text-muted">` + date_time + `</small>
+                            <p>` + message + `</p>
+                        </div></li>`;
 
                         }
                         );
@@ -187,7 +190,7 @@
 	    if(docCookies.getItem("permission") != "Admin"){
 		    document.getElementById("new_ann").style.display = "none";
 	    } else {
-		    document.getElementById("new_ann").style.display = "block";
+		    //document.getElementById("new_ann").style.display = "block";
 	    }
 	}
         </script>
