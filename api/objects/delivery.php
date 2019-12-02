@@ -27,9 +27,9 @@
             return $stmt;
         }
 
-        function setRouteStop($stop){
+        function setRouteStop($stop, $store){
             $truck_driver = $this->truck_driver_id;
-            $query = "SELECT insertDeliveryDriverTruckCombo('$truck_driver', '$stop');";
+            $query = "SELECT insertDeliveryDriverTruckCombo('$truck_driver', '$stop', '$store');";
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
 

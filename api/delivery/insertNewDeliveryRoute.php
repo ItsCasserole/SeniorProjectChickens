@@ -24,7 +24,7 @@ if( !empty($data->truck_id) &&
 
 	$stmt = $del->setTruckDriver();
 	$result = $stmt->fetch();
-	$del->truck_driver_id = intval($result[0]);
+	$del->truck_driver_id = $result[0];
 
 	for($i=1; $i<=$len; $i++){
 	    $stmt = $del->setRouteStop($i, $arr[$i-1]->store_id);
@@ -32,6 +32,5 @@ if( !empty($data->truck_id) &&
 	    $stmt = $del->insertDeliveryOrders(intval($result[0]), $arr[$i-1]->store_id);
 	}
 }
-
-echo json_encode("yes");
+echo json_encode($result[0]);
 ?>
