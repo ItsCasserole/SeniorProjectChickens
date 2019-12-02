@@ -133,8 +133,8 @@
 
         }
 
-       //update user information
-       public function update_userinfo(){
+        //update user information
+	public function update_userinfo(){
 
             $firstname = $this->first_name;
             $lastname = $this->last_name;
@@ -147,10 +147,16 @@
             $stmt = $this->conn->prepare($sql);
             $stmt->execute();
             return $stmt;
-       }
+        }
+	
+	public function changePassword($newPass){
+	    $username = $this->name_string;	
+	    $pass = $this->auth_string;
 
-
-
-
+	    $query = "SELECT changePassword('$username', '$pass', '$newPass');";
+	    $stmt = $this->conn->prepare($query);
+	    $stmt->execute();
+	    return $stmt;
+	}
     }
 ?>
