@@ -44,3 +44,33 @@ function checkPermissions(permissionNeeded){
         document.getElementById("adminsub").style.display = 'block';
     }
 }
+
+function changePassword(){
+    var username = $('#username').val();
+    var currPass = $('#currentPassword').val();
+    var newPass = $('#newPassword').val();
+    var reenterPass = $('#reenter').val();
+
+    if(newPass != reenterPass){
+	alert("The new password fields don't match. Please try again.");
+    }
+    else{
+	$.ajax({
+	    type: 'post',
+	    url: '../user/change_password.php',
+	    data: {
+		username : username,
+		currPass : currPass,
+		newPass : newPass
+	    },
+	    success: function(result){
+		if(result == "success"){
+		    logout();
+		}
+		else{
+		    alert("Incorrect information. Please try again.");
+		}
+	    }
+	});
+    }
+}

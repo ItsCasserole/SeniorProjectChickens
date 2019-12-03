@@ -43,6 +43,7 @@
                         <li><a href="accountsmanagement.html">Manage Accounts</a></li>
                     </ul>
                 </li>
+		<li><a href="changePassword.html"><i class="fas fa-cog fa-fw"></i> Change Password </a></li>
             </ul>
 
         </nav>
@@ -359,7 +360,6 @@
                     deliveryStr += '>' + 'Truck Number : ' + result[i].truck_number;
                     deliveryStr += '   -   ' + result[i].first_name;
                     deliveryStr += ' ' + result[i].last_name + '</button>';
-
                     $('#dispatchList').append(deliveryStr);
                 }
             }
@@ -372,7 +372,16 @@
 	editMode = true;
 	selectTruckAndDriver();
 	addEditItems(x);
-	deleteDispatch();
+	$.ajax({
+	    type: 'post',
+	    url: '../delivery/deleteRoute.php',
+	    data: {
+	        truck_driver_id : x
+	    },
+	    success: function(result){
+	        document.getElementById("dispatches").style.display = "none";
+	    }
+	});
     }
 
     function deleteDispatch(){
@@ -406,11 +415,12 @@
 	    //dispatchTableBody
 	truckId = routeInfo[4];
 	driverId = routeInfo[5];
+	truckDriverId = routeInfo[0];
 	$.ajax({
 	    type: 'post',
 	    url: '../delivery/getDispatchDeliveries.php',
 	    data: {
-		   truck_driver_id : routeInfo[0]
+		   truck_driver_id : truckDriverId
 	    },
 	    success: function(result){
 		dispatchStoreInfo = [];
@@ -424,7 +434,6 @@
 		    arr[4] = result[i].store_state;
 		    arr[5] = result[i].store_phone;
 		    arr[6] = result[i].total_coops;
-
 		    delRow = '<tr><td>' + result[i].store_name;
 		    delRow += '   -   Total Coops : ' + result[i].total_coops + '</td></tr>';
 		    $('#dispatchTableBody').append(delRow);
@@ -478,6 +487,7 @@
 		    driverId = -1;
 		    editMode = false;
 		    dispatchStoreInfo = [];
+		    document.getElementById("dispatches").style.display = "block";
 	        }
 	    });
 	}
@@ -610,8 +620,7 @@
 			}
 		    }
 		    document.getElementById("coopsRemaining").innerHTML = "Coops Remaining: " + coopsRemaining;
-		    var s = "selectTruckAndDriver" + coopsRemaining;
-		    alert(s);
+		    document.getElementById("dispatches").style.display = "none";
 		}
 	    });
 	}
@@ -633,8 +642,6 @@
 	    $('#sortablelist').append(li);
 
 	    // Update coops remaining
-            var p = "addEditItems" + coopsRemaining;
-            alert(p);
             coopsRemaining -= coopsInInvoice;
             document.getElementById("coopsRemaining").innerHTML = "Coops Remaining: " + coopsRemaining;
 
@@ -729,7 +736,10 @@
         truckId = -1;
         driverId = -1;
         coopsRemaining = -1;
-        document.getElementById("modalAddBtn").setAttribute("disabled","true")
+        document.getElementById("modalAddBtn").setAttribute("disabled","true");
+	$('#dispatchList').empty();
+        populateDispatchList();
+	document.getElementById("dispatches").style.display = "block";
     }
 
 
