@@ -49,7 +49,7 @@
       function addTruck(){
                       var truckNumber = $('#truckNumber').val();
                       var truckVIN = $('#truckVIN').val();
-                      var truckPlateNumber = $('#truckPlateNumber').val();
+                      var truckPlateNumber = $('#truckLicensePlate').val();
                       var truckMaxCoops = $('#truckMaxCoops').val();
                       var truck_transmission = $('#inputTransmission').val();
 
