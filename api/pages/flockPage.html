@@ -84,7 +84,7 @@
 		<form id='createFlock' action='#' method='post'>
 		<div class="form-group">
 		<label for="farmName"><b>Farm</b></label><br>
-		<select name="farm_id" class="farmList" required></select>
+		<select name="farm_id" class="addfarmList" required></select>
 		</div>
 		<div class="form-group">
 		<label for="building"><b>Building</b></label><br>
@@ -210,8 +210,11 @@
 			   });
 			   //create flock table
 			   $(document).on('click','.showFlockTable',function(){
+				   
 				   $.getJSON("../flock/read.php", function(flockData){
-					   var tableStr = `<table class='table table-bordered table-hover'>
+					   $.getJSON("../order/getOrders.php", function(orderData){
+					   
+						   var tableStr = `<table class='table table-bordered table-hover'>
 						   <!-- creating our table heading -->
 						   <tr>
 						   <th class='w-15-pct'>Farm Name</th>
@@ -223,6 +226,23 @@
 						   <th class='w-25-pct text-align-center'>Action</th>
 						   </tr>`;
 					   $.each(flockData.records, function(key,val){
+						   var removeBool = false;
+						   $.each(orderData.records,function(okey,oval){
+
+                                                           if(oval.flock_id == val.flock_id){
+                                                             removeBool = true;
+                                 
+							   }
+						   });        
+					   
+						   if(val.hatchlings <= 0){
+							   $.ajax({
+                                                                   url : "../flock/delete.php",
+                                                                   type : "POST",
+                                                                   dataType : 'json',
+                                                                   data : JSON.stringify({ flock_id: val.flock_id }),
+                                                           });
+						   }else{
 						   tableStr += `<tr>
 							   <td>` + val.farm_name + `</td>
 							   <td>` + val.building_number +`</td>
@@ -231,17 +251,24 @@
 							   <td>` + val.delivery_date + `</td>
 							   <td>` + val.hatchlings + `</td>
 							   <td>
-							   <button class='btn btn-info m-r-10px updateFlock' data-toggle='modal' data-target='#updateModal'  data-id='` + val.flock_id + `'>Update</button>
-							   <button class='btn btn-danger m-r-10px removeFlock' data-id='` + val.flock_id + `'>Remove</button>
-							   </td>
-							   </tr>`;
+							   <button class='btn btn-info m-r-10px updateFlock' data-toggle='modal' data-target='#updateModal'  data-id='` + val.flock_id + `'>Update</button>`;
+							   if(!removeBool){
+								   
+							  tableStr+=`<button class='btn btn-danger m-r-10px removeFlock' data-id='` + val.flock_id + `'>Remove</button></td></tr>`;
+							   }else{
+								   tableStr+=`<button class='btn btn-danger disabled m-r-10px'>Remove</button></td></tr>`;
+							   }
+						   }
+					   
 					   });
+					   
 					   tableStr += `</table>`;
 					   $('#flockInfo').empty();
 					   $('#flockInfo').append(tableStr);
+					   });
 				   });
 			   });
-
+			   
 			   var farm = "../farm/read.php";
 			   var building = "../building/read.php";
 			   var bird = "../bird/read.php";
@@ -249,6 +276,7 @@
 			   $.getJSON(farm, function(farmData){
 				   $.getJSON(building, function(buildingData){
 					   $.getJSON(bird, function(birdData){
+						  
 						   var farmStr = `<option value=''>Select Farm</option>`;
 						   var buildingStr = `<option value=''>Select Building</option>`;
 						   var birdStr = `<option value=''>Select Bird Type</option>`;
@@ -262,7 +290,7 @@
 						   $.each(birdData.records, function(key,val){
 							   birdStr +=`<option value='` + val.bird_type_id + `'>` + val.bird_desc + `</option>`;
 						   });
-
+						   $('.addfarmList').append(farmStr);
 						   $('.farmList').append(farmStr);
 						   $('.buildingList').append(buildingStr);
 						   $('.birdList').append(birdStr);
