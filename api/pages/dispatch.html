@@ -783,7 +783,7 @@
 		dropdown = document.getElementById("truck");
 		for(var i=0; i<result.length; i++){
 		    option = document.createElement('option');
-		    option.text = result[i].truck_number;
+		    option.text = result[i].truck_number + " - " + result[i].transmission;
 		    option.value = result[i].truck_id;
 		    dropdown.add(option);
 								       }

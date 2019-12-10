@@ -24,7 +24,8 @@ $trucks = array();
 foreach($stmt->fetchAll() as $row){
     $inner_array = array(
 	"truck_id" => $row['id'],
-	"truck_number" => $row['truck_number']
+	"truck_number" => $row['truck_number'],
+	"transmission" => $row['truck_transmission']
     );
     $trucks[] = $inner_array;
 }
