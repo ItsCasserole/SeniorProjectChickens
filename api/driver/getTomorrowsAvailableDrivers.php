@@ -1,5 +1,7 @@
-
 <?php
+//Takes in a transmission type and returns the list of drivers who are available to drive 
+//that type of transmission tomorrow.
+//Author: Cassandra Bailey
 
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");

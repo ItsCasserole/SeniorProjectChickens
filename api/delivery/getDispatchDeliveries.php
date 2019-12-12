@@ -1,4 +1,6 @@
 <?php
+//Takes in a truck_driver_id and returns the route assigned to it
+//Author: Cassandra Bailey
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: POST");

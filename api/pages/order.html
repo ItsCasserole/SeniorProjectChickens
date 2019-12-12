@@ -83,7 +83,7 @@
 			<input type="text" class="numcoops" id="numcoops" placeholder="Number of Coops">
 		        	
 			<select class="bird1" id="bird1">
-				
+				<option value="-1">Choose Flock...</option>	
 			</select>
 	
 			<button id="addMoreFields" class="btn btn-primary btn-sm" type="button" onclick="addOrderLine()">+</button>
@@ -92,49 +92,49 @@
 			    <input type="text" id="numcoops2" placeholder="Number of Coops">
 
                         <select class="bird2" id="bird2">
-                                 
+				<option value="-1">Choose Flock...</option>
                         </select>
 		    </div>
 		    <div id="form-group-3">
 			    <input type="text" id="numcoops3" placeholder="Number of Coops">
 
                         <select class="bird3" id="bird3">
-                                 
+                                <option value="-1">Choose Flock...</option> 
                         </select>
 		    </div>
 		    <div id="form-group-4">
 			    <input type="text" id="numcoops4" placeholder="Number of Coops">
 
                         <select class="bird4" id="bird4">
-                                 
+				<option value="-1">Choose Flock...</option> 
                         </select>
 		    </div>
 		    <div id="form-group-5">
 			    <input type="text" id="numcoops5" placeholder="Number of Coops">
 
                         <select class="bird5" id="bird5">
-                                 
+				<option value="-1">Choose Flock...</option>
                         </select>
 		    </div>
 		    <div id="form-group-6">
 			    <input type="text" id="numcoops6" placeholder="Number of Coops">
 
                         <select class="bird6" id="bird6">
-                                 
+				<option value="-1">Choose Flock...</option>
                         </select>
 		    </div>
 		    <div id="form-group-7">
 			    <input type="text" id="numcoops7" placeholder="Number of Coops">
 
                         <select class="bird7" id="bird7">
-                                 
+				<option value="-1">Choose Flock...</option>
                         </select>
 		    </div>
 		    <div id="form-group-8">
 			    <input type="text" id="numcoops8" placeholder="Number of Coops">
 
                         <select class="bird8" id="bird8">
-                                 
+				<option value="-1">Choose Flock...</option>
                         </select>
 		    </div>
 
@@ -287,7 +287,7 @@ function getRecentID(){
 }
 
 function submitOrder(){
-        if($('#deldate').val() != "" && $('#numcoops').val() != ""){
+        if($('#deldate').val() != "" && $('#numcoops').val() != "" && $('#bird1').val() != -1){
 		addInvoice($('#storeList').val(), $('#deldate').val());
                 addOrder($('#storeList').val(), $('#deldate').val(), $('#numcoops').val(), $('#bird1').val(), id);
                 if(document.getElementById("form-group-2").style.display != "none" && $('#numcoops2').val() != ""){

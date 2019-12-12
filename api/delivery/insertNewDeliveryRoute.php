@@ -1,4 +1,9 @@
 <?php
+//Takes in a truck_id, driver_id, and a list of deliveries. A truck_driver_id is created for 
+//the combo of truck_id and driver_id. Then each delivery in the list is added to the database 
+//with the truck_driver_id
+//Author: Cassandra Bailey
+
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: POST");
