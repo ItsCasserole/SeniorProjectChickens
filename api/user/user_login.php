@@ -1,4 +1,8 @@
 <?php
+//Takes in username and password. If username exists, check if password matches the stored password
+//If yes, return user information. If no, return error message
+//Author: Cassandra Bailey
+
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: POST");

@@ -1,4 +1,8 @@
 <?php
+//Takes in the username, old password, and new password. If the username exists, check if 
+//old password matches the stored password. If yes, set stored password = new password
+//Author: Cassandra Bailey
+
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: POST");

@@ -289,12 +289,18 @@
                     $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
                 });
             });
+	//populate the truck dropdown with the list of ALL tomorrow's available trucks
 	populateTruckDropdown("MANUAL");
+	//populate the driver dropdown with the list of ALL tomorrow's available drivers
 	populateDriverDropdown("AUTOMATIC");
+	//disable driver dropdown; enabled upon truck selection
 	document.getElementById("driver").disabled = true;
+	//get tomorrow's date and store it
 	setTomorrowsDate();
 
+	//populate the list of tomorrow's assigned routes
 	populateDispatchList();
+	//populate the list of tomorrow's unassigned deliveries
 	populateUnassignedDeliveriesList();
         // instanciate selects
         $('select').selectpicker();
@@ -306,6 +312,8 @@
     });
     // End of ready ----------------------------------------------------------------------------------------------------
 
+    //Populates the list of tomorrows deliveries which have not been assigned to a route
+    //Author: Cassandra Bailey
     function populateUnassignedDeliveriesList(){
 	$.ajax({
             type: 'post',
@@ -337,6 +345,8 @@
         });
     }
 
+    //populate the list of tomorrow's assigned routes
+    //Author: Cassandra Bailey
     function populateDispatchList(){
 	$.ajax({
             type: 'post',
@@ -366,12 +376,20 @@
         });
     }
 
+    //Run on route edit button click
+    //Author: Cassandra Bailey
     function editDispatch(){
 	//dispatchTableBody
 	var x = document.getElementById("popupTruckDriverId").value;
 	editMode = true;
+
+	//set the specified truck and driver for the route being edited
 	selectTruckAndDriver();
+
+	//populate the edit card with the list of items in the route
 	addEditItems(x);
+
+	//delete the exisiting route from the database; when applied, route will be re-added
 	$.ajax({
 	    type: 'post',
 	    url: '../delivery/deleteRoute.php',
@@ -382,8 +400,13 @@
 	        document.getElementById("dispatches").style.display = "none";
 	    }
 	});
+
+	//scroll automatically to the editing card
+	$('html, body').stop().animate({scrollTop:$('#routeCard').offset().top});
     }
 
+    //run on delete route button select
+    //Author: Cassandra Bailey
     function deleteDispatch(){
 	var x = document.getElementById('popupTruckDriverId').value;
 	    $.ajax({
@@ -393,13 +416,21 @@
 		       truck_driver_id : x
 		},
 		success: function(result){
+		    //if route successfully deleted
 		    if(result.message == "success"){
+			//refresh the assigned routes list with the newly updated list from the db
 			$('#dispatchList').empty();
                     	populateDispatchList();
+			
+			//refresh the unassigned list of deliveries with the newly updated list from the db
 			$('#invoiceList').empty();
 			populateUnassignedDeliveriesList();
+
+			//refresh the truck dropdown with the newly updated list of tomorrow's available trucks from the db
 			$('#truck').empty().append('<option value=-1>Choose Truck...</option>');
 			populateTruckDropdown("MANUAL");
+
+			//refresh the driver dropdown with the newly updated list of tomorrow's available drivers from the db
 			$('#driver').empty().append('<option value=-1>Choose Driver...</option>');
 			populateDriverDropdown("AUTOMATIC");
 		    }
@@ -407,7 +438,17 @@
 	    });
     }
 
+    //populate the popup menu for the assigned route
+    //Author: Cassandra Bailey
     function populateRoutePopup(route){
+	//route values
+	//0 - truck_driver_id
+	//1 - driver first_name
+	//2 - driver last_name
+	//3 - truck_number
+	//4 - truck_id
+	//5 - driver_id
+	
 	var routeInfo = route.split(',');
 	document.getElementById('popupTruckDriverId').value = routeInfo[0];
 	document.getElementById('popupTruckVIN').innerHTML = routeInfo[3];
@@ -443,6 +484,8 @@
 	});
     }
 
+    //insert a new route into the database
+    //Author: Cassandra Bailey
     function createDispatch() {
 	var arr = document.getElementById("sortablelist").getElementsByTagName("LI");
 	var numDeliveries = arr.length;
@@ -469,6 +512,8 @@
 	        data: JSON.stringify(obj),
 	        success: function(result){
 		    $('#sortablelist').empty();
+			//if in edit mode, truck and driver may not have been selected in dropdowns
+			//therefore, don't touch truck and driver dropdowns if in edit mode
 			if(!editMode){
 		    	    var itemSelectorOption = $('#truck option:selected');
         	    	    itemSelectorOption.remove();
@@ -479,20 +524,26 @@
 		    	    $('#driver').selectpicker('refresh');
 	            	    document.getElementById("driver").disabled = true;
 			}
+		    //refresh the list of tomorrow's assigned routes based on the newly updated list from the db
 		    $('#dispatchList').empty();
 		    populateDispatchList();
 	    
+		    //remove the edit card display
 	            document.getElementById("routeCard").style.display = "none";
 		    truckId = -1;
 		    driverId = -1;
 		    editMode = false;
 		    dispatchStoreInfo = [];
+
+		    //display list of assigned routes
 		    document.getElementById("dispatches").style.display = "block";
 	        }
 	    });
 	}
     }
 
+    //get tomorrow's date in Eastern Standard Time
+    //Author: Cassandra Bailey
     function setTomorrowsDate(){
 	$.ajax({
 	    type: 'post',
@@ -512,6 +563,7 @@
     }
 
     // Change Modal Information based on invoice that was clicked
+    //Author: Cassandra Bailey, Joe Tagliaferro
     function populatePopup(buttonName)
     {
 	//delivery_arr[0] - store_id
@@ -539,7 +591,7 @@
         var coopsOfType = 0;
         var orderRow = "";
 
-
+	//show stores individual order information
 	$.ajax({
             type: 'post',
             url: '../order/getTomorrowsIndividualOrders.php',
@@ -561,7 +613,7 @@
         var truck_id = truckId;
 	var driver_id = driverId;
 	
-        // check to see if we have a truck and driver
+        // check to see if we have a truck and driver selected
 	if(!(truck_id < 0 || driver_id < 0))
         {
             var addBtn = document.getElementById("modalAddBtn");
@@ -579,8 +631,11 @@
     }
 
     // display route creation card with accurate # of coopsRemaining
+    //Author: Cassandra Bailey, Joe Tagliaferro
     function selectTruckAndDriver()
     {
+	//if in edit mode, then truck id and driver id cannot be retrieved from the dropdowns
+	//get id values from the stored id values
 	if(editMode){
 	    truck_id = truckId;
 	    driver_id = driverId;
@@ -603,7 +658,8 @@
             document.getElementById("sortablelist").innerHTML = "";
 
             document.getElementById("routeCard").style.display = "block";
-
+	    
+	    //get the max number of coops for the specified truck and display in the route card
 	    $.ajax({
 	        type: 'post',
 	        url: '../truck/getMaxCoops.php',
@@ -627,6 +683,8 @@
 
     }
 
+    //Take items from assigned route and insert them into the list in the route (edit) card
+    //Author: Cassandra Bailey
     function addEditItems(truckDriverId){
 	var len = dispatchStoreInfo.length;
 	for(var i=0; i<len; i++){
@@ -670,12 +728,22 @@
     }
 
     // Add Invoice Item to Sortable List
+    // Author: Cassandra Bailey, Joe Tagliaferro
     function addItem(buttonName)
     {
+	//array is stored in the button value; this array contains the following
+	//0 - store_id
+	//1 - store_name
+	//2 - store_address
+	//3 - store_city
+	//4 - store_state
+	//5 - store_phone
+	//6 - number_coops
+
 	var delivery = document.getElementsByName(buttonName)[0].value;
 	var deliveryInfo = delivery.split(',');
 	var coops = deliveryInfo[6];
-        //TODO: set coopsInInvoice to the number of coops in an invoice, given an invoice id
+        
         var coopsInInvoice = parseInt(coops, 10);
 
         var s = 'Total Coops : ' + deliveryInfo[6] + '   -   ' + deliveryInfo[1];
@@ -728,6 +796,7 @@
 
 
     // reset all values, hide route card, disable modal add button.
+    //Author: Cassandra Bailey, Joe Tagliaferro
     function clearRoute()
     {
         document.getElementById("coopsRemaining").innerHTML = "No Truck Has Been Selected";
@@ -740,9 +809,16 @@
 	$('#dispatchList').empty();
         populateDispatchList();
 	document.getElementById("dispatches").style.display = "block";
+
+	$('#truck').empty().append('<option value=-1>Choose Truck...</option>');
+	populateTruckDropdown("MANUAL");
+	$('#driver').empty().append('<option value=-1>Choose Driver...</option>');
+	populateDriverDropdown("AUTOMATIC");
     }
 
-
+    //get the transmission type for the selected truck
+    //method called upon truck selection so that drivers can be filtered based on their capabilities
+    //Author: Cassandra Bailey
     function getTruckTransmission(){
 	var e = document.getElementById("truck");
 	var id = e.options[e.selectedIndex].value;
@@ -751,29 +827,32 @@
 	}
 	else{
 	    document.getElementById("driver").disabled = true;
-	}
-	$.ajax({
-	    type: 'post',
-	    url: '../truck/getTrans.php',
-	    data: {
-		   truck_id: id
-	    },
-	    success: function(result){
-		var str = result.trans.toString();  
-		$('#driver').empty().
-                    append('<option value=-1>Choose Driver...</option>');
-                $('#driver').selectpicker('refresh');
+	
+	    $.ajax({
+	        type: 'post',
+	        url: '../truck/getTrans.php',
+	        data: {
+		       truck_id: id
+	        },
+	        success: function(result){
+		    var str = result.trans.toString();  
+		    $('#driver').empty().
+                        append('<option value=-1>Choose Driver...</option>');
+                    $('#driver').selectpicker('refresh');
 
-		if(str.trim() == "Automatic"){
-		    populateDriverDropdown("AUTOMATIC");
-		}
-		else{
-		    populateDriverDropdown("MANUAL");
-		}
-	    }
-	});
+		    if(str.trim() == "Automatic"){
+		        populateDriverDropdown("AUTOMATIC");
+		    }
+		    else{
+		        populateDriverDropdown("MANUAL");
+		    }
+	        }
+	    });
+	}
     }
 
+    //populate the truck dropdown based on the given transmission type
+    //Author: Cassandra Bailey
     function populateTruckDropdown(transmission){
 	$.ajax({
             type: 'post',
@@ -792,6 +871,8 @@
         });
     }
 
+    //populate the driver dropdown based on the transmission type of the selected truck
+    //Author: Cassandra Bailey
     function populateDriverDropdown(transmission){
         $.ajax({
             type: 'post',

@@ -1,4 +1,6 @@
 <?php
+//Gets the list of tomorrows available trucks which correspond to the driver's tranmission capabilities
+//Author: Cassandra Bailey
 
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");

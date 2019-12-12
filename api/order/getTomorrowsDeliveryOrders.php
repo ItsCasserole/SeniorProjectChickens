@@ -1,4 +1,6 @@
 <?php
+//Returns a list of tomorrow's deliveries which have not yet been assigned to a route
+//Author: Cassandra Bailey
 
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");

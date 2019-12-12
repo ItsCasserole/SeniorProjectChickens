@@ -1,4 +1,7 @@
 <?php
+//Returns the list of tomorrows orders corresponding to the given store id
+//Author: Cassandra Bailey
+
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: POST");

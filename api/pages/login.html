@@ -32,9 +32,14 @@
         </div>
     </body>
     <script language="javascript">
+	
+	//Used for logging in a user based on provided form information
+	//Author: Cassandra Bailey
 	function login(){
 	    var username = $('#username').val();
 	    var password = $('#password').val();
+
+	    //If either username or password field empty, don't go to database
 	    if(username == "" || password == ""){
 		alert("Please enter a username AND a password.");
 	    }
@@ -52,9 +57,13 @@
 			    alert("Username or password incorrect. Please try again.");
 			}
 			else{
+			    //if username == password, then this is user's first time logging in
+			    //they are required to change their password to something that is 
+			    //not equal to their username
 			    if(username == password){
 				window.location.href = "changePassword.html";
 			    }
+			    //if user != password, log user in and set cookie values
 			    else{	
 			    	docCookies.setItem("username", username);
 			    	docCookies.setItem("userid", obj.userid);
