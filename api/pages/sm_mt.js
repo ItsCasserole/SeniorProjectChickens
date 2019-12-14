@@ -117,7 +117,7 @@
                  alert(response);
              }
          });
-       
+       //alert(name + "/n Birth:  " + driverBirth+ " /n Medical:   " + driverME+ "/n L Number: " + driverLN+ "/n Expiration:  " + driverLE + "/n Phone : " + driverPhone + "/n License type:  " + driverLT + "/n Driver Trans: " + driverTransmission);
 
     }
     
