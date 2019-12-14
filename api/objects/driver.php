@@ -47,10 +47,10 @@
         $transmission_type= $this->transmission_type;
         //$driver_status= $this->driver_status;
         $user_ID= $this->user_ID;
-
         
-        $sql = "INSERT INTO chickens.Driver(first_name,last_name,phone_number, date_of_birth, license_st, license_number, license_type, license_expiration, medical_expiration, transmission_type,user_ID)
-        VALUES ('$first_name','$last_name','$phone_number','$date_of_birth','$license_st','$license_number','$license_type','$license_expiration','$medical_expiration','$transmission_type','$user_ID');";
+        
+        $sql = "INSERT INTO chickens.Driver(first_name,last_name,phone_number, date_of_birth, license_st, license_number, license_type, license_expiration, medical_expiration, transmission_type, user_ID, driver_status)
+        VALUES ('$first_name','$last_name','$phone_number','$date_of_birth','$license_st','$license_number','$license_type','$license_expiration','$medical_expiration','$transmission_type','$user_ID', '1');";
         $stmt = $this->conn->prepare($sql);
         $stmt-> execute();
 }
