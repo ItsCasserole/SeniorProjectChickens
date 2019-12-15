@@ -1,4 +1,6 @@
 <?php
+//Returns tomorrows date in Eastern Standard Time
+//Author: Cassandra Bailey
 
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");

@@ -286,3 +286,7 @@ a[data-toggle="collapse"] {
         line-height: .25;
         border-radius: 0rem;
 }
+
+.disabled {
+	color: #999;
+}

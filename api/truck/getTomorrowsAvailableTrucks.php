@@ -1,4 +1,6 @@
 <?php
+//Gets the list of tomorrows available trucks which correspond to the driver's tranmission capabilities
+//Author: Cassandra Bailey
 
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
@@ -24,7 +26,8 @@ $trucks = array();
 foreach($stmt->fetchAll() as $row){
     $inner_array = array(
 	"truck_id" => $row['id'],
-	"truck_number" => $row['truck_number']
+	"truck_number" => $row['truck_number'],
+	"transmission" => $row['truck_transmission']
     );
     $trucks[] = $inner_array;
 }

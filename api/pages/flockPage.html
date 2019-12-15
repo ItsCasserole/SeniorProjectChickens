@@ -13,7 +13,7 @@
 		<link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
  integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
- crossorigin="anonymous">
+ crossorigin="anonymous"> 
 
 		<!-- Our Custom CSS -->
 		<link rel="stylesheet" href="style.css">
@@ -66,12 +66,11 @@
 	     <!--dropdown--!>
 	      <select id="farm" class="farmList"></select>
 	      <br><br>
-	      <div class='btn btn-primary pull-right m-b-15px showFlockTable'>
-	      <span class='glyphicon glyphicon-plus'></span> Show All Flocks
+	      <div>
+	      <button class="btn btn-primary pull-right m-b-15px showFlockTable"><i class="fas fa-info-circle"></i> Show All Flocks</button>
 	      </div>
-	      <br>
 	      <!--flock info--!>
-	       <p class="card-text"><b>Flock Information:</b><br></p>
+	       <p class="card-text"></p>
 	       <div id="flockInfo"></div>
 	       </div>
 	       </div>
@@ -84,7 +83,7 @@
 		<form id='createFlock' action='#' method='post'>
 		<div class="form-group">
 		<label for="farmName"><b>Farm</b></label><br>
-		<select name="farm_id" class="farmList" required></select>
+		<select name="farm_id" class="addfarmList" required></select>
 		</div>
 		<div class="form-group">
 		<label for="building"><b>Building</b></label><br>
@@ -103,7 +102,7 @@
 		<select name="bird_type_id" class="birdList" required></select>
 		</div>
 		<br>
-		<button type="submit" class="btn btn-primary">Add New Flock</button>
+		<button type="submit" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Add New Flock</button>
 		<button class="btn btn-primary">Clear</button>
 		</form>
 		</div>
@@ -111,18 +110,19 @@
 
 		<!-- Modal -->
 		<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModal" aria-hidden="true">
-			<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-dialog modal-md" role="document">	
 				<div class="modal-content">
 					<div class="modal-header">
-						<h5 class="modal-title" id="updateModalLabel">Update Flock</h5>
+						<h1 class="modal-title" id="updateModalLabel">Update Flock</h1>
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
 					</div>
 					<div class="modal-body updateForm">
+					
 					</div>
 				</div>
-			</div>
+		</div>	
 		</div>
 	   </div></div>
 
@@ -166,52 +166,73 @@
      					}					
 				    });
 				   $.getJSON("../flock/read_farms.php?farm_id=" + id, function(data){
-					   var readFlock='';
+					   $.getJSON("../order/getOrders.php", function(orderData){
+					   var readFlock=`<b>Flock Information:</b><br>`;
 					   $.each(data.records, function(key,val){
+						   
+						   var removeBool = false;
+						   
+						   $.each(orderData.records,function(okey,oval){
+                                                           if(oval.flock_id == val.flock_id){
+                                                             removeBool = true;
+                                                           }
+                                                   });
+						   
 						   readFlock +=`
 							   <!-- farm data will be shown in this table -->
 							   <table class='table table-bordered table-hover'>
 							   <tr>
-							   <td class='w-30-pct'>Farm Name</td>
-							   <td class='w-70-pct'>` + val.farm_name + `</td>
+							   <td class='w-10-pct'>Farm Name :</td>
+							   <td class='w-25-pct'>` + val.farm_name + `</td>
 							   </tr>
 							   <tr>
-							   <td>Building #</td>
+							   <td>Building # :</td>
 							   <td>` + val.building_number + `</td>
 							   </tr>
 							   <tr>
-							   <td>Building Floor</td>
+							   <td>Building Floor :</td>
 							   <td>` + val.building_floor + `</td>
 							   </tr>
 							   <tr>
-							   <td>Bird Type</td>
+							   <td>Bird Type :</td> 
 							   <td>` + val.bird_desc + `</td>
 							   </tr>
 							   <tr>
-							   <td>Delivery Date</td>
+							   <td>Delivery Date :</td>
 							   <td>` + val.delivery_date + `</td>
 							   </tr>
 							   <tr>
-							   <td>Hatchlings</td>
+							   <td>Hatchlings :</td>
 							   <td>` + val.hatchlings + `</td>
 							   </tr>
 							   <tr>
 							   <td>	
-							   <button class='btn btn-info m-r-10px updateFlock' data-toggle='modal' data-target='#updateModal'  data-id='` + val.flock_id + `'>Update</button>
-							   <button class='btn btn-danger m-r-10px removeFlock' data-id='` + val.flock_id + `'>Remove</button>
-							   </td>    
-							   </tr>`;
+							   <button class='btn btn-info m-r-10px updateFlock' data-toggle='modal' 
+						   data-target='#updateModal'  data-id='` + val.flock_id + `'><i class='fas fa-edit'></i> Update</button>`;
 						   
+						   if(removeBool){
+							   readFlock += `<button class='btn removeDisabled'
+                                                                   	data-id='` + val.flock_id + `' disabled><i class='fas fa-trash-alt'></i> Remove</button></td></tr>`;
+						   }else{
+							   readFlock += `<button class='btn btn-danger removeFlock' 
+							   		data-id='` + val.flock_id + `'><i class='fas fa-trash-alt'></i> Remove</button></td></tr>`;
+						   }
+					  
 					   });
 					   readFlock += `</table>`;
 					   $('#flockInfo').empty();
 					   $('#flockInfo').append(readFlock);
+					   });
 				   });
 			   });
 			   //create flock table
 			   $(document).on('click','.showFlockTable',function(){
+				   
 				   $.getJSON("../flock/read.php", function(flockData){
-					   var tableStr = `<table class='table table-bordered table-hover'>
+					   $.getJSON("../order/getOrders.php", function(orderData){
+					   
+						   var tableStr = `<b>Flock Information:</b><br>
+					           <table class='table table-bordered table-hover'>
 						   <!-- creating our table heading -->
 						   <tr>
 						   <th class='w-15-pct'>Farm Name</th>
@@ -219,10 +240,21 @@
 						   <th class='w-5-pct'>Building Floor</th>
 						   <th class='w-15-pct'>Bird Type</th>
 						   <th class='w-15-pct'>Delivery Date</th>
-						   <th class='w-10-pct'>Hatchlings</th>
-						   <th class='w-25-pct text-align-center'>Action</th>
+						   <th class='w-5-pct'>Hatchlings</th>
+						   <th class='w-35-pct text-align-center'>Action</th>
 						   </tr>`;
-					   $.each(flockData.records, function(key,val){
+					   
+					$.each(flockData.records, function(key,val){
+						   var removeBool = false;
+						   $.each(orderData.records,function(okey,oval){
+                                                           if(oval.flock_id == val.flock_id){
+                                                             removeBool = true;
+							   }
+						   });        
+					   
+						   if(val.hatchlings <= 0){
+	    						tableStr += `<tr style='visibility: hidden'></tr>`
+	    					}else{
 						   tableStr += `<tr>
 							   <td>` + val.farm_name + `</td>
 							   <td>` + val.building_number +`</td>
@@ -231,17 +263,27 @@
 							   <td>` + val.delivery_date + `</td>
 							   <td>` + val.hatchlings + `</td>
 							   <td>
-							   <button class='btn btn-info m-r-10px updateFlock' data-toggle='modal' data-target='#updateModal'  data-id='` + val.flock_id + `'>Update</button>
-							   <button class='btn btn-danger m-r-10px removeFlock' data-id='` + val.flock_id + `'>Remove</button>
-							   </td>
-							   </tr>`;
+							   <button class='btn btn-info m-r-10px updateFlock' data-toggle='modal'
+	    						data-target='#updateModal'  data-id='` + val.flock_id + `'><i class='fas fa-edit'></i> Update</button>`;
+							  
+							  if(removeBool){
+								   tableStr += `<button class='btn removeDisabled' 
+	    data-id='` + val.flock_id + `' disabled><i class='fas fa-trash-alt'></i> Remove</button></td></tr>`;
+							   }else{
+								   tableStr += `<button class='btn btn-danger removeFlock' 
+						data-id='` + val.flock_id + `'><i class='fas fa-trash-alt'></i> Remove</button></td></tr>`;
+							   }
+						}
+					   
 					   });
+					   
 					   tableStr += `</table>`;
 					   $('#flockInfo').empty();
 					   $('#flockInfo').append(tableStr);
+					   });
 				   });
 			   });
-
+			   
 			   var farm = "../farm/read.php";
 			   var building = "../building/read.php";
 			   var bird = "../bird/read.php";
@@ -249,6 +291,7 @@
 			   $.getJSON(farm, function(farmData){
 				   $.getJSON(building, function(buildingData){
 					   $.getJSON(bird, function(birdData){
+						  
 						   var farmStr = `<option value=''>Select Farm</option>`;
 						   var buildingStr = `<option value=''>Select Building</option>`;
 						   var birdStr = `<option value=''>Select Bird Type</option>`;
@@ -262,7 +305,7 @@
 						   $.each(birdData.records, function(key,val){
 							   birdStr +=`<option value='` + val.bird_type_id + `'>` + val.bird_desc + `</option>`;
 						   });
-
+						   $('.addfarmList').append(farmStr);
 						   $('.farmList').append(farmStr);
 						   $('.buildingList').append(buildingStr);
 						   $('.birdList').append(birdStr);
@@ -298,12 +341,12 @@
 					   message: "<h4>Are you sure?</h4>",
 					   buttons: {
 						   confirm: {
-							   label: '<span class="glyphicon glyphicon-ok"></span> Yes',
+							   label: '<i class="fas fa-check"></i> Yes',
 							   className: 'btn-danger'
 						   },
 						   cancel: {
-							   label: '<span class="glyphicon glyphicon-remove"></span> No',
-							   className: 'btn-primary'
+							   label: '<i class="fas fa-times"></i> Cancel',
+							   className: 'btn-secondary'
 						   }
 					   },
 					   callback: function (result) {
@@ -366,11 +409,11 @@
 								   birdOptions+=`</select>`;
 
 								   //build flock form for update
-								   var updateStr=`<form id="updateFlockForm" action="#" method="post" border="0">
+								   var updateStr=`<form id="updateFlockForm" action="#" method="post" border="100">
 									   <table class="table table-hover table-responsive table-bordered">
 									   <tr>
-									   <td>Farm</td>
-									   <td>` + farmOptions + `</td>
+									   <td class='w-25-pct'>Farm</td>
+									   <td class='w-75-pct'>` + farmOptions + `</td>
 									   </tr>
 									   <tr>
 									   <td>Building</td>
@@ -392,7 +435,7 @@
 									   <td><input value="` + id + `" name='flock_id' type='hidden'></input></td>
 									   <td>
 									   <button type='submit' class='btn btn-info'>
-									   <span class='glyphicon glyphicon-edit'></span>Update Flock
+									   <i class='fas fa-edit'></i> Update Flock
 									   </button>
 									   </td>
 									   </tr>

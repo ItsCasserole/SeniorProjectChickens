@@ -26,6 +26,7 @@ if($num>0){
 			"bird" => $bird,
 			"date" => $date,
 			"id" => $id,
+			"flock_id" => $flock_id
 
                 );
 
