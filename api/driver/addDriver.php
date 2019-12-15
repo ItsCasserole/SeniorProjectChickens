@@ -26,12 +26,7 @@ $driver = new Driver($db);
     $driverPhone = $_POST['driverPhone'];
     $driverTransmission = $_POST['driverTransmission'];
     $driverLT = $_POST['driverLT'];
-    /*
-    $myfile = fopen("test.txt", "w") or die("Unable to open file!");
-    $txt = "$first_name ". "$last_name "."$driverPhone "."$driverBirth "."$driverState "."$driverLN " ."$driverLT "."$driverLE "."$driverME "."$driverTransmission "."$driverUser ". "Testing 1";
-    fwrite($myfile, $txt);
-    fclose($myfile);
-    */
+
 
     $driver->first_name = $first_name;
     $driver->last_name = $last_name;
