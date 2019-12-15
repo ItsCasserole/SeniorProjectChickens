@@ -15,19 +15,23 @@ $db = $database->getConnection();
 $driver = new Driver($db);
 
 
-        $first_name = $_POST['first_name'];
-        $last_name =$_POST['last_name'];
-        $driverUser = $_POST['driverUser'];
-        $driverBirth= $_POST['driverBirth'];
-        $driverLN = $_POST['driverLN'];
-        $driverME = $_POST['driverME'];
-        $driverState =$_POST['driverState'];
-        $driverLE = $_POST['driverLE'];
-        $driverPhone = $_POST['driverPhone'];
-        $driverTransmission = $_POST['driverTransmission'];
-        $driverLT = $_POST['driverLT'];
-
-
+    $first_name = $_POST['first_name'];
+    $last_name =$_POST['last_name'];
+    $driverUser = $_POST['driverUser'];
+    $driverBirth= $_POST['driverBirth'];
+    $driverLN = $_POST['driverLN'];
+    $driverME = $_POST['driverME'];
+    $driverState =$_POST['driverState'];
+    $driverLE = $_POST['driverLE'];
+    $driverPhone = $_POST['driverPhone'];
+    $driverTransmission = $_POST['driverTransmission'];
+    $driverLT = $_POST['driverLT'];
+    /*
+    $myfile = fopen("test.txt", "w") or die("Unable to open file!");
+    $txt = "$first_name ". "$last_name "."$driverPhone "."$driverBirth "."$driverState "."$driverLN " ."$driverLT "."$driverLE "."$driverME "."$driverTransmission "."$driverUser ". "Testing 1";
+    fwrite($myfile, $txt);
+    fclose($myfile);
+    */
 
     $driver->first_name = $first_name;
     $driver->last_name = $last_name;

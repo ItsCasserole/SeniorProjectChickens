@@ -48,6 +48,10 @@
         //$driver_status= $this->driver_status;
         $user_ID= $this->user_ID;
         
+        $myfile = fopen("test.txt", "w") or die("Unable to open file!");
+        $txt = "$first_name "+ "$last_name "+"$phone_number "+"$date_of_birth "+"$license_st "+"$license_number " +"$license_type "+"$license_expiration "+"$medical_expiration "+"$transmission_type "+"$user_ID "+ "1";
+        fwrite($myfile, $txt);
+        fclose($myfile); 
         
         $sql = "INSERT INTO chickens.Driver(first_name,last_name,phone_number, date_of_birth, license_st, license_number, license_type, license_expiration, medical_expiration, transmission_type, user_ID, driver_status)
         VALUES ('$first_name','$last_name','$phone_number','$date_of_birth','$license_st','$license_number','$license_type','$license_expiration','$medical_expiration','$transmission_type','$user_ID', '1');";
