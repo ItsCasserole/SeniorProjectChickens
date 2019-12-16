@@ -149,6 +149,14 @@
 					var id = $(this).find(":selected").val();
 					// read farm record based on given ID
 					$.getJSON("../farm/read_one.php?farm_id=" + id, function(data){
+						$.getJSON("../flock/read.php", function(flockData){
+							var removeBool = false;
+							$.each(flockData.records, function(fkey,fval){
+								if(fval.farm_id == id){
+									removeBool = true;
+								}
+							});
+
 						var readFarm=`<b>Farm Information:</b><br>
 							<!-- farm data will be shown in this table -->
 							<table class='table table-bordered table-hover'>
@@ -167,14 +175,19 @@
 							<tr>	
 							<td>
 							<button class='btn btn-info m-r-10px updateFarm' data-toggle='modal' 
-						        data-target='#updateModal' data-id='` + data.farm_id + `'><i class='fas fa-edit'></i> Update</button>
-							<button class='btn btn-danger m-r-10px removeFarm' 
-						        data-id='` + data.farm_id + `'><i class='fas fa-trash-alt'></i> Remove</button>
-							</td>
-							</tr>
-							</table>`;
+						        data-target='#updateModal' data-id='` + data.farm_id + `'><i class='fas fa-edit'></i> Update</button>`;
+							if(removeBool){
+                                                                        readFarm += `<button class='btn removeDisabled'
+								data-id='` + data.farm_id + `' disabled><i class='fas fa-trash-alt'></i> Remove</button></td></tr> </table>`;
+                                                                } else {
+                                                                readFarm += `<button class='btn btn-danger m-r-10px removeFarm'
+                                                                data-id='` + data.farm_id + `'><i class='fas fa-trash-alt'></i> Remove</button>
+                                                                </td>
+										</tr> </table>`;
+					}
 						$('#farmTable').empty();
 						$('#farmTable').append(readFarm);
+						});
 					});
 				});
 				$.getJSON("../farm/read.php", function(data){
@@ -187,7 +200,9 @@
 
 				$(document).on('click','.showFarmTable',function(){ 
 					var farm = "../farm/read.php";
+					var flock = "../flock/read.php";
 					$.getJSON(farm,function(data){
+						$.getJSON(flock, function(flockData){
 						//show farm table
 						var tableStr = `<b>Farm Information:</b><br>
 							<table class='table table-bordered table-hover'>
@@ -200,6 +215,14 @@
 							<th class='w-20-pct text-align-center'>Action</th>
 							</tr>`;
 						$.each(data.records, function(key,val){
+							var removeBool = false;
+							$.each(flockData.records, function(fkey,fval){
+								if(fval.farm_id == val.farm_id){
+									removeBool = true;
+								}
+							});
+
+
 							tableStr += `<tr>
 								<td>` + val.farm_id + `</td>
 								<td>` + val.farm_name +`</td>	    
@@ -207,15 +230,21 @@
 								<td>` + val.farm_city + `</td>
 								<td>
 								<button class='btn btn-info m-r-10px updateFarm' data-toggle='modal' 
-							        data-target='#updateModal' data-id='` + val.farm_id + `'><i class='fas fa-edit'></i> Update</button>
-								<button class='btn btn-danger m-r-10px removeFarm' 
+							        data-target='#updateModal' data-id='` + val.farm_id + `'><i class='fas fa-edit'></i> Update</button>`;
+							        if(removeBool){
+									tableStr += `<button class='btn removeDisabled'
+	  							data-id='` + val.farm_id + `' disabled><i class='fas fa-trash-alt'></i> Remove</button></td></tr>`;
+								} else {
+								tableStr += `<button class='btn btn-danger m-r-10px removeFarm' 
 							        data-id='` + val.farm_id + `'><i class='fas fa-trash-alt'></i> Remove</button>
 								</td>
 								</tr>`;
+								}
 						});
 						tableStr += `</table>`;
 						$('#farmTable').empty();
-						$('#farmTable').append(tableStr);    	    
+						$('#farmTable').append(tableStr);    
+						});
 					});
 				});
 
