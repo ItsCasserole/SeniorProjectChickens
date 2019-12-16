@@ -67,5 +67,12 @@
 			$stmt->execute();
 			return $stmt;
 		}
+
+		public function showOrders(){
+			$sql = "call showOrders();";
+			$stmt = $this->conn->prepare($sql);
+			$stmt->execute();
+			return $stmt;
+		}
 	}
 ?>
