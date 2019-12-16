@@ -15,18 +15,17 @@ $db = $database->getConnection();
 $driver = new Driver($db);
 
 
-        $first_name = $_POST['first_name'];
-        $last_name =$_POST['last_name'];
-        $driverUser = $_POST['driverUser'];
-        $driverBirth= $_POST['driverBirth'];
-        $driverLN = $_POST['driverLN'];
-        $driverME = $_POST['driverME'];
-        $driverState =$_POST['driverState'];
-        $driverLE = $_POST['driverLE'];
-        $driverPhone = $_POST['driverPhone'];
-        $driverTransmission = $_POST['driverTransmission'];
-        $driverLT = $_POST['driverLT'];
-
+    $first_name = $_POST['first_name'];
+    $last_name =$_POST['last_name'];
+    $driverUser = $_POST['driverUser'];
+    $driverBirth= $_POST['driverBirth'];
+    $driverLN = $_POST['driverLN'];
+    $driverME = $_POST['driverME'];
+    $driverState =$_POST['driverState'];
+    $driverLE = $_POST['driverLE'];
+    $driverPhone = $_POST['driverPhone'];
+    $driverTransmission = $_POST['driverTransmission'];
+    $driverLT = $_POST['driverLT'];
 
 
     $driver->first_name = $first_name;

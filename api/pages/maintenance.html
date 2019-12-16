@@ -1,7 +1,11 @@
 <!DOCTYPE html>
+ <!-- Authored By Connor Astemborski and Joe Tagliaferro  -->
+ 
 <html lang="en">
 
 <head>
+ 
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -69,7 +73,7 @@
 
         <!-- Add New Customer Card -->
  <button type="button" class="collapsible">Customer</button>
-        <div class="formContent">
+        <div id="customerDiv" class="formContent">
             <div class="card mx-auto">
                 <div class="card-body">
                     <form>
@@ -100,7 +104,7 @@
                             <label for="customerPhone">Phone Number</label>
                             <input type="text" class="form-control" id="customerPhone" placeholder="555 555 5555">
                         </div>
-                        <button type="submit" class="btn btn-primary" onclick="addCustomer();">Add New Customer</button>
+                        <button id="addNewCustomerButton" type="submit" class="btn btn-primary" >Add New Customer</button>
                         <button type="reset" class="btn btn-secondary">Cancel</button>
                     </form>
                     <br><hr><br>
@@ -114,7 +118,7 @@
                                 </select>
                             </div>
                         </div>
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#deactivateModal">
+                        <button  type="button" class="btn btn-primary" data-toggle="modal" data-target="#deactivateModal">
                             Deactivate
                         </button>
                     </form>
@@ -129,7 +133,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <form>
-                                        <button id="modal-button" type="submit" class="btn btn-primary" onclick="deactivateCustomer();">Yes</button>
+                                        <button id="deactivateCustomerButton" type="submit" class="btn btn-primary" onclick="deactivateCustomer();">Yes</button>
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
                                     </form>
                                 </div>
@@ -144,7 +148,7 @@
 
 <!-- Add New Truck Card -->
     <button type="button" class="collapsible">Truck</button>
-    <div class="formContent">
+    <div id="addTruckDiv" class="formContent">
           <div class="card mx-auto">
             <div class="card-body">
                 <form>
@@ -180,7 +184,7 @@
                     
 
 
-                    <button type="submit" class="btn btn-primary" onclick="addTruck();">Add New Truck</button>
+                    <button type="submit" class="btn btn-primary" id="addTruckButton">Add New Truck</button>
                     <button type="reset" class="btn btn-secondary">Cancel</button>
                 </form>
                 <br><hr><br>
@@ -198,54 +202,20 @@
                             <label for="inactiveTrucks">Inactive Trucks</label>
                                 <select id="inactiveTrucks" class="form-control">
                                 </select>
-                        </div>
+                          </div>
                         </div>
                             
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#deactivateModalTruck">
+                        <button id= "deactivateTruckButton" type="button" class="btn btn-primary">
                             Deactivate
                         </button>
                         
-                        <button type="button" id="activate" class="btn btn-primary" data-toggle="modal" data-target="#activateModal">
+                        <button type="button" id="activate" class="btn btn-primary">
                             Reactivate
                         </button>
                     </form>
-                    <div class="modal fade" id="deactivateModalTruck" tabindex="-1" role="dialog" aria-labelledby="newAnnouncementModal" aria-hidden="true">
-                        <div class="modal-dialog modal-sm" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="deactivateModalLabel">Deactivate Truck?</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">x</span>
-                                    </button>
-                                </div>
-                                <div class="modal-footer">
-                                    <form>
-                                        <button id="modal-button" type="submit" class="btn btn-primary" onclick="deactivateTruck();">Yes</button>
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                     
-                      <div class="modal fade" id="activateModal" tabindex="-1" role="dialog" aria-labelledby="newAnnouncementModal" aria-hidden="true">
-                        <div class="modal-dialog modal-sm" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="activateModal">Activate Truck?</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">x</span>
-                                    </button>
-                                </div>
-                                <div class="modal-footer">
-                                    <form>
-                                        <button id="modal-button" type="submit" class="btn btn-primary" onclick="activateTruck();">Yes</button>
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+ 
+
                 <br>
                 
                                             <!-- Current Trucks Card-->
@@ -256,7 +226,7 @@
                     <input class="form-control" id="myInput" type="text" placeholder="Search by Truck VIN, or License Plate #">
                     <br>
                     <div class="table-responsive" id="truckTable">
-                        <table class="table table-bordered table-hover" >
+                        <table id = "truckTableReal" class="table table-bordered table-hover" >
                             <thead>
                                 <tr>
                                     <th>Truck #</th>
@@ -282,7 +252,7 @@
     <br>
 
 <button type="button" class="collapsible">Driver</button>
-    <div class="formContent">
+    <div id = "driverDiv" class="formContent">
         <div class="card mx-auto">
             <div class="card-body">
                 <form>
@@ -335,7 +305,7 @@
                         <input type="text" class="form-control" id="driverPhone" placeholder="555 555 5555">
                     </div>
 
-                    <button type="submit" class="btn btn-primary" onclick="addDriver();">Add New Driver</button>
+                    <button type="button" class="btn btn-primary" id="addDriverButton">Add New Driver</button>
                     <button type="reset" class="btn btn-secondary">Cancel</button>
                 </form>
             </div>
@@ -363,13 +333,169 @@
 
 <!-- Collapse/Open Sidebar -->
 <script type="text/javascript">
+ //On Load Functions
     $(document).ready(function () {
         $('#sidebarCollapse').on('click', function () {
             $('#sidebar').toggleClass('active')
         });
+        getTrucks();
+        driverDropDown();
+        loadCustomerDropDown();
+ });
+</script>
 
+<!-- Search Table functionality -->
+<script>
+    $(document).ready(function(){
+        $("#myInput").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#myTable tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
 
-         $.getJSON("../truck/read.php", function (data) {
+<script>
+ //Code for openning and Closing Collapsible Buttons
+    var coll = document.getElementsByClassName("collapsible");
+    var i;
+
+for (i = 0; i < coll.length; i++) {
+  coll[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+    if (content.style.display === "block") {
+      content.style.display = "none";
+    } else {
+      content.style.display = "block";
+    }
+  });
+}
+</script>
+<script>
+ function reload(){
+    var container = document.getElementById("driverDiv");
+    var content = container.innerHTML;
+    container.innerHTML= content; 
+    
+   //this line is to watch the result in console , you can remove it later	
+    //console.log("Refreshed");
+}
+//Adding a New Driver
+ $(function(){
+    $('#addDriverButton').click(function(e){
+        e.preventDefault();
+        addDriver();
+        e.preventDefault();
+        clearDropDown("driverUser");
+        driverDropDown();
+        //reload();
+        alert("Driver Added!");
+
+  
+    });
+});
+ //Deactivate Truck
+  $(function(){
+    $('#deactivateTruckButton').click(function(e){
+        e.preventDefault();
+        deactivateTruck();
+        e.preventDefault();
+        clearDropDown("activeTrucks");
+        clearDropDown("inactiveTrucks");
+        var table = document.getElementById("truckTableReal");
+        for(var i = table.rows.length - 1; i > 0; i--)
+        {
+            table.deleteRow(i);
+        }
+        getTrucks();
+
+        
+
+  
+    });
+});
+    //activate Truck
+    $(function(){
+    $('#activate').click(function(e){
+        e.preventDefault();
+        activateTruck();
+        e.preventDefault();
+        clearDropDown("activeTrucks");
+        clearDropDown("inactiveTrucks");
+        var table = document.getElementById("truckTableReal");
+        for(var i = table.rows.length - 1; i > 0; i--)
+        {
+            table.deleteRow(i);
+        }
+        getTrucks();
+        
+  
+    });
+});
+    //Add Truck
+    $(function(){
+    $('#addTruckButton').click(function(e){
+        e.preventDefault();
+        addTruck();
+        e.preventDefault();
+        clearDropDown("activeTrucks");
+        clearDropDown("inactiveTrucks");
+        var table = document.getElementById("truckTableReal");
+        //or use :  var table = document.all.tableid;
+        for(var i = table.rows.length - 1; i > 0; i--)
+        {
+            table.deleteRow(i);
+        }
+        getTrucks();
+        //reload("addTruckDiv");
+        alert("New Truck Added!");
+        
+
+  
+    });
+});
+    
+
+      //Add Customer
+      $(function(){
+    $('#addNewCustomerButton').click(function(e){
+        e.preventDefault();
+        addCustomer();
+        e.preventDefault();
+        clearDropDown("currCustomers");
+        loadCustomerDropDown();
+        reload("customerDiv");
+        alert("New Customer Added!");
+        
+
+  
+    });
+});
+      
+
+</script>
+<script>
+ //Remove Contents of a Given Drop Down
+ function clearDropDown(dropDown){
+          var selectobject = document.getElementById(dropDown);
+                  for (var i=selectobject.length; i>=0; i--) {
+                          selectobject.remove(i);
+                  }
+ }
+ 
+</script>
+<script>
+ //Get and Populate Truck Table and Drop Downs
+ function getTrucks(){
+            $.ajax({
+                type: "GET",
+                url: "../truck/read.php", //php file goes here
+
+            });
+            
+             $.getJSON("../truck/read.php", function (data) {
             
             var trucks = '';
             var activeTrucks = '';
@@ -405,9 +531,24 @@
            $('#inactiveTrucks').append(inactiveTrucks);
            $('#activeTrucks').append(activeTrucks);
        });
-         
-         
-         $.getJSON("../driver/readDrivers.php", function (data) {
+  
+ }
+</script>
+<script>
+ 
+ //Get and Populate Driver Drop Down
+ function driverDropDown(){
+
+                  
+                  
+                                 $.ajax({
+                type: "GET",
+                url: "../driver/readDrivers.php", //php file goes here
+
+            });
+  
+        
+           $.getJSON("../driver/readDrivers.php", function (data) {
             
             var drivers = '';
 
@@ -420,13 +561,24 @@
             
             
 
-        
+
            });
 
            $('#driverUser').append(drivers);
+           //alert(drivers);
        });
-         
-            $.getJSON("../store/getStores.php", function (data) {
+ }
+</script>
+
+<script>
+ //Get and Populate Customer Drop Down
+ function loadCustomerDropDown(){
+                                   $.ajax({
+                type: "GET",
+                url: "../store/getStores.php.php", //php file goes here
+
+            });
+              $.getJSON("../store/getStores.php", function (data) {
             
             var stores = '';
 
@@ -445,43 +597,8 @@
         
            $('#currCustomers').append(stores);
        });
-            
-
-
-
-
- });
+ }
 </script>
-
-<!-- Search Table functionality -->
-<script>
-    $(document).ready(function(){
-        $("#myInput").on("keyup", function() {
-            var value = $(this).val().toLowerCase();
-            $("#myTable tr").filter(function() {
-                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-            });
-        });
-    });
-</script>
-
-<script>
-    var coll = document.getElementsByClassName("collapsible");
-    var i;
-
-for (i = 0; i < coll.length; i++) {
-  coll[i].addEventListener("click", function() {
-    this.classList.toggle("active");
-    var content = this.nextElementSibling;
-    if (content.style.display === "block") {
-      content.style.display = "none";
-    } else {
-      content.style.display = "block";
-    }
-  });
-}
-</script>
-
 
 
 </body>
