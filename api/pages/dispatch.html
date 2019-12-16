@@ -809,7 +809,8 @@
 	$('#dispatchList').empty();
         populateDispatchList();
 	document.getElementById("dispatches").style.display = "block";
-
+	$('#invoiceList').empty();
+        populateUnassignedDeliveriesList();
 	$('#truck').empty().append('<option value=-1>Choose Truck...</option>');
 	populateTruckDropdown("MANUAL");
 	$('#driver').empty().append('<option value=-1>Choose Driver...</option>');
@@ -822,11 +823,18 @@
     function getTruckTransmission(){
 	var e = document.getElementById("truck");
 	var id = e.options[e.selectedIndex].value;
-	if(id != -1){
-	    document.getElementById("driver").disabled = false;
+	if(id == -1){
+	    document.getElementById("driver").disabled = true;
 	}
 	else{
-	    document.getElementById("driver").disabled = true;
+	    document.getElementById("routeCard").style.display = "none";
+	    document.getElementById("driver").disabled = false;
+
+	    document.getElementById("coopsRemaining").innerHTML = "No Truck Has Been Selected";
+
+	    truckId = -1;
+            driverId = -1;
+            coopsRemaining = -1;
 	
 	    $.ajax({
 	        type: 'post',
