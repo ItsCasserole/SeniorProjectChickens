@@ -603,7 +603,6 @@ var uid =  $('#inputuid').val();
                         userid : uid
                 },
                 success : function(result) {
-                         alert("User Deleted!");
                          window.location.reload();
                 },
                 error : function(xhr, resp, text){
@@ -640,7 +639,6 @@ $(document).on('submit', '#addform', function(){
                 data : form_data,
                 success : function(result) {
                         var response = result.message;
-                        alert(response);
                         window.location.reload();
                 },
                 error : function(xhr, resp, text){
@@ -672,7 +670,6 @@ $( "#editform" ).submit(function( event ) {
                 type : "POST",
                 data : editform_data,
                 success : function(result) {
-                        alert("User Updated");
                         window.location.reload();
                 },
                 error : function(xhr, resp, text){
