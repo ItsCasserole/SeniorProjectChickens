@@ -1,3 +1,5 @@
+//Clear all cookie values and send user to login page
+//Author: Cassandra Bailey
 function logout(){
     docCookies.removeItem("username");
     docCookies.removeItem("userid");
@@ -7,18 +9,25 @@ function logout(){
     window.location.href = "login.html";
 }
 
-
+//Check if user is logged in. 
+//Author: Cassandra Bailey
 function loggedin(){
+    //if no user is logged in and they are trying to access a page other than the login page,
+    //send them to the login page
     if(docCookies.getItem("userid") == null &&
        window.location.href.indexOf("login.html") == -1){
 	window.location.href = "login.html";
     }
+    //if user is logged in and they are trying to access the login page, send them to 
+    //their designated home page
     else if(docCookies.getItem("userid") != null &&
 	    window.location.href.indexOf("login.html") != -1){
 	redirectOnPermissions();	
     }
 }
 
+//Send logged in user to their corresponding homepage
+//Author: Cassandra Bailey
 function redirectOnPermissions(){
     var perm = docCookies.getItem("permission");
     if(perm == "Sales Manager" || perm == "Admin"){
@@ -45,12 +54,15 @@ function checkPermissions(permissionNeeded){
     }
 }
 
+//Change the users password based on their username. 
+//Author: Cassandra Bailey
 function changePassword(){
     var username = $('#username').val();
     var currPass = $('#currentPassword').val();
     var newPass = $('#newPassword').val();
     var reenterPass = $('#reenter').val();
 
+    //If the two versions of the new password don't match, don't call the database
     if(newPass != reenterPass){
 	alert("The new password fields don't match. Please try again.");
     }
@@ -64,6 +76,7 @@ function changePassword(){
 		newPass : newPass
 	    },
 	    success: function(result){
+		//on success, logout user and send them to the login page
 		if(result == "success"){
 		    logout();
 		}

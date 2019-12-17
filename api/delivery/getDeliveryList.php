@@ -1,5 +1,6 @@
 <?php
-
+//Gets the list of tomorrow's assigned routes
+//Author: Cassandra Bailey
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: POST");
