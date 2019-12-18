@@ -481,16 +481,21 @@
 <!-- Collapse/Open Sidebar -->
 
 <script type="text/javascript">
+/*
+Author: Riddhi Patel
+*/
 
 $(document).ready(function () {
 
+        //Collapes sidebar.
         $('#sidebarCollapse').on('click', function () {
 
             $('#sidebar').toggleClass('active')
 
         });
 
-        $('#listofUsers').on('click',function(){
+        //Allows to select a user. 
+        $('#listofUsers').on('click',function(){ 
             $name = $(this)
             $name.parent().find('input').removeClass('active');
             $name.addClass('active');
@@ -501,6 +506,7 @@ $(document).ready(function () {
             }
         });
 
+        //Gets all the existig users. 
         $.getJSON("../user/read_user.php", function (data) {
             
 
@@ -519,7 +525,7 @@ $(document).ready(function () {
         $('#listofUsers').append(str);
 
       });
-
+//Allows to search users. 
 $("#searchUsers").on("keyup", function() {
     var value = $(this).val().toLowerCase();
     $("#listofUsers").parent().find('a').filter(function() {
@@ -535,7 +541,7 @@ $("#searchUsers").on("keyup", function() {
 
 
     
-//populate edit and delete forms. 
+//Gets user information by userID and populates edit and delete forms. 
 function populateForms(uid){
         $.ajax({
                 type: "GET",
@@ -568,8 +574,9 @@ function populateForms(uid){
 }
 
 
-//filter users
+//Gets users based on the status. 
 $(document).on('change', '#filter', function(){
+//selected id of the option(active or inactive)
 var id = $(this).val();
 $.getJSON("../user/read_userbystat.php?id="+ id, function (data) {
 
@@ -593,8 +600,9 @@ $.getJSON("../user/read_userbystat.php?id="+ id, function (data) {
 });
 
 
-//delete user
+//deletes selected user.
 function deleteUser(){
+//user ID of the user being deleted.
 var uid =  $('#inputuid').val();
         $.ajax({
                 url : "../user/delete_user.php",
@@ -611,7 +619,7 @@ var uid =  $('#inputuid').val();
         });
 }
 
-
+//Serializes objects so it can get converted into JSON.
 $.fn.serializeObject = function()
 {
     var o = {};
@@ -657,7 +665,6 @@ $( "#editform" ).submit(function( event ) {
     var role =  $('#inputRole').val();
     var activestat =  $('#inputStatus').val();
 
-
     var obj = {userid: user_id, firstName: firstname,
                 lastName: lastname, permission: role,
                 userName: username,activestatus: activestat
@@ -679,6 +686,7 @@ $( "#editform" ).submit(function( event ) {
 
 });
 
+//checks permissoin for sales manager. 
 function startup(){
     loggedin();
     checkPermissions("Sales Manager");
