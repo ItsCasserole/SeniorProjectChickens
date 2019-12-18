@@ -133,13 +133,19 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
 
 <script type="text/javascript">
+/*
+Authors: Riddhi Patel,Joe Tagliaferro
+*/
+
+//ID of the currently logged in truck driver.
 var truckdriverID = docCookies.getItem("userid");
+
     $(document).ready(function () {
         $('#sidebarCollapse').on('click', function () {
             $('#sidebar').toggleClass('active')
         });
 
-
+         //Gets all the sent messages for today.
          $.getJSON("../message/readforTD.php", function (data) {
             
             var messagestrTD = '<ul class="media-list">';
@@ -160,7 +166,7 @@ var truckdriverID = docCookies.getItem("userid");
           $('#announcementsTD').prepend(messagestrTD);
        });
 	
-        //gets deliveries. 
+        //gets all deliveries for today. 
         $.getJSON("../delivery/getDeliveriesforTD.php?user_id="+truckdriverID, function (data) {
 
              var deliveryStr = "";
@@ -221,6 +227,7 @@ var truckdriverID = docCookies.getItem("userid");
 </script>
 </body>
 <script type="text/javascript">
+    //checks permission for truck driver.
     function startup(){
 	loggedin();
 	checkPermissions("Truck Driver");
